@@ -3,15 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/globals.css" />
     <link rel="stylesheet" href="styles/index.css" />
     <title>Zombiaki</title>
   </head>
   <body>
-    <h1>Zombiaki</h1>
-    <h2>Ignacy Trzewiczek</h2>
-    <h3>Adaptacja on-line: <a href="https://pogbit.com/">Pogbit.com</a></h3>
-    <script src="scripts/index.js" async></script>
+    <header></header>
+    <main>
+      <h1>Zombiaki</h1>
+      <h2>Ignacy Trzewiczek</h2>
+      <!-- MENU -->
+      <div class="menu hidden" id="menu">
+        <p class="reset" id="reset">RESET</p>
+      </div>
+      <!-- WYBÓR RASY -->
+      <div class="choose-race" id="choose-race">
+        <div id="choose-ludzie">
+          <img src="images/cards/ludzie/rewers.webp" alt="ludzie" />
+          <p>Ludzie</p>
+        </div>
+        <div id="choose-zombiaki">
+          <img src="images/cards/zombiaki/rewers.webp" alt="zombiaki" />
+          <p>Zombiaki</p>
+        </div>
+      </div>
+
+      <div id="board" class="board hidden">
+        <!-- TALIA -->
+        <div id="deck" class="deck">
+          <img src="" alt="deck" id="current_card" />
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>Adaptacja on-line: <a href="https://pogbit.com/">Pogbit.com</a></p>
+    </footer>
+
+    <script type="module" src="scripts/index.js" async></script>
   </body>
 </html>

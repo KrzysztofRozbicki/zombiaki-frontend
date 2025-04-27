@@ -13,7 +13,7 @@ def process_card_scan(image_path, output_folder):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     # Apply threshold to find cards
-    _, thresh = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY_INV)
+    _, thresh = cv2.threshold(gray, 200, 200, cv2.THRESH_BINARY_INV)
     
     # Find contours
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -49,7 +49,7 @@ def process_card_scan(image_path, output_folder):
         warped = cv2.warpPerspective(img, M, (width, height))
         
         # Save the card as PNG without modifying internal content
-        output_path = os.path.join(output_folder, f"1.png")
+        output_path = os.path.join(output_folder, f"20.png")
         cv2.imwrite(output_path, warped)
         
         # Draw rectangle around detected card (for visualization)
@@ -64,10 +64,10 @@ def process_card_scan(image_path, output_folder):
     return len(card_contours)
 
 # Create output directory if it doesn't exist
-output_dir = "images/art"
+output_dir = "images/instrukcja_cut/"
 os.makedirs(output_dir, exist_ok=True)
 
 # Process the scan
-scan_path = "images/art2.png"  # Replace with your scan image path
+scan_path = "images/instrukcja/20.png"  # Replace with your scan image path
 num_cards = process_card_scan(scan_path, output_dir)
 print(f"Extracted {num_cards} cards to {output_dir}")

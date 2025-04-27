@@ -1,4 +1,4 @@
-[
+export const cards_zombiaki = [
   {
     "id": 1,
     "amount": 1,

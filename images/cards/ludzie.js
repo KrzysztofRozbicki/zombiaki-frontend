@@ -1,4 +1,4 @@
-[
+export const cards_ludzie = [
   {
     "id": 1,
     "amount": 1,
@@ -189,17 +189,17 @@
     "flavor": "Na rzeźbę łydek idealne."
   },
   {
-    "id": 29,
+    "id": 28,
     "amount": 1,
     "name": "GRANAT",
     "description": "Zagraj Granat na dowolne pole planszy. Granat automatycznie niszczy wszystkie karty znajdujące się na tym polu. Przed Granatem nie chroni Człowiek.",
     "flavor": "Wyrwij zawlęczkę i policz do trzech."
   },
   {
-    "id": 30,
+    "id": 39,
     "amount": 1,
     "name": "AUTO",
     "description": "Wystaw Auto na dowolnym wolnym polu. Autom można zdetonować za pomocą STrzału, Snajpera, Serii, Miotacza, Ulicy w ogniu, Ropy, Granatu, odłamka Miny. Zdetonowane zadaje 1 ranę na swoim polu i 1 na każdym dookoła (nawet po skosie). Zombiaki mogą wchodzić na pole z Autem.",
     "flavor": "Trabant! Nie trzeba detonatora!"
   }
-]
+];
