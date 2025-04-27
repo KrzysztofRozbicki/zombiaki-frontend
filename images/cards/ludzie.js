@@ -1,4 +1,4 @@
-export const cards_ludzie = [
+export const cards_ludzie_json = [
   {
     "id": 1,
     "amount": 1,
@@ -196,7 +196,7 @@ export const cards_ludzie = [
     "flavor": "Wyrwij zawlęczkę i policz do trzech."
   },
   {
-    "id": 39,
+    "id": 29,
     "amount": 1,
     "name": "AUTO",
     "description": "Wystaw Auto na dowolnym wolnym polu. Autom można zdetonować za pomocą STrzału, Snajpera, Serii, Miotacza, Ulicy w ogniu, Ropy, Granatu, odłamka Miny. Zdetonowane zadaje 1 ranę na swoim polu i 1 na każdym dookoła (nawet po skosie). Zombiaki mogą wchodzić na pole z Autem.",

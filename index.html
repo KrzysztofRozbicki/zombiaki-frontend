@@ -12,33 +12,117 @@
   <body>
     <header></header>
     <main>
-      <h1>Zombiaki</h1>
-      <h2>Ignacy Trzewiczek</h2>
-      <!-- MENU -->
-      <div class="menu hidden" id="menu">
-        <p class="reset" id="reset">RESET</p>
+      <div id="intro">
+        <h1>Zombiaki</h1>
+        <h2>Ignacy Trzewiczek</h2>
       </div>
+
       <!-- WYBÓR RASY -->
       <div class="choose-race" id="choose-race">
-        <div id="choose-ludzie">
-          <img src="images/cards/ludzie/rewers.webp" alt="ludzie" />
-          <p>Ludzie</p>
-        </div>
         <div id="choose-zombiaki">
           <img src="images/cards/zombiaki/rewers.webp" alt="zombiaki" />
           <p>Zombiaki</p>
         </div>
+
+        <div id="choose-ludzie">
+          <img src="images/cards/ludzie/rewers.webp" alt="ludzie" />
+          <p>Ludzie</p>
+        </div>
       </div>
 
+      <!-- ALERT O WYRZUCENIU KARTY -->
+
+      <div id="alert" class="hidden">
+        <div>
+          <button id="close_alert" class="close_backdrop">X</button>
+          <p id="alert_text"></p>
+        </div>
+      </div>
+
+      <!-- WYBRANA KARTA -->
+      <div id="chosen_card" class="hidden">
+        <div>
+          <img src="" id="chosen_card_picture" alt="wybrana karta" />
+          <button id="close_card" class="close_backdrop">X</button>
+          <div class="card_buttons_box">
+            <button id="play_card">ZAGRAJ</button>
+            <button id="throw_card">ODRZUĆ</button>
+          </div>
+        </div>
+      </div>
       <div id="board" class="board hidden">
-        <!-- TALIA -->
-        <div id="deck" class="deck">
-          <img src="" alt="deck" id="current_card" />
+        <!-- MENU -->
+        <div class="menu hidden" id="menu">
+          <p class="reset" id="reset">RESET</p>
+        </div>
+
+        <!-- TALIA ZOMBIAKI -->
+        <div id="deck_zombiaki" class="deck">
+          <img src="" alt="card1" id="card_1_zombiaki" class="card_zombiaki" />
+          <img src="" alt="card2" id="card_2_zombiaki" class="card_zombiaki" />
+          <img src="" alt="card3" id="card_3_zombiaki" class="card_zombiaki" />
+          <img src="" alt="card4" id="card_4_zombiaki" class="card_zombiaki" />
+          <div id="rewers_stack_zombiaki">
+            <img
+              src="images/cards/zombiaki/rewers.webp"
+              alt="rewers"
+              class="rewers"
+              id="rewers_zombiaki"
+            />
+            <p>KONIEC TURY</p>
+          </div>
+        </div>
+        <!-- PLANSZA -->
+        <div id="streets">
+          <div id="levels">
+            <img src="images/przecznice/5.webp" alt="lvl5" />
+            <img src="images/przecznice/4.webp" alt="lvl4" />
+            <img src="images/przecznice/3.webp" alt="lvl3" />
+            <img src="images/przecznice/2.webp" alt="lvl2" />
+            <img src="images/przecznice/1.webp" alt="lvl1" />
+          </div>
+          <div id="tor_1">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div id="tor_2">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div id="tor_3">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <!-- TALIA LUDZIE -->
+        <div id="deck_ludzie" class="deck">
+          <img src="" alt="card1" id="card_1_ludzie" class="card_ludzie" />
+          <img src="" alt="card2" id="card_2_ludzie" class="card_ludzie" />
+          <img src="" alt="card3" id="card_3_ludzie" class="card_ludzie" />
+          <img src="" alt="card4" id="card_4_ludzie" class="card_ludzie" />
+          <div id="rewers_stack_ludzie">
+            <img
+              src="images/cards/ludzie/rewers.webp"
+              alt="rewers"
+              class="rewers"
+              id="rewers_ludzie"
+            />
+            <p>KONIEC TURY</p>
+          </div>
         </div>
       </div>
     </main>
     <footer>
-      <p>Adaptacja on-line: <a href="https://pogbit.com/">Pogbit.com</a></p>
+      <p>Wersja on-line: <a href="https://pogbit.com/">Pogbit.com</a></p>
     </footer>
 
     <script type="module" src="scripts/index.js" async></script>

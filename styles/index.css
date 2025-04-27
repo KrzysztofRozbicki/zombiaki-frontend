@@ -1,31 +1,10 @@
-body {
-  background: var(--background-color);
-  color: var(--primary-color);
-  position: relative;
-  padding-block: 1rem;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  gap: 1rem;
-}
-
-h1 {
-  text-transform: uppercase;
-}
-
-footer {
+#menu {
   position: fixed;
-  font-family: "Arial", "sans-serif";
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  padding-block: 0.5rem;
+  top: 1rem;
+  left: 1rem;
 }
 
+/* INTRO */
 .choose-race {
   display: flex;
   gap: 2rem;
@@ -38,7 +17,8 @@ footer {
 }
 
 .choose-race div,
-.deck {
+.deck,
+.deck div {
   position: relative;
   cursor: pointer;
 }
@@ -47,16 +27,17 @@ footer {
   z-index: 2;
   text-align: center;
   position: absolute;
-  color: var(--accent-color);
+  color: var(--secondary-color);
   font-size: 3rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-text-stroke: 3px var(--background-color);
 }
-
-.choose-race div:after,
-.deck:after {
+#choose-zombiaki p {
+  color: var(--color-green);
+}
+.choose-race div:after {
   content: "";
   position: absolute;
   top: 0;
@@ -88,14 +69,70 @@ footer {
 }
 
 .choose-race div:hover::after,
-.choose-race div:focus::after,
-.deck:hover::after,
-.deck:focus::after {
+.choose-race div:focus::after {
   opacity: 0.5;
 }
 
+/* PLANSZA */
+.board {
+  display: flex;
+}
+.deck {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+#levels img {
+  height: 18dvh;
+}
+
 .deck img {
-  max-height: 40vh;
+  max-height: 35vh;
+  max-width: 12vw;
+  z-index: 3;
+}
+
+.deck img:hover,
+.deck img:focus {
+  filter: sepia(1.3) saturate(2);
+  transform-origin: top;
+  z-index: 4;
+}
+
+.deck div p {
+  position: absolute;
+  z-index: 2;
+  top: 70%;
+  right: 15%;
+  font-size: 2rem;
+  width: 100%;
+  transform: rotate(-90deg) translate(50%, 50%);
+  -webkit-text-stroke: 2px var(--background-color);
+  color: var(--accent-color);
+  text-align: center;
+}
+
+#rewers_stack_zombiaki p {
+  color: var(--color-green);
+}
+
+.deck div p:hover,
+.deck div p:focus {
+  color: var(--secondary-color) !important;
+}
+
+.deck div:has(p:hover) img.rewers,
+.deck div:has(p:focus) img.rewers {
+  filter: sepia(1.3) saturate(2);
+}
+
+.deck div {
+  position: absolute;
+  bottom: -42%;
+  left: 25%;
+  transform: rotate(90deg);
 }
 
 .reset {
@@ -103,4 +140,115 @@ footer {
 }
 .reset:hover {
   color: var(--secondary-color);
+}
+
+#streets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-inline: 1rem;
+}
+#streets div {
+  display: flex;
+  gap: 0.5rem;
+}
+#tor_1 div,
+#tor_2 div,
+#tor_3 div {
+  height: 18dvh;
+  aspect-ratio: 0.66;
+  background-color: var(--primary-color);
+  border-radius: 0.75rem;
+}
+
+/* WYBRANA KARTA */
+
+#chosen_card,
+#alert {
+  position: fixed;
+  backdrop-filter: blur(10px);
+  width: 100dvw;
+  height: 100dvh;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#chosen_card div,
+#alert div {
+  position: relative;
+}
+
+.close_backdrop {
+  font-size: 4rem;
+  color: var(--accent-color);
+  border: none;
+  background: none;
+  position: absolute;
+  right: -4rem;
+  top: -4rem;
+  cursor: pointer;
+}
+.close_backdrop:hover,
+.close_backdrop:focus {
+  color: var(--secondary-color);
+  transform: scale(1.2);
+}
+
+.card_buttons_box {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.card_buttons_box button {
+  font-size: 2rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  border: 2px solid var(--primary-color);
+}
+
+.card_buttons_box button:hover,
+.card_buttons_box button:focus {
+  transform: scale(1.1);
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+}
+#play_card {
+  background-color: var(--color-green);
+}
+
+.rewers:hover,
+.rewers:focus {
+  transform: none !important;
+}
+.rewers:hover ~ p,
+.rewers:focus ~ p {
+  color: var(--secondary-color) !important;
+}
+.card_blank {
+  cursor: auto !important;
+}
+.card_blank:hover,
+.card_blank:focus {
+  filter: none !important;
+}
+/* ALERT */
+
+#alert div {
+  background-color: var(--background-color);
+  font-size: 3rem;
+  color: var(--accent-color);
+  max-width: 800px;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  padding-block: 3rem;
 }

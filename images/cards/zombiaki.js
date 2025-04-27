@@ -1,4 +1,4 @@
-export const cards_zombiaki = [
+export const cards_zombiaki_json = [
   {
     "id": 1,
     "amount": 1,
