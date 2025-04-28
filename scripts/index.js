@@ -1,6 +1,7 @@
 import { cards_ludzie_json } from '../images/cards/ludzie.js';
 import { cards_zombiaki_json } from '../images/cards/zombiaki.js';
 import { initMenu } from './menu.js';
+import { showAlert } from './utils.js';
 
 
 const choose_ludzie = document.getElementById('choose-ludzie');
@@ -16,8 +17,8 @@ const card_2_ludzie = document.getElementById('card_2_ludzie');
 const card_3_ludzie = document.getElementById('card_3_ludzie');
 const card_4_ludzie = document.getElementById('card_4_ludzie');
 
-const cards_zombiaki = [card_1_zombiaki, card_2_zombiaki, card_3_zombiaki, card_4_zombiaki];
-const cards_ludzie = [card_1_ludzie, card_2_ludzie, card_3_ludzie, card_4_ludzie]
+export const cards_zombiaki = [card_1_zombiaki, card_2_zombiaki, card_3_zombiaki, card_4_zombiaki];
+export const cards_ludzie = [card_1_ludzie, card_2_ludzie, card_3_ludzie, card_4_ludzie]
 
 const chosen_card = document.getElementById('chosen_card');
 const chosen_card_picture = document.getElementById('chosen_card_picture');
@@ -30,6 +31,7 @@ choose_zombiaki.addEventListener('click', () => start('zombiaki'));
 
 
 // GLOBAL VARIABLES
+let player_cards = [];
 let MAX_CARD_THROWN = 1;
 let MAX_CARD_PLAYED = 3;
 let cards_thrown = 0;
@@ -39,21 +41,23 @@ let deck_zombiaki = [];
 let deck_ludzie = [];
 let playable_cards = [];
 let race = null;
+let game_over = false;
+let winner = null;
 
 
 function start(race_chosen) {
     race = race_chosen;
-    // Stwórz talię
-    createDeck();
+    startDeck();
 
-    // Potasuj talię
+    // Obsługa tur
+    handleNewTurn();
+}
+
+function startDeck() {
+    createDeck()
     shuffle();
-
-    // Wrzuć talię na ekran
-    showDeck();
-
-    // Obsługa talii
-
+    initMenu(race);
+    drawCards(true);
 }
 
 function createDeck() {
@@ -78,8 +82,6 @@ function createDeck() {
             deck_zombiaki.push(card);
         }
     }
-
-
 }
 
 function shuffleDeck() {
@@ -108,61 +110,73 @@ function shuffle() {
     deck_zombiaki.push(endCard);
 }
 
-function showDeck() {
-    initMenu();
-    firstDraw();
+
+function getCardsFromDeck(first_draw, deck, side) {
+
+    for (let i = 0; i < deck.length; i++) {
+        const currentId = deck[i].getAttribute('data-id');
+        if (!first_draw) {
+            if (currentId == true || currentId !== 'blank') continue;
+        }
+        let card = null;
+        if (side === 'zombiaki') card = deck_zombiaki.shift();
+        if (side === 'ludzie') card = deck_ludzie.shift();
+        if (card) {
+            const { id, name } = card;
+            if (name === "ŚWIT") { game_over = true, winner = 'ludzie' };
+            deck[i].src = `images/cards/${side}/${id}.webp`;
+            deck[i].dataset.id = id;
+            deck[i].dataset.name = name;
+            if (race === side) playable_cards.push(card);
+        }
+    }
 }
 
+function drawCards(first_draw = false) {
 
-function firstDraw() {
-    playable_cards = [];
+    getCardsFromDeck(first_draw, cards_zombiaki, "zombiaki");
+    getCardsFromDeck(first_draw, cards_ludzie, "ludzie");
 
-    for (let i = 0; i < cards_zombiaki.length; i++) {
-        const card = deck_zombiaki.shift();
-        const { id, name } = card;
-        cards_zombiaki[i].src = `images/cards/zombiaki/${id}.webp`;
-        cards_zombiaki[i].dataset.id = id;
-        cards_zombiaki[i].dataset.name = name;
-        if (race === "zombiaki") playable_cards.push(card);
-    }
-
-    for (let i = 0; i < cards_ludzie.length; i++) {
-        const card = deck_ludzie.shift();
-        const { id, name } = card;
-        cards_ludzie[i].src = `images/cards/ludzie/${id}.webp`;
-        cards_ludzie[i].dataset.id = id;
-        cards_ludzie[i].dataset.name = name;
-        if (race === "ludzie") playable_cards.push(card);
-    }
-    setCards();
+    setCards(first_draw);
 }
+
 //ZAGRANIA KARTY
 
-function setCards() {
-    let player_cards = [];
+function handleCardEvent(card) {
+    return function () {
+        chosen_card_picture.src = card.src;
+        active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
+        if (!active_card) {
+            return;
+        }
+        chosen_card.classList.remove('hidden');
+    }
+}
+function setCards(first_draw) {
     if (race === "zombiaki") player_cards = cards_zombiaki;
     if (race === "ludzie") player_cards = cards_ludzie;
 
-
     player_cards.forEach(card => {
-        card.addEventListener('click', () => {
-            console.log(card);
-            chosen_card_picture.src = card.src;
-            active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
-            if (!active_card) {
-                return;
-            }
-            chosen_card.classList.remove('hidden');
-        })
-    })
+        const handler = handleCardEvent(card);
+        card.handler = handler;
+        card.addEventListener('click', handler);
+    });
 
     close_card.addEventListener('click', () => {
         chosen_card.classList.add('hidden');
-    })
-    playCard();
-    throwCard();
+    });
+
+    if (first_draw) {
+        playCard();
+        throwCard();
+    }
 }
 
+function unsetCards() {
+    player_cards.forEach(card => {
+        card.removeEventListener('click', card.handler);
+    });
+}
 
 function playCard() {
     play_card.addEventListener('click', () => {
@@ -195,31 +209,46 @@ function throwCard() {
         cards_thrown++;
         removeCard();
     })
-
 }
 
 
-function showAlert(text) {
-    const alert = document.getElementById('alert');
-    const close_alert = document.getElementById('close_alert');
-    const alert_text = document.getElementById('alert_text');
-
-    alert_text.innerText = text;
-    alert.classList.remove('hidden');
-
-    close_alert.addEventListener('click', () => {
-        alert.classList.add('hidden');
-    })
-}
 
 function removeCard() {
     const id = active_card.id;
-    const indexRemove = playable_cards.findIndex(el => el.id === active_card.id);
-    playable_cards.splice(indexRemove, 1);
-    const cardToRemove = document.querySelector(`img[data-id="${id}"]`);
-    cardToRemove.src = `images/cards/blank.webp`;
-    cardToRemove.classList.add('card_blank');
-    cardToRemove.dataset.id = null;
-    cardToRemove.dataset.name = null;
+    const index_remove = playable_cards.findIndex(el => el.id === active_card.id);
+    playable_cards.splice(index_remove, 1);
+    const card_to_remove = document.querySelector(`img[data-id="${id}"][data-playable="true"]`);
+    card_to_remove.src = `images/cards/blank.webp`;
+    card_to_remove.classList.add('card_blank');
+    card_to_remove.dataset.id = 'blank';
+    card_to_remove.dataset.name = 'blank';
+    card_to_remove.removeEventListener('click', card_to_remove.handler);
     chosen_card.classList.add('hidden');
+}
+
+function handleNewTurn() {
+    const ludzie_end_turn = document.getElementById('rewers_stack_ludzie');
+    const zombiaki_end_turn = document.getElementById('rewers_stack_zombiaki');
+    const end_turn_cards = [ludzie_end_turn, zombiaki_end_turn];
+    end_turn_cards.forEach(el => {
+        el.addEventListener('click', () => {
+            newTurn();
+        })
+    })
+}
+
+function newTurn() {
+
+    if (cards_thrown === 0) {
+        showAlert("MUSISZ ODRZUCIĆ KARTĘ");
+        return;
+    }
+
+    cards_thrown = 0;
+    cards_played = 0;
+    active_card = null;
+
+    //Dociągnięcie nowych kart
+    unsetCards();
+    drawCards();
 }

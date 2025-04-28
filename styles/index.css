@@ -124,8 +124,10 @@
 }
 
 .deck div:has(p:hover) img.rewers,
-.deck div:has(p:focus) img.rewers {
-  filter: sepia(1.3) saturate(2);
+.deck div:has(p:focus) img.rewers,
+.rewers:hover,
+.rewers:focus {
+  filter: sepia(1.3) saturate(2) brightness(0.5) !important;
 }
 
 .deck div {
@@ -138,6 +140,7 @@
 .reset {
   cursor: pointer;
 }
+
 .reset:hover {
   color: var(--secondary-color);
 }
@@ -148,6 +151,7 @@
   gap: 0.5rem;
   margin-inline: 1rem;
 }
+
 #streets div {
   display: flex;
   gap: 0.5rem;
@@ -240,6 +244,7 @@
 .card_blank:focus {
   filter: none !important;
 }
+
 /* ALERT */
 
 #alert div {
