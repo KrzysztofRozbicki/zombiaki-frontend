@@ -1,0 +1,95 @@
+.board {
+  display: flex;
+}
+#levels img {
+  height: 18dvh !important;
+}
+
+#streets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-inline: 1rem;
+}
+
+#streets div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.field img {
+  width: 100%;
+  height: 100%;
+}
+
+.field {
+  height: 18dvh;
+  aspect-ratio: 0.66;
+  background-color: var(--primary-color);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  font-size: 2rem;
+  font-family: "Arial", sans-serif;
+  cursor: not-allowed;
+}
+
+.field:has(img) {
+  cursor: pointer;
+  outline: 2px solid var(--primary-color);
+}
+
+#streets .field_available {
+  background-color: var(--color-green);
+  cursor: cell;
+  animation: 0.7s infinite alternate ease-in-out fieldAvailable;
+}
+
+#streets .zombiaki:hover,
+#streets .zombiaki:focus {
+  background-color: var(--accent-color);
+}
+.field {
+  position: relative;
+}
+.field.zombiak {
+  filter: hue-rotate(90deg) saturate(0.5);
+  animation: 0.7s infinite alternate ease-in-out cardAvailable;
+}
+
+.field .overlay {
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+  width: 80%;
+  height: 80%;
+  border-radius: 0.75rem;
+  outline: 1px solid var(--secondary-color);
+}
+
+.field .overlay:hover,
+.field .overlay:focus {
+  transform: scale(1.5);
+  filter: sepia(1.3) saturate(2) brightness(0.8);
+  z-index: 4;
+}
+
+@keyframes fieldAvailable {
+  from {
+    background-color: var(--color-green);
+  }
+  to {
+    background-color: var(--primary-color);
+  }
+}
+
+@keyframes cardAvailable {
+  from {
+    filter: none;
+  }
+  to {
+    filter: hue-rotate(90deg) saturate(0.5);
+  }
+}

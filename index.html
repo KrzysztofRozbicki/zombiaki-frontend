@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/globals.css" />
     <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/board.css" />
     <title>Zombiaki</title>
   </head>
   <body>
@@ -19,7 +20,8 @@
 
       <!-- WYBÓR RASY -->
       <div class="choose-race" id="choose-race">
-        <div id="choose-zombiaki">
+        <p id="start">START</p>
+        <!-- <div id="choose-zombiaki">
           <img src="images/cards/zombiaki/rewers.webp" alt="zombiaki" />
           <p>Zombiaki</p>
         </div>
@@ -27,7 +29,7 @@
         <div id="choose-ludzie">
           <img src="images/cards/ludzie/rewers.webp" alt="ludzie" />
           <p>Ludzie</p>
-        </div>
+        </div> -->
       </div>
 
       <!-- ALERT O WYRZUCENIU KARTY -->
@@ -45,8 +47,10 @@
           <img src="" id="chosen_card_picture" alt="wybrana karta" />
           <button id="close_card" class="close_backdrop">X</button>
           <div class="card_buttons_box">
-            <button id="play_card">ZAGRAJ</button>
+            <button id="play_card" class="hidden">ZAGRAJ</button>
             <button id="throw_card">ODRZUĆ</button>
+            <button id="play_bear" class="hidden">UŻYJ MISIA</button>
+            <button id="play_boss" class="hidden">UŻYJ BOSSA</button>
           </div>
         </div>
       </div>
@@ -58,10 +62,30 @@
 
         <!-- TALIA ZOMBIAKI -->
         <div id="deck_zombiaki" class="deck">
-          <img src="" alt="card1" id="card_1_zombiaki" class="card_zombiaki" />
-          <img src="" alt="card2" id="card_2_zombiaki" class="card_zombiaki" />
-          <img src="" alt="card3" id="card_3_zombiaki" class="card_zombiaki" />
-          <img src="" alt="card4" id="card_4_zombiaki" class="card_zombiaki" />
+          <img
+            src="images/cards/blank.webp"
+            alt="card1"
+            id="card_1_zombiaki"
+            class="card_zombiaki"
+          />
+          <img
+            src="images/cards/blank.webp"
+            alt="card2"
+            id="card_2_zombiaki"
+            class="card_zombiaki"
+          />
+          <img
+            src="images/cards/blank.webp"
+            alt="card3"
+            id="card_3_zombiaki"
+            class="card_zombiaki"
+          />
+          <img
+            src="images/cards/blank.webp"
+            alt="card4"
+            id="card_4_zombiaki"
+            class="card_zombiaki"
+          />
           <div id="rewers_stack_zombiaki">
             <img
               src="images/cards/zombiaki/rewers.webp"
@@ -82,33 +106,53 @@
             <img src="images/przecznice/1.webp" alt="lvl1" />
           </div>
           <div id="tor_1">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div data-tor="1" data-przecznica="5" class="field"></div>
+            <div data-tor="1" data-przecznica="4" class="field"></div>
+            <div data-tor="1" data-przecznica="3" class="field"></div>
+            <div data-tor="1" data-przecznica="2" class="field"></div>
+            <div data-tor="1" data-przecznica="1" class="field"></div>
           </div>
           <div id="tor_2">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div data-tor="2" data-przecznica="5" class="field"></div>
+            <div data-tor="2" data-przecznica="4" class="field"></div>
+            <div data-tor="2" data-przecznica="3" class="field"></div>
+            <div data-tor="2" data-przecznica="2" class="field"></div>
+            <div data-tor="2" data-przecznica="1" class="field"></div>
           </div>
           <div id="tor_3">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div data-tor="3" data-przecznica="5" class="field"></div>
+            <div data-tor="3" data-przecznica="4" class="field"></div>
+            <div data-tor="3" data-przecznica="3" class="field"></div>
+            <div data-tor="3" data-przecznica="2" class="field"></div>
+            <div data-tor="3" data-przecznica="1" class="field"></div>
           </div>
         </div>
         <!-- TALIA LUDZIE -->
         <div id="deck_ludzie" class="deck">
-          <img src="" alt="card1" id="card_1_ludzie" class="card_ludzie" />
-          <img src="" alt="card2" id="card_2_ludzie" class="card_ludzie" />
-          <img src="" alt="card3" id="card_3_ludzie" class="card_ludzie" />
-          <img src="" alt="card4" id="card_4_ludzie" class="card_ludzie" />
+          <img
+            src="images/cards/ludzie/rewers.webp"
+            alt="card1"
+            id="card_1_ludzie"
+            class="card_ludzie"
+          />
+          <img
+            src="images/cards/ludzie/rewers.webp"
+            alt="card2"
+            id="card_2_ludzie"
+            class="card_ludzie"
+          />
+          <img
+            src="images/cards/ludzie/rewers.webp"
+            alt="card3"
+            id="card_3_ludzie"
+            class="card_ludzie"
+          />
+          <img
+            src="images/cards/ludzie/rewers.webp"
+            alt="card4"
+            id="card_4_ludzie"
+            class="card_ludzie"
+          />
           <div id="rewers_stack_ludzie">
             <img
               src="images/cards/ludzie/rewers.webp"

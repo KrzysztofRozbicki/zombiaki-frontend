@@ -11,6 +11,12 @@
   margin-top: 2rem;
 }
 
+.choose-race p {
+  color: var(--secondary-color);
+  font-size: 6rem;
+  cursor: pointer;
+}
+
 .choose-race img {
   max-height: 50vh;
   position: relative;
@@ -73,19 +79,13 @@
   opacity: 0.5;
 }
 
-/* PLANSZA */
-.board {
-  display: flex;
-}
+/* TALIE */
+
 .deck {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   height: 100%;
-}
-
-#levels img {
-  height: 18dvh;
 }
 
 .deck img {
@@ -96,7 +96,7 @@
 
 .deck img:hover,
 .deck img:focus {
-  filter: sepia(1.3) saturate(2);
+  filter: sepia(1.3) saturate(2) brightness(0.8);
   transform-origin: top;
   z-index: 4;
 }
@@ -145,26 +145,6 @@
   color: var(--secondary-color);
 }
 
-#streets {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-inline: 1rem;
-}
-
-#streets div {
-  display: flex;
-  gap: 0.5rem;
-}
-#tor_1 div,
-#tor_2 div,
-#tor_3 div {
-  height: 18dvh;
-  aspect-ratio: 0.66;
-  background-color: var(--primary-color);
-  border-radius: 0.75rem;
-}
-
 /* WYBRANA KARTA */
 
 #chosen_card,
@@ -211,12 +191,13 @@
 
 .card_buttons_box button {
   font-size: 2rem;
-  padding: 1.25rem;
+  padding: 1.75rem;
   border-radius: 1.5rem;
   background-color: var(--accent-color);
   color: var(--primary-color);
   cursor: pointer;
   border: 2px solid var(--primary-color);
+  width: 90%;
 }
 
 .card_buttons_box button:hover,
@@ -225,7 +206,8 @@
   color: var(--secondary-color);
   border: 2px solid var(--secondary-color);
 }
-#play_card {
+#play_card,
+#play_bear {
   background-color: var(--color-green);
 }
 
@@ -238,11 +220,12 @@
   color: var(--secondary-color) !important;
 }
 .card_blank {
-  cursor: auto !important;
+  cursor: no-drop !important;
+  filter: grayscale(1);
 }
 .card_blank:hover,
 .card_blank:focus {
-  filter: none !important;
+  filter: grayscale(1) !important;
 }
 
 /* ALERT */
@@ -256,4 +239,9 @@
   border-radius: 1rem;
   text-align: center;
   padding-block: 3rem;
+}
+
+.disable {
+  pointer-events: none;
+  filter: grayscale(1);
 }

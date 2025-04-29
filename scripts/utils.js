@@ -11,12 +11,11 @@ export function showAlert(text) {
     })
 };
 
-export function cardEvent() {
-    const chosen_card_picture = document.getElementById('chosen_card_picture');
-    chosen_card_picture.src = card.src;
-    active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
-    if (!active_card) {
-        return;
-    }
-    chosen_card.classList.remove('hidden');
+
+export function show(element) {
+    element.classList.remove('hidden');
+}
+
+export function hide(element) {
+    element.classList.add('hidden');
 }
