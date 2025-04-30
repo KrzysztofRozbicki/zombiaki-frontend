@@ -1,6 +1,6 @@
 import { raceFunctions } from "./allCards.js";
 import { gameOver } from "./index.js";
-import { addBear } from "./zombiaki/id_1.js";
+import { addOverlay } from "./zombiaki/utils.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
 const T2_P5 = document.querySelector('div[data-tor="2"][data-przecznica="5"]');
@@ -45,11 +45,26 @@ export function putZombiak(card) {
 }
 
 export function updateBoard(prev_turn) {
-    if (prev_turn === 'ludzie') moveZombiaki();
+    if (prev_turn === 'ludzie') {
+        moveZombiaki();
+
+        const overlay_elements = document.querySelectorAll('#overlay');
+        overlay_elements.forEach(element => {
+            if (!element.classList.contains('disable')) {
+                element.classList.add('disable');
+            }
+        });
+    }
+
     if (prev_turn === 'zombiaki') moveLudzie();
-    console.log(board);
 }
 
+export function resetUsableCards() {
+    const overlay_elements = document.querySelectorAll('#overlay');
+    overlay_elements.forEach(element => {
+        element.classList.remove('disable');
+    })
+}
 
 function moveZombiaki() {
     for (let i = board.length - 1; i >= 0; i--) {
@@ -66,23 +81,35 @@ function moveZombiaki() {
                 //funkcja sprawdzająca mur i sume zombiaków
                 //Czy mogą się ruszać
                 //zmiana zombiaka o 1 pole do przodu
-                const overlay = board[i][j].element.getAttribute('data-overlay');
 
                 unsetField(board[i][j]);
                 putPicture(board[i + 1][j], card);
-                if (overlay) {
-                    const card_overlay = board[i][j].card_overlay;
-                    board[i][j].card_overlay = null;
-                    if (overlay === 'MIŚ') addBear(card_overlay, board[i + 1][j]);
-                }
+
+                moveOverlay(board[i][j], board[i + 1][j]);
 
                 //sprawdzenie czy zombiak nie wszedł na minę / beczkę
+
+
             }
         }
     }
     move_available = true;
 }
 
+function moveOverlay(old_field, new_field) {
+    const overlay = old_field.element.getAttribute('data-overlay');
+    if (!overlay) return;
+
+    const card_overlay = old_field.card_overlay;
+    old_field.card_overlay = null;
+    const { id, race } = card_overlay;
+    const callback = `${race}_id_${id}_callback`;
+
+    if (overlay !== false) {
+        addOverlay(card_overlay, new_field, raceFunctions[callback]);
+    }
+
+}
 
 function moveLudzie() {
     console.log('ludzie idą do przodu');
@@ -127,7 +154,11 @@ function setField(field, card) {
 function putPicture(field, card) {
     const { id, name, race, type } = card;
     const { element } = field;
-    element.innerHTML = `<img src='images/cards/${race}/${id}.webp' alt='card'/>`;
+    const degrees = Math.floor(Math.random() * (5 - -5) + -5);
+    element.innerHTML = `<img src='images/cards/${race}/${id}.webp' style="transform: rotate(${degrees}deg)" alt='card'/>`;
+    if (card.hp) {
+        element.innerHTML += `<div data-max_hp="${card.max_hp}" data-current_hp="${card.hp}" style="transform: rotate(${degrees}deg)"/>`
+    }
     element.dataset.id = id;
     element.dataset.name = name;
     element.dataset.type = type;
@@ -135,7 +166,11 @@ function putPicture(field, card) {
 }
 
 function cardFunction(card) {
-    const { id, race } = card;
+    const { id, race, type, special } = card;
+    if (type === "zombiak" && !special) {
+        putZombiak(card);
+        return;
+    }
     const functionName = `${race}_id_${id}`;
     raceFunctions[functionName](card, active_field);
 }

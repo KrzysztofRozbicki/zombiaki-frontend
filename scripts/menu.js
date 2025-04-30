@@ -4,7 +4,7 @@ const board_element = document.getElementById('board');
 const menu_element = document.getElementById('menu');
 const choose_race = document.getElementById('choose-race');
 import { cards_ludzie, cards_zombiaki } from "./index.js";
-
+import { show, hide } from "./utils.js";
 export function initMenu(race) {
     intro.classList.add('hidden');
     choose_race.classList.add('hidden');
@@ -20,9 +20,10 @@ export function initMenu(race) {
 export function chooseRace(race) {
     const koniec_tury_ludzie = document.getElementById('rewers_stack_ludzie');
     const koniec_tury_zombiaki = document.getElementById('rewers_stack_zombiaki');
+
     if (race === 'ludzie') {
-        koniec_tury_zombiaki.classList.add('hidden');
-        koniec_tury_ludzie.classList.remove('hidden');
+        hide(koniec_tury_zombiaki);
+        show(koniec_tury_ludzie);
         cards_ludzie.forEach(card =>
             card.dataset.playable = true
         )
@@ -30,9 +31,10 @@ export function chooseRace(race) {
             card.dataset.playable = false
         )
     }
+
     if (race === 'zombiaki') {
-        koniec_tury_ludzie.classList.add('hidden');
-        koniec_tury_zombiaki.classList.remove('hidden');
+        hide(koniec_tury_ludzie);
+        show(koniec_tury_zombiaki);
         cards_zombiaki.forEach(card =>
             card.dataset.playable = true
         )

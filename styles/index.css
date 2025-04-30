@@ -4,17 +4,62 @@
   left: 1rem;
 }
 
+button {
+  background: transparent;
+}
+
 /* INTRO */
+
+#intro {
+  display: flex;
+  flex-direction: row;
+  width: 100dvw;
+  height: calc(100dvh - 4rem);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.left_background {
+  position: absolute;
+  transform: rotate(90deg) translateY(-200%);
+  width: calc(100dvh - 4rem);
+}
+
+.right_background {
+  position: absolute;
+  transform: rotate(-90deg) translateY(-200%);
+  width: calc(100dvh - 4rem);
+}
+
+#intro .cover_img {
+  height: calc(100dvh - 4rem);
+}
 .choose-race {
   display: flex;
   gap: 2rem;
   margin-top: 2rem;
 }
 
-.choose-race p {
+.choose-race p,
+#intro p {
   color: var(--secondary-color);
   font-size: 6rem;
   cursor: pointer;
+  -webkit-text-stroke: 6px var(--accent-color);
+}
+
+#intro p {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.choose-race p:hover,
+.choose-race p:focus,
+#intro p:hover,
+#intro p:focus {
+   color: var(--background-color);
 }
 
 .choose-race img {
@@ -40,6 +85,7 @@
   transform: translate(-50%, -50%);
   -webkit-text-stroke: 3px var(--background-color);
 }
+
 #choose-zombiaki p {
   color: var(--color-green);
 }
@@ -150,7 +196,7 @@
 #chosen_card,
 #alert {
   position: fixed;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px) sepia(1);
   width: 100dvw;
   height: 100dvh;
   top: 0;
@@ -160,9 +206,13 @@
   align-items: center;
   justify-content: center;
 }
+
 #chosen_card div,
 #alert div {
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .close_backdrop {
@@ -175,6 +225,7 @@
   top: -4rem;
   cursor: pointer;
 }
+
 .close_backdrop:hover,
 .close_backdrop:focus {
   color: var(--secondary-color);
@@ -193,22 +244,25 @@
   font-size: 2rem;
   padding: 1.75rem;
   border-radius: 1.5rem;
-  background-color: var(--accent-color);
   color: var(--primary-color);
   cursor: pointer;
-  border: 2px solid var(--primary-color);
   width: 90%;
+  border: none;
+  background-image: url('../images/red_button.webp');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
 }
 
 .card_buttons_box button:hover,
 .card_buttons_box button:focus {
   transform: scale(1.1);
   color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
 }
+
 #play_card,
-#play_bear {
-  background-color: var(--color-green);
+#play_overlay {
+ background-image: url('../images/green_button.webp');
 }
 
 .rewers:hover,

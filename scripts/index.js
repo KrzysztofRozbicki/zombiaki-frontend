@@ -2,7 +2,7 @@ import { cards_ludzie_json } from '../images/cards/ludzie.js';
 import { cards_zombiaki_json } from '../images/cards/zombiaki.js';
 import { initMenu, chooseRace } from './menu.js';
 import { showAlert } from './utils.js';
-import { placeCard, updateBoard } from './board.js';
+import { placeCard, updateBoard, resetUsableCards } from './board.js';
 import { show, hide } from './utils.js';
 
 // const choose_ludzie = document.getElementById('choose-ludzie');
@@ -33,15 +33,13 @@ export const throw_card = document.getElementById('throw_card');
 // choose_zombiaki.addEventListener('click', () => start('zombiaki'));
 start_button.addEventListener('click', () => start('zombiaki'));
 
-
-
 // GLOBAL VARIABLES
-export let turn = 'zombiaki';
-export let prev_turn = null;
+let turn = 'zombiaki';
+let prev_turn = null;
 
+let MIN_CARD_THROWN = 1;
+let bear_played = false;
 let player_cards = [];
-let MAX_CARD_THROWN = 1;
-let MAX_CARD_PLAYED = 3;
 let cards_thrown = 0;
 let cards_played = 0;
 let active_card = null;
@@ -154,7 +152,6 @@ function getCardsFromDeck(first_draw, deck) {
             if (turn === 'zombiaki') active_cards_zombiaki.push(card);
         }
     }
-    console.log(playable_cards);
 }
 export function gameOver(winner) {
     if (winner === 'ludzie') showAlert(`LUDZIE WYGRALI WSZYSTKIE ZOMBIAKI SĄ JESZCZE BARDZIEJ MARTWE`);
@@ -167,6 +164,10 @@ function drawCards(first_draw = false) {
 
     if (turn === 'ludzie') getCardsFromDeck(first_draw, cards_ludzie);
     if (turn === 'zombiaki') getCardsFromDeck(first_draw, cards_zombiaki);
+    if (first_draw) {
+        const ludzie_deck = document.getElementById('deck_ludzie');
+        ludzie_deck.classList.add('disable');
+    }
 
     setCards();
 }
@@ -181,6 +182,9 @@ function showCard(card) {
             return;
         }
         show(chosen_card);
+        close_card.addEventListener('click', () => {
+            hide(chosen_card);
+        }, { once: true });
     }
 }
 function setCards() {
@@ -192,10 +196,11 @@ function setCards() {
         card.handler = handler;
         card.addEventListener('click', handler);
     });
+}
 
-    close_card.addEventListener('click', () => {
-        hide(chosen_card);
-    });
+
+function closeCard() {
+
 }
 
 function unsetCards() {
@@ -207,21 +212,13 @@ function unsetCards() {
 
 function playCard() {
     play_card.addEventListener('click', () => {
-        if (cards_thrown === 0) {
+        if (cards_thrown < MIN_CARD_THROWN) {
             showAlert('NAJPIERW ODRZUĆ JEDNĄ KARTĘ');
             hide(chosen_card);
             return
         }
-
-        if (cards_played >= MAX_CARD_PLAYED) {
-            showAlert('NIE MOŻESZ ZAGRAĆ WIĘCEJ KART');
-            hide(chosen_card);
-            return
-        }
-
         cards_played++;
 
-        //ADD FUNCTION TO PLAY
         placeCard(active_card);
         removeCard();
     })
@@ -229,15 +226,16 @@ function playCard() {
 
 function throwCard() {
     throw_card.addEventListener('click', () => {
-        if (cards_thrown >= MAX_CARD_THROWN) {
-            showAlert('JUŻ ODRZUCIŁEŚ KARTY');
-            hide(chosen_card);
-            return;
+        if (turn === 'zombiaki') {
+            resetUsableCards();
         }
         cards_thrown++;
-        show(play_card);
-        hide(throw_card);
+        if (cards_thrown >= MIN_CARD_THROWN) {
+            show(play_card);
+            hide(throw_card);
+        }
         removeCard();
+
     })
 }
 
@@ -274,16 +272,16 @@ function handleNewTurn() {
 }
 
 function endTurn() {
-
-    if (cards_thrown === 0) {
+    if (cards_thrown < MIN_CARD_THROWN) {
         showAlert("MUSISZ ODRZUCIĆ KARTĘ");
         return;
     }
-
+    const ludzie_deck = document.getElementById('deck_ludzie');
+    ludzie_deck.classList.remove('disable');
+    MIN_CARD_THROWN = 1;
     cards_thrown = 0;
     cards_played = 0;
     active_card = null;
-
     switchTurn();
     unsetCards();
     drawCards();
@@ -291,8 +289,15 @@ function endTurn() {
 
 function switchTurn() {
     [prev_turn, turn] = [turn, prev_turn];
+    cards_thrown = 0;
     chooseRace(turn);
     updateBoard(prev_turn);
     hide(play_card);
     show(throw_card);
+    if (bear_played) MIN_CARD_THROWN = 2;
+    bear_played = false;
+}
+
+export function setBearPlayed(value) {
+    bear_played = value;
 }

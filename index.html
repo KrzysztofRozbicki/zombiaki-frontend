@@ -14,13 +14,15 @@
     <header></header>
     <main>
       <div id="intro">
-        <h1>Zombiaki</h1>
-        <h2>Ignacy Trzewiczek</h2>
+         <!-- <img class="left_background" src="images/art/1.webp"/> -->
+        <img class="cover_img" src="images/art/cover.webp" id="cover" alt="start_screen" />
+         <!-- <img class="right_background" src="images/art/2.webp"/> -->
+        <p id="start">START</p>
       </div>
 
       <!-- WYBÓR RASY -->
       <div class="choose-race" id="choose-race">
-        <p id="start">START</p>
+     
         <!-- <div id="choose-zombiaki">
           <img src="images/cards/zombiaki/rewers.webp" alt="zombiaki" />
           <p>Zombiaki</p>
@@ -46,11 +48,11 @@
         <div>
           <img src="" id="chosen_card_picture" alt="wybrana karta" />
           <button id="close_card" class="close_backdrop">X</button>
+          <div id="chosen_card_health"></div>
           <div class="card_buttons_box">
             <button id="play_card" class="hidden">ZAGRAJ</button>
             <button id="throw_card">ODRZUĆ</button>
-            <button id="play_bear" class="hidden">UŻYJ MISIA</button>
-            <button id="play_boss" class="hidden">UŻYJ BOSSA</button>
+            <button id="play_overlay" class="hidden"></button>
           </div>
         </div>
       </div>
@@ -125,6 +127,9 @@
             <div data-tor="3" data-przecznica="3" class="field"></div>
             <div data-tor="3" data-przecznica="2" class="field"></div>
             <div data-tor="3" data-przecznica="1" class="field"></div>
+          </div>
+          <div>
+            <button id="cancel">ANULUJ</button>
           </div>
         </div>
         <!-- TALIA LUDZIE -->

@@ -16,6 +16,7 @@
 }
 body {
   font-family: "Klathy", sans-serif;
+  overflow: hidden;
 }
 
 .hidden {
@@ -29,6 +30,7 @@ body {
 *:focus,
 *:after,
 *:before {
+  font-family: "Klathy", sans-serif;
   transition: all 0.5s ease-in-out;
 }
 

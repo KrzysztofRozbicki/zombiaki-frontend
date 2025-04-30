@@ -15,6 +15,7 @@
 #streets div {
   display: flex;
   gap: 0.5rem;
+  position: relative;
 }
 
 .field img {
@@ -67,13 +68,42 @@
   height: 80%;
   border-radius: 0.75rem;
   outline: 1px solid var(--secondary-color);
+  transform: rotate(-10deg);
+  z-index: 4;
 }
 
 .field .overlay:hover,
 .field .overlay:focus {
-  transform: scale(1.5);
+  transform: scale(1.5) !important;
   filter: sepia(1.3) saturate(2) brightness(0.8);
   z-index: 4;
+}
+
+.field .overlay:hover + div[data-overlay="true"] {
+  transform: scale(1.5) !important;
+  z-index: 4;
+  bottom: 10%;
+}
+
+#cancel {
+  width: 50%;
+  padding: 1rem;
+  position: absolute;
+  cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  color: var(--background-color);
+  background-image: url('../images/red_button.webp');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+#cancel:hover,
+#cancel:focus {
+  background-image: url('../images/yellow_button.webp');
 }
 
 @keyframes fieldAvailable {
@@ -92,4 +122,99 @@
   to {
     filter: hue-rotate(90deg) saturate(0.5);
   }
+}
+
+/* HIT POINTS STYLING */
+
+.field div {
+  z-index:4;
+}
+
+.field div[data-max_hp="3"] {
+  position: absolute;
+  bottom: 5%;
+  height: 10%;
+  width: 60%;
+}
+.field div:after,
+#chosen_card_health:after {
+  content: "";
+  font-size: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  line-height: 33%;
+  color: var(--secondary-color);
+  transform: rotate(-4deg);
+  transform-origin: top right;
+}
+
+.field div[data-max_hp="3"][data-current_hp="2"]:after {
+  content: "x";
+  width: 33%;
+}
+.field div[data-max_hp="3"][data-current_hp="1"]:after {
+  content: "xx";
+  width: 66%;
+}
+.field div[data-max_hp="3"][data-current_hp="0"]:after {
+  content: "xxx";
+  width: 100%;
+}
+
+.field div[data-max_hp="4"][data-overlay="true"] {
+  position: absolute;
+  bottom: 27%;
+  left: 0;
+  height: 10%;
+  width: 66%;
+}
+
+.field div[data-overlay="true"]:after {
+  font-size: 75%;
+}
+.field div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
+  content: "x";
+  width: 25%;
+}
+.field div[data-max_hp="4"][data-current_hp="2"][data-overlay="true"]:after {
+  content: "xx";
+  width: 50%;
+}
+.field div[data-max_hp="4"][data-current_hp="1"][data-overlay="true"]:after {
+  content: "xxx";
+  width: 75%;
+}
+.field div[data-max_hp="4"][data-current_hp="0"][data-overlay="true"]:after {
+  content: "xxxx";
+  width: 100%;
+}
+
+#chosen_card_health[data-max_hp="4"] {
+  position: absolute;
+  width: 80%;
+  height: 10%;
+  bottom: 17%;
+}
+#chosen_card_health:after {
+  font-size: 700%;
+}
+#chosen_card_health[data-max_hp="4"][data-current_hp="3"]:after {
+  content: "x";
+  width: 25%;
+}
+
+#chosen_card_health[data-max_hp="4"][data-current_hp="2"]:after {
+  content: "xx";
+  width: 50%;
+}
+#chosen_card_health[data-max_hp="4"][data-current_hp="1"]:after {
+  content: "xxx";
+  width: 75%;
+}
+#chosen_card_health[data-max_hp="4"][data-current_hp="0"]:after {
+  content: "xxxx";
+  width: 100%;
 }
