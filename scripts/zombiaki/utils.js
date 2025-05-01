@@ -49,13 +49,14 @@ export function addOverlay(card, field_board, callback) {
     const degrees = Math.floor(Math.random() * (10 - -10) + -10);
     element.innerHTML += `<img src='images/cards/${race}/${id}.webp' id="overlay" alt='card' class="overlay" style="transform: rotate(${degrees}deg)"/>`;
     element.innerHTML += `<div data-max_hp="${card.max_hp}" data-current_hp="${card.hp}" style="transform: rotate(${degrees}deg)" data-overlay="true"/>`;
-    element.dataset.overlay = 'UŻYJ MISIA';
+    element.dataset.overlay = card.overlay_text;
 
     const overlay = document.getElementById('overlay');
     const handler = showOverlay(field_board, field_board.card_overlay, callback);
     overlay.handler = handler;
     overlay.addEventListener('click', handler);
 }
+
 function showOverlay(field_board, card, callback) {
     return function () {
         console.log('show overlay');

@@ -14,9 +14,7 @@
     <header></header>
     <main>
       <div id="intro">
-         <!-- <img class="left_background" src="images/art/1.webp"/> -->
         <img class="cover_img" src="images/art/cover.webp" id="cover" alt="start_screen" />
-         <!-- <img class="right_background" src="images/art/2.webp"/> -->
         <p id="start">START</p>
       </div>
 
@@ -65,36 +63,30 @@
         <!-- TALIA ZOMBIAKI -->
         <div id="deck_zombiaki" class="deck">
           <img
-            src="images/cards/blank.webp"
+            src="images/cards/zombiaki/rewers.webp"
             alt="card1"
             id="card_1_zombiaki"
             class="card_zombiaki"
           />
           <img
-            src="images/cards/blank.webp"
+            src="images/cards/zombiaki/rewers.webp"
             alt="card2"
             id="card_2_zombiaki"
             class="card_zombiaki"
           />
           <img
-            src="images/cards/blank.webp"
+            src="images/cards/zombiaki/rewers.webp"
             alt="card3"
             id="card_3_zombiaki"
             class="card_zombiaki"
           />
           <img
-            src="images/cards/blank.webp"
+            src="images/cards/zombiaki/rewers.webp"
             alt="card4"
             id="card_4_zombiaki"
             class="card_zombiaki"
           />
-          <div id="rewers_stack_zombiaki">
-            <img
-              src="images/cards/zombiaki/rewers.webp"
-              alt="rewers"
-              class="rewers"
-              id="rewers_zombiaki"
-            />
+          <div id="rewers_stack_zombiaki" class="end_turn">
             <p>KONIEC TURY</p>
           </div>
         </div>
@@ -129,7 +121,7 @@
             <div data-tor="3" data-przecznica="1" class="field"></div>
           </div>
           <div>
-            <button id="cancel">ANULUJ</button>
+            <button id="cancel" class="hidden">ANULUJ</button>
           </div>
         </div>
         <!-- TALIA LUDZIE -->
@@ -158,21 +150,15 @@
             id="card_4_ludzie"
             class="card_ludzie"
           />
-          <div id="rewers_stack_ludzie">
-            <img
-              src="images/cards/ludzie/rewers.webp"
-              alt="rewers"
-              class="rewers"
-              id="rewers_ludzie"
-            />
-            <p id="koniec_tury">KONIEC TURY</p>
+          <div id="rewers_stack_ludzie" class="end_turn">
+            <p id="end_turn" >KONIEC TURY</p>
           </div>
         </div>
       </div>
     </main>
-    <footer>
+    <!-- <footer>
       <p>Wersja on-line: <a href="https://pogbit.com/">Pogbit.com</a></p>
-    </footer>
+    </footer> -->
 
     <script type="module" src="scripts/index.js" async></script>
   </body>

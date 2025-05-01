@@ -19,8 +19,34 @@ const T2_P1 = document.querySelector('div[data-tor="2"][data-przecznica="1"]');
 const T3_P1 = document.querySelector('div[data-tor="3"][data-przecznica="1"]');
 
 let active_field = null;
+let move_zombiaki = true;
 
-let move_available = true;
+const test_card = {
+    "id": 3,
+    "amount": 1,
+    "name": "WACEK",
+    "type": "zombiak",
+    "description": "Na początku twojej tury Zombiak przesuwa się o 1 pole do przodu.",
+    "flavor": "Taki sobie, na trzy plus.",
+    "hp": 3,
+    "max_hp": 3,
+    "race": "zombiaki"
+};
+
+const test_overlay_card = {
+    "id": 1,
+    "amount": 1,
+    "name": "MIŚ",
+    "type": "overlay",
+    "overlay_text": "ZAGRAJ MISIA",
+    "description": "Połóż Misia na wybranego Zombiaka (z wyjątkiem Psa i Kota). Miś porusza się razem z Zombiakiem. W twojej turze możesz zmniejszyć siłę Misia o 1, aby grający ludźmi odrzucił 2 karty, a nie 1 w najbliższej fazie Odrzucenia. Miś może być atakowany tak jak Zombiak. Grający ludźmi może atakować Zombiaka lub Misia - jeśli Miś otrzyma więcej ran niż ma aktualnie siły, to pozostałe rany otrzymuje Zombiak. Jeśli Zombiak zginie, to Miś ginie razem z nim.",
+    "flavor": "Misio chce zombiaczka.",
+    "hp": 4,
+    "max_hp": 4,
+    "special": true,
+    "race": "zombiaki"
+
+}
 
 export const board = [
     [{ element: T1_P5 }, { element: T2_P5 }, { element: T3_P5 }],
@@ -31,8 +57,15 @@ export const board = [
 ];
 
 
+export function testMode() {
+    const { id, race } = test_overlay_card
+    setField(board[1][1], test_card);
+    addOverlay(test_overlay_card, board[1][1], raceFunctions[`${race}_id_${id}_callback`])
+}
+
 export function placeCard(card) {
     cardFunction(card);
+
 }
 
 export function putZombiak(card) {
@@ -67,6 +100,10 @@ export function resetUsableCards() {
 }
 
 function moveZombiaki() {
+    if (!move_zombiaki) {
+        move_zombiaki = true;
+        return;
+    }
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
             const card = board[i][j].card;
@@ -77,28 +114,25 @@ function moveZombiaki() {
                     gameOver('zombiaki');
                     return;
                 }
-                //JEŚLI MUR TO NIE IDZIE DALEJ CHYBA ŻE SUMA WIĘCEJ
+
                 //funkcja sprawdzająca mur i sume zombiaków
-                //Czy mogą się ruszać
-                //zmiana zombiaka o 1 pole do przodu
-
-                unsetField(board[i][j]);
-                putPicture(board[i + 1][j], card);
-
-                moveOverlay(board[i][j], board[i + 1][j]);
 
                 //sprawdzenie czy zombiak nie wszedł na minę / beczkę
+
+                putPicture(board[i + 1][j], card);
+                moveOverlay(board[i][j], board[i + 1][j]);
+                unsetField(board[i][j]);
 
 
             }
         }
     }
-    move_available = true;
 }
 
 function moveOverlay(old_field, new_field) {
     const overlay = old_field.element.getAttribute('data-overlay');
-    if (!overlay) return;
+    console.log('move overlay: ', overlay);
+    if (overlay === "null") return;
 
     const card_overlay = old_field.card_overlay;
     old_field.card_overlay = null;
@@ -118,7 +152,7 @@ function moveLudzie() {
 function putCard(field, card) {
     const { element } = field;
     element.classList.add('field_available', `${card.race}`);
-    const handler = setField(field, card);
+    const handler = setFieldHandler(field, card);
     element.handler = handler;
     element.addEventListener('click', handler);
 }
@@ -134,20 +168,24 @@ function unsetField(board_field) {
 }
 
 function setField(field, card) {
-    return function () {
-        putPicture(field, card);
-        board.forEach(przecznica => {
-            przecznica.forEach(pole => {
-                const { element } = pole;
-                element.classList.remove(`${card.race}`, 'field_available');
-                if (element.handler) {
-                    element.removeEventListener('click', element.handler);
-                    element.handler = null;
-                }
-            })
+    putPicture(field, card);
+    board.forEach(przecznica => {
+        przecznica.forEach(pole => {
+            const { element } = pole;
+            element.classList.remove(`${card.race}`, 'field_available');
+            if (element.handler) {
+                element.removeEventListener('click', element.handler);
+                element.handler = null;
+            }
         })
-        const zombiaki_deck = document.getElementById('deck_zombiaki');
-        zombiaki_deck.classList.remove('disable');
+    })
+    const zombiaki_deck = document.getElementById('deck_zombiaki');
+    zombiaki_deck.classList.remove('disable');
+}
+
+function setFieldHandler(field, card) {
+    return function () {
+        setField(field, card);
     }
 }
 
@@ -173,4 +211,12 @@ function cardFunction(card) {
     }
     const functionName = `${race}_id_${id}`;
     raceFunctions[functionName](card, active_field);
+}
+
+export function setMoveZombiaki(value) {
+    move_zombiaki = value;
+}
+
+function cancelCard(card) {
+    //pokaż przycisk anulowania
 }

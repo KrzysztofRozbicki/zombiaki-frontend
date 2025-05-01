@@ -1,19 +1,26 @@
 .board {
   display: flex;
+  position: relative;
 }
-#levels img {
-  height: 18dvh !important;
+
+#levels img,
+.field {
+  height: 19dvh;
+  object-fit: contain;
 }
 
 #streets {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+    position: relative;
   gap: 0.5rem;
   margin-inline: 1rem;
+  padding-block: 0.5rem;
 }
 
 #streets div {
   display: flex;
+  flex-direction: column-reverse;
   gap: 0.5rem;
   position: relative;
 }
@@ -24,9 +31,8 @@
 }
 
 .field {
-  height: 18dvh;
   aspect-ratio: 0.66;
-  background-color: var(--primary-color);
+  background-color: var(--accent-color);
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
@@ -39,7 +45,7 @@
 
 .field:has(img) {
   cursor: pointer;
-  outline: 2px solid var(--primary-color);
+  background: none;
 }
 
 #streets .field_available {
@@ -52,9 +58,11 @@
 #streets .zombiaki:focus {
   background-color: var(--accent-color);
 }
+
 .field {
   position: relative;
 }
+
 .field.zombiak {
   filter: hue-rotate(90deg) saturate(0.5);
   animation: 0.7s infinite alternate ease-in-out cardAvailable;
@@ -101,6 +109,7 @@
   background-position: center center;
   background-size: contain;
 }
+
 #cancel:hover,
 #cancel:focus {
   background-image: url('../images/yellow_button.webp');
@@ -111,7 +120,7 @@
     background-color: var(--color-green);
   }
   to {
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
   }
 }
 
@@ -131,11 +140,12 @@
 }
 
 .field div[data-max_hp="3"] {
-  position: absolute;
+  position: absolute !important;
   bottom: 5%;
   height: 10%;
   width: 60%;
 }
+
 .field div:after,
 #chosen_card_health:after {
   content: "";
@@ -155,38 +165,44 @@
   content: "x";
   width: 33%;
 }
+
 .field div[data-max_hp="3"][data-current_hp="1"]:after {
   content: "xx";
   width: 66%;
 }
+
 .field div[data-max_hp="3"][data-current_hp="0"]:after {
   content: "xxx";
   width: 100%;
 }
 
 .field div[data-max_hp="4"][data-overlay="true"] {
-  position: absolute;
+  position: absolute !important;
   bottom: 27%;
   left: 0;
   height: 10%;
-  width: 66%;
+  width: 60%;
 }
 
 .field div[data-overlay="true"]:after {
   font-size: 75%;
 }
+
 .field div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
   content: "x";
   width: 25%;
 }
+
 .field div[data-max_hp="4"][data-current_hp="2"][data-overlay="true"]:after {
   content: "xx";
   width: 50%;
 }
+
 .field div[data-max_hp="4"][data-current_hp="1"][data-overlay="true"]:after {
   content: "xxx";
   width: 75%;
 }
+
 .field div[data-max_hp="4"][data-current_hp="0"][data-overlay="true"]:after {
   content: "xxxx";
   width: 100%;
@@ -198,9 +214,11 @@
   height: 10%;
   bottom: 17%;
 }
+
 #chosen_card_health:after {
   font-size: 700%;
 }
+
 #chosen_card_health[data-max_hp="4"][data-current_hp="3"]:after {
   content: "x";
   width: 25%;
@@ -210,10 +228,12 @@
   content: "xx";
   width: 50%;
 }
+
 #chosen_card_health[data-max_hp="4"][data-current_hp="1"]:after {
   content: "xxx";
   width: 75%;
 }
+
 #chosen_card_health[data-max_hp="4"][data-current_hp="0"]:after {
   content: "xxxx";
   width: 100%;

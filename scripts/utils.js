@@ -16,6 +16,14 @@ export function show(element) {
     element.classList.remove('hidden');
 }
 
+export function showAll(array) {
+    array.forEach(el => el.classList.remove('hidden'))
+}
+
 export function hide(element) {
     element.classList.add('hidden');
+}
+
+export function hideAll(array) {
+    array.forEach(el => el.classList.add('hidden'))
 }

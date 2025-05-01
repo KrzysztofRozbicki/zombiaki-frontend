@@ -17,6 +17,7 @@
 body {
   font-family: "Klathy", sans-serif;
   overflow: hidden;
+    user-select: none;
 }
 
 .hidden {
@@ -38,7 +39,6 @@ body {
   background: var(--background-color);
   color: var(--primary-color);
   position: relative;
-  padding-block: 1rem;
 }
 
 #intro,
@@ -56,6 +56,7 @@ h1 {
 
 footer {
   width: 100dvw;
+  height: 1rem;
   position: fixed;
   font-family: "Arial", "sans-serif";
   bottom: 0;
@@ -69,4 +70,19 @@ footer {
 footer a {
   text-decoration: none;
   color: var(--accent-color);
+  cursor: pointer;
+  display: inline-block;
+}
+
+footer:hover *,
+footer:focus *,
+footer a:hover,
+footer a:focus {
+  font-family: "Arial", "sans-serif";
+}
+
+footer a:hover,
+footer a:focus {
+  transform: scale(1.1);
+  transform-origin: center left;
 }
