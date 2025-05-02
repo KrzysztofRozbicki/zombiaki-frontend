@@ -68,17 +68,17 @@ body.background {
   width: 100%;
   height: 100%;
 }
-div[data-przecznica="1"]:has(img) > div,
-div[data-przecznica="2"]:has(img) > div {
+div[data-przecznica="1"]:has(img):hover > div,
+div[data-przecznica="2"]:has(img):hover > div {
   transform-origin: bottom center;
 }
 
-div[data-przecznica="3"]:has(img) > div {
+div[data-przecznica="3"]:has(img):hover > div {
   transform-origin: center center;
 }
 
-div[data-przecznica="4"]:has(img) > div,
-div[data-przecznica="5"]:has(img) > div {
+div[data-przecznica="4"]:has(img):hover > div,
+div[data-przecznica="5"]:has(img):hover > div {
   transform-origin: top center;
 }
 
@@ -158,6 +158,21 @@ div[data-przecznica="5"]:has(img) > div {
   background-image: url('../images/yellow_button.webp');
 }
 
+.death_animation {
+  cursor: url('../images/cursors/normal.ico'), auto;
+  animation: 2s alternate ease-in deathAnimation;
+}
+
+@keyframes deathAnimation {
+  from {
+    opacity: 1;
+    filter: blur(0) grayscale(0);
+  }
+   to {
+    opacity: 0;
+    filter: blur(50px) grayscale(1);
+   }
+}
 @keyframes fieldAvailable {
   from {
     background-color: var(--color-green-opacity);
@@ -270,7 +285,8 @@ div[data-przecznica="5"]:has(img) > div {
   position: absolute;
   width: 80%;
   height: 10%;
-  bottom: 17%;
+  bottom: 15%;
+  transform: rotate(-5deg); 
 }
 
 #chosen_card_health:after {

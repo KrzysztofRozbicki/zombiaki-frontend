@@ -9,6 +9,6 @@
 9. TEST MODE / ZROBIONE
 10. Anulowanie zagranie karty. / ZROBIONE
 11. Zagranie karty strzałów (obrażenie + cofnięcie) / ZROBIONE
-12. Zrobienie przebicia obrażeń od serii.
+12. Zrobienie przebicia obrażeń od serii. / ZROBIONE
 14. Zagranie KLIK jako reakcji.
 

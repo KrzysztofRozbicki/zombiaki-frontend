@@ -4,15 +4,12 @@ import { show, hide, enable, disable } from '../utils.js';
 import { board } from "../board.js";
 const play_overlay = document.getElementById('play_overlay');
 
-export function removeHealth(field_board, overlay = false) {
-    const { element } = field_board;
-    let new_hp = overlay ? --field_board.card_overlay.hp : --field_board.card.hp;
-    let hp_element = element.querySelector('div');
-    const card = overlay ? field_board.card_overlay : field_board.card;
-    if (overlay) hp_element = element.querySelector('div[data-overlay="true"]');
-    console.log(hp_element);
-    hp_element.dataset.current_hp = new_hp;
-    if (new_hp === 0) deleteCard(overlay);
+export function useOverlay(field_board) {
+    const { element, card_overlay } = field_board;
+    card_overlay.hp -= 1;
+    const hp_element = element.querySelector('div[data-overlay="true"]');
+    hp_element.dataset.current_hp = card_overlay.hp;
+    if (card_overlay.hp === 0) deleteOverlay(field_board);
 }
 
 export function putOverlay(card, callback) {
@@ -39,7 +36,6 @@ export function putOverlay(card, callback) {
 
 function overlayHandler(card, field, callback) {
     return function () {
-        console.log('adddd');
         addOverlay(card, field, callback);
     }
 }
@@ -130,15 +126,18 @@ function closeOverlay() {
     hide(play_overlay);
     hide(chosen_card);
     play_overlay.removeEventListener('click', play_overlay.handler)
+    const chosen_card_health = document.getElementById('chosen_card_health');
     play_overlay.handler = null;
-    chosen_card.dataset.max_hp = null;
-    chosen_card.dataset.current_hp = null;
+    chosen_card_health.dataset.max_hp = null;
+    chosen_card_health.dataset.current_hp = null;
 }
 
-function deleteCard(overlay) {
-    if (overlay) {
-        const overlay = document.getElementById('overlay');
-        overlay.remove();
-        hide(chosen_card);
-    }
+export function deleteOverlay(field_board) {
+    const { element } = field_board;
+    delete field_board.card_overlay;
+    const overlay_element = element.querySelector('#overlay');
+    overlay_element.remove();
+    hide(chosen_card);
+    console.log(board);
+    closeOverlay();
 }

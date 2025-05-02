@@ -12,7 +12,7 @@ export const cards_ludzie_json = [
     {
         "id": 2,
         "amount": 1,
-        "dmg": 2,
+        "dmg": 3,
         "piercing": true,
         "name": "KRÓTKA SERIA",
         "type": "shot",
@@ -186,10 +186,12 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "MUR Z RUPIECI",
         "type": "object",
+        "mur": true,
         "hp": 5,
         "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z Zombiakiem; przecznic znajdujących się za Zombiakiem; przecznicy V. Zombiak nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombiaków idących za nim wyniesie 5 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
         "flavor": "PAnopwie, objazd!",
         "board": true,
+        "walkable": true,
         "race": "ludzie"
     },
     {
@@ -273,10 +275,12 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "MUR",
         "type": "object",
+        "mur": true,
         "hp": 6,
         "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z Zombiakiem; przecznic znajdujących się za Zombiakiem; przecznicy V. Zombiak nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombiaków idących za nim wyniesie 6 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
         "flavor": "Bez spychacza- zapomnij.",
         "board": true,
+        "walkable": true,
         "race": "ludzie"
     },
     {
