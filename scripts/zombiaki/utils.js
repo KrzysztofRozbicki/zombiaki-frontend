@@ -1,6 +1,6 @@
 
-import { chosen_card, chosen_card_picture, close_card, play_card, throw_card } from "../index.js";
-import { show, hide } from '../utils.js';
+import { chosen_card, chosen_card_picture, close_card, play_card, throw_card, checkTurn, removeCard } from "../index.js";
+import { show, hide, enable, disable } from '../utils.js';
 import { board } from "../board.js";
 const play_overlay = document.getElementById('play_overlay');
 
@@ -10,13 +10,14 @@ export function removeHealth(field_board, overlay = false) {
     let hp_element = element.querySelector('div');
     const card = overlay ? field_board.card_overlay : field_board.card;
     if (overlay) hp_element = element.querySelector('div[data-overlay="true"]');
+    console.log(hp_element);
     hp_element.dataset.current_hp = new_hp;
     if (new_hp === 0) deleteCard(overlay);
 }
 
 export function putOverlay(card, callback) {
     const zombiaki_deck = document.getElementById('deck_zombiaki');
-    zombiaki_deck.classList.add('disable');
+    disable(zombiaki_deck);
     let no_zombiak = true;
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
@@ -27,39 +28,66 @@ export function putOverlay(card, callback) {
 
             if (type !== 'zombiak' && (name === 'KOT' || name === 'PIES')) continue;
             no_zombiak = false;
-            console.log(no_zombiak);
-            element.classList.add('zombiak');
-            element.addEventListener('click', () => {
-                addOverlay(card, board[i][j], callback);
-            }, { once: true });
+            element.classList.add('overlay_available');
+            const handler = overlayHandler(card, board[i][j], callback);
+            element.overlay_handler = handler;
+            element.addEventListener('click', handler, { once: true });
         }
-    }
-    if (no_zombiak) {
-        console.log('NIE MA ŻADNEGO ZOMBIAKA');
     }
 }
 
+
+function overlayHandler(card, field, callback) {
+    return function () {
+        console.log('adddd');
+        addOverlay(card, field, callback);
+    }
+}
 export function addOverlay(card, field_board, callback) {
     const zombiaki_deck = document.getElementById('deck_zombiaki');
-    zombiaki_deck.classList.remove('disable');
+    enable(zombiaki_deck);
     const { element } = field_board;
     field_board.card_overlay = card;
-    const { id, race } = card;
-    element.classList.remove('zombiak');
-    const degrees = Math.floor(Math.random() * (10 - -10) + -10);
-    element.innerHTML += `<img src='images/cards/${race}/${id}.webp' id="overlay" alt='card' class="overlay" style="transform: rotate(${degrees}deg)"/>`;
-    element.innerHTML += `<div data-max_hp="${card.max_hp}" data-current_hp="${card.hp}" style="transform: rotate(${degrees}deg)" data-overlay="true"/>`;
+    const { id, race, hp, max_hp } = card;
+    element.classList.remove('overlay_available');
+    const degrees = Math.floor(Math.random() * (15 - -15) + -15);
+
+
+    const divElement = document.createElement('div');
+    divElement.style = `transform: rotate(${degrees}deg)`;
+    divElement.setAttribute('id', 'overlay');
+    divElement.classList.add('overlay')
+
+    const imgElement = document.createElement('img');
+    imgElement.src = `images/cards/${race}/${id}.webp`;
+    divElement.appendChild(imgElement);
+
+    if (hp) {
+        const hpElement = document.createElement('div');
+        hpElement.dataset.max_hp = max_hp;
+        hpElement.dataset.current_hp = hp;
+        hpElement.dataset.card_id = id;
+        hpElement.dataset.overlay = true;
+        divElement.appendChild(hpElement);
+    };
+
+    element.appendChild(divElement);
+
     element.dataset.overlay = card.overlay_text;
 
-    const overlay = document.getElementById('overlay');
+    const cancel_button = document.getElementById('cancel');
+    hide(cancel_button);
+
+    const overlay = element.querySelector('#overlay');
     const handler = showOverlay(field_board, field_board.card_overlay, callback);
     overlay.handler = handler;
     overlay.addEventListener('click', handler);
+    removeCard();
 }
 
 function showOverlay(field_board, card, callback) {
     return function () {
-        console.log('show overlay');
+        if (checkTurn() === 'ludzie') return;
         const { element } = field_board;
         play_overlay.innerText = element.getAttribute('data-overlay');
         show(chosen_card);
@@ -98,7 +126,6 @@ function handlePlayOverplay(field_board, callback) {
 }
 
 function closeOverlay() {
-    console.log('close Overlay')
     show(play_card);
     hide(play_overlay);
     hide(chosen_card);

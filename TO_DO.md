@@ -7,6 +7,8 @@
 7. Zagranie nakładki na karte. / ZROBIONE
 8. Brak powtórzeń zagrań zombiaków - wywołanie tej samej funkcji do kart zombiaków. / ZROBIONE
 9. TEST MODE / ZROBIONE
-10. Anulowanie zagranie karty.
-11. Zagranie karty strzałów (obrażenie + cofnięcie + przebicie obrażeń)
-12. Zagrywanie kolejnych kart zombiaków.
+10. Anulowanie zagranie karty. / ZROBIONE
+11. Zagranie karty strzałów (obrażenie + cofnięcie) / ZROBIONE
+12. Zrobienie przebicia obrażeń od serii.
+14. Zagranie KLIK jako reakcji.
+

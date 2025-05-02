@@ -1,8 +1,9 @@
-import { cards_ludzie_json, cards_zombiaki_json } from './allCards.js';
+import { cards_ludzie_json } from './ludzie/cards.js';
+import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace } from './menu.js';
 import { showAlert } from './utils.js';
 import { placeCard, updateBoard, resetUsableCards, testMode } from './board.js';
-import { show, hide } from './utils.js';
+import { show, hide, enable, disable } from './utils.js';
 
 // const choose_ludzie = document.getElementById('choose-ludzie');
 // const choose_zombiaki = document.getElementById('choose-zombiaki');
@@ -27,11 +28,13 @@ export const chosen_card_picture = document.getElementById('chosen_card_picture'
 export const close_card = document.getElementById('close_card');
 export const play_card = document.getElementById('play_card');
 export const throw_card = document.getElementById('throw_card');
+const cancel_button = document.getElementById('cancel');
 
 export const deck_json_ludzie = cards_ludzie_json;
 export const deck_json_zombiaki = cards_zombiaki_json;
 
-const TEST_MODE = false;
+export const TEST_MODE = false;
+
 // choose_ludzie.addEventListener('click', () => start('ludzie'));
 // choose_zombiaki.addEventListener('click', () => start('zombiaki'));
 start_button.addEventListener('click', () => start('zombiaki'));
@@ -53,18 +56,20 @@ let active_cards_zombiaki = [];
 let playable_cards = [];
 let game_over = false;
 
+
+
 function start(race_chosen) {
     turn = race_chosen;
     prev_turn = 'ludzie';
     if (TEST_MODE) startTest('ludzie');
     startDeck();
 
-
     // Obsługa tur
     handleNewTurn();
 }
 
 function startDeck() {
+    showBackground()
     createDeck()
     //shuffle();
     initMenu(turn);
@@ -73,6 +78,10 @@ function startDeck() {
     throwCard();
 }
 
+
+function showBackground() {
+    document.body.classList.add('background');
+}
 function startTest(race) {
     testMode();
     turn = race;
@@ -82,7 +91,6 @@ function startTest(race) {
 function createDeck() {
     deck_zombiaki = [];
     deck_ludzie = [];
-
 
     for (let i = 0; i < deck_json_ludzie.length; i++) {
         const { id, amount } = deck_json_ludzie[i];
@@ -174,14 +182,8 @@ function drawCards(first_draw = false) {
     if (turn === 'ludzie') getCardsFromDeck(first_draw, cards_ludzie);
     if (turn === 'zombiaki') getCardsFromDeck(first_draw, cards_zombiaki);
     if (first_draw) {
-        if (turn === 'ludzie') {
-            const zombie_deck = document.getElementById('deck_zombiaki');
-            zombie_deck.classList.add('disable');
-        }
-        if (turn === 'zombiaki') {
-            const ludzie_deck = document.getElementById('deck_ludzie');
-            ludzie_deck.classList.add('disable');
-        }
+        const deck = document.getElementById(`deck_${prev_turn}`);
+        disable(deck);
     }
 
     setCards();
@@ -230,7 +232,11 @@ function playCard() {
         cards_played++;
 
         placeCard(active_card);
-        removeCard();
+        if (!active_card.board) {
+            removeCard();
+            return;
+        }
+        hide(chosen_card);
     })
 }
 
@@ -249,18 +255,22 @@ function throwCard() {
     })
 }
 
-function removeCard() {
+export function removeCard() {
+    if (!active_card) return;
     const id = active_card.id;
     indexRemove(playable_cards);
     if (turn === 'ludzie') indexRemove(active_cards_ludzie);
     if (turn === 'zombiaki') indexRemove(active_cards_zombiaki);
     const card_to_remove = document.querySelector(`img[data-id="${id}"][data-playable="true"]`);
-    card_to_remove.src = `images/cards/${turn}/rewers.webp`;
-    card_to_remove.classList.add('card_blank');
-    card_to_remove.dataset.id = 'blank';
-    card_to_remove.dataset.name = 'blank';
-    card_to_remove.removeEventListener('click', card_to_remove.handler);
+    if (card_to_remove) {
+        card_to_remove.src = `images/cards/${turn}/rewers.webp`;
+        card_to_remove.classList.add('card_blank');
+        card_to_remove.dataset.id = 'blank';
+        card_to_remove.dataset.name = 'blank';
+        card_to_remove.removeEventListener('click', card_to_remove.handler);
+    }
     hide(chosen_card);
+    hide(cancel_button);
 }
 
 function indexRemove(array) {
@@ -286,8 +296,7 @@ function endTurn() {
         showAlert("MUSISZ ODRZUCIĆ KARTĘ");
         return;
     }
-    const ludzie_deck = document.getElementById('deck_ludzie');
-    ludzie_deck.classList.remove('disable');
+
     MIN_CARD_THROWN = 1;
     cards_thrown = 0;
     cards_played = 0;
@@ -298,21 +307,42 @@ function endTurn() {
 }
 
 function switchTurn() {
+    let deck = document.getElementById(`deck_${turn}`);
+    disable(deck);
     [prev_turn, turn] = [turn, prev_turn];
     cards_thrown = 0;
     chooseRace(turn);
     updateBoard(prev_turn);
     hide(play_card);
     show(throw_card);
+    deck = document.getElementById(`deck_${turn}`);
+    enable(deck)
     if (bear_played) MIN_CARD_THROWN = 2;
     bear_played = false;
+
 }
 
 export function setBearPlayed(value) {
     bear_played = value;
 }
 
+export function setActiveCard(card) {
+    active_card = card;
+}
+
+export function checkTurn() {
+    return turn;
+}
+
 document.addEventListener('dblclick', function (e) {
     e.preventDefault();
     return false;
 }, false);
+
+document.addEventListener('mousedown', () => {
+    document.body.classList.add('clicking');
+});
+
+document.addEventListener('mouseup', () => {
+    document.body.classList.remove('clicking');
+});

@@ -20,6 +20,13 @@ export function initMenu(race) {
 export function chooseRace(race) {
     const end_turn_ludzie = document.getElementById('rewers_stack_ludzie');
     const end_turn_zombiaki = document.getElementById('rewers_stack_zombiaki');
+    const stack_ludzie = end_turn_ludzie.querySelectorAll('.stack');
+    const stack_zombiaki = end_turn_zombiaki.querySelectorAll('.stack');
+    const whole_stack = [...stack_ludzie, ...stack_zombiaki];
+    for (let i = 0; i < whole_stack.length; i++) {
+        const degrees = Math.floor(Math.random() * (10 - -10) + -10);
+        whole_stack[i].style = `transform:rotate(${degrees}deg);`
+    }
 
     if (race === 'ludzie') {
         hide(end_turn_zombiaki);

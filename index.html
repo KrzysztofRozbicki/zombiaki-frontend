@@ -41,6 +41,8 @@
         </div>
       </div>
 
+      <!-- ANULUJ KARTĘ -->
+
       <!-- WYBRANA KARTA -->
       <div id="chosen_card" class="hidden">
         <div>
@@ -87,6 +89,10 @@
             class="card_zombiaki"
           />
           <div id="rewers_stack_zombiaki" class="end_turn">
+            <img src="images/cards/zombiaki/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/zombiaki/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/zombiaki/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/zombiaki/rewers_rotated.webp" class="stack"/>
             <p>KONIEC TURY</p>
           </div>
         </div>
@@ -120,9 +126,6 @@
             <div data-tor="3" data-przecznica="2" class="field"></div>
             <div data-tor="3" data-przecznica="1" class="field"></div>
           </div>
-          <div>
-            <button id="cancel" class="hidden">ANULUJ</button>
-          </div>
         </div>
         <!-- TALIA LUDZIE -->
         <div id="deck_ludzie" class="deck">
@@ -151,9 +154,14 @@
             class="card_ludzie"
           />
           <div id="rewers_stack_ludzie" class="end_turn">
+            <img src="images/cards/ludzie/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/ludzie/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/ludzie/rewers_rotated.webp" class="stack"/>
+            <img src="images/cards/ludzie/rewers_rotated.webp" class="stack"/>
             <p id="end_turn" >KONIEC TURY</p>
           </div>
         </div>
+        <button id="cancel" class="hidden" >ANULUJ</button>
       </div>
     </main>
     <!-- <footer>

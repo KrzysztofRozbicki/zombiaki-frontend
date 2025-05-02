@@ -1,6 +1,13 @@
 .board {
   display: flex;
   position: relative;
+
+}
+
+body.background {
+  background-image: url('../images/board_6.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #levels img,
@@ -18,13 +25,15 @@
   padding-block: 0.5rem;
 }
 
-#streets div {
+#streets > div {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 0.5rem;
   position: relative;
 }
-
+#levels {
+  flex-direction: column-reverse !important;
+}
 .field img {
   width: 100%;
   height: 100%;
@@ -32,7 +41,7 @@
 
 .field {
   aspect-ratio: 0.66;
-  background-color: var(--accent-color);
+  background-color: var(--accent-color-opacity);
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
@@ -40,18 +49,50 @@
   color: var(--accent-color);
   font-size: 2rem;
   font-family: "Arial", sans-serif;
-  cursor: not-allowed;
 }
 
 .field:has(img) {
-  cursor: pointer;
+   cursor: url('../images/cursors/hover.ico'), auto;
   background: none;
+}
+
+
+.field_image:hover,
+.overlay:hover {
+  position: absolute;
+  top: 0;
+  transform: scale(4) !important;
+  z-index: 5;
+}
+.overlay:hover {
+  width: 100%;
+  height: 100%;
+}
+div[data-przecznica="1"]:has(img) > div,
+div[data-przecznica="2"]:has(img) > div {
+  transform-origin: bottom center;
+}
+
+div[data-przecznica="3"]:has(img) > div {
+  transform-origin: center center;
+}
+
+div[data-przecznica="4"]:has(img) > div,
+div[data-przecznica="5"]:has(img) > div {
+  transform-origin: top center;
 }
 
 #streets .field_available {
   background-color: var(--color-green);
-  cursor: cell;
+  cursor: url('../images/cursors/add.ico'), auto;
   animation: 0.7s infinite alternate ease-in-out fieldAvailable;
+}
+
+.shot_available > div {
+  cursor: url('../images/crosshair.ico'), crosshair;
+  animation: 0.7s infinite alternate ease-in-out shotAvailable;
+  background-color: var(--accent-color-opacity);
+  border-radius: 1rem;
 }
 
 #streets .zombiaki:hover,
@@ -63,43 +104,35 @@
   position: relative;
 }
 
-.field.zombiak {
+.field.overlay_available {
   filter: hue-rotate(90deg) saturate(0.5);
   animation: 0.7s infinite alternate ease-in-out cardAvailable;
 }
 
-.field .overlay {
+.overlay {
   position: absolute;
   top: -0.5rem;
   left: -0.5rem;
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 70%;
   border-radius: 0.75rem;
-  outline: 1px solid var(--secondary-color);
   transform: rotate(-10deg);
   z-index: 4;
 }
 
-.field .overlay:hover,
-.field .overlay:focus {
-  transform: scale(1.5) !important;
-  filter: sepia(1.3) saturate(2) brightness(0.8);
-  z-index: 4;
+.field.shot_available > div:hover,
+.field.shot_available > div:focus {
+  filter: none;
 }
 
-.field .overlay:hover + div[data-overlay="true"] {
-  transform: scale(1.5) !important;
-  z-index: 4;
-  bottom: 10%;
-}
+
 
 #cancel {
-  width: 50%;
+  width: 27%;
+  aspect-ratio: 2.8;
   padding: 1rem;
   position: absolute;
-  cursor: pointer;
-  left: 50%;
-  transform: translateX(-50%);
+   cursor: url('../images/cursors/hover.ico'), auto;
   font-size: 1.5rem;
   border: none;
   outline: none;
@@ -108,6 +141,16 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
+  z-index: 4;
+  bottom: 2rem;
+}
+
+#cancel.zombiaki_active {
+    right: 0;
+}
+
+#cancel.ludzie_active {
+  left: 0;
 }
 
 #cancel:hover,
@@ -117,10 +160,19 @@
 
 @keyframes fieldAvailable {
   from {
-    background-color: var(--color-green);
+    background-color: var(--color-green-opacity);
   }
   to {
-    background-color: var(--accent-color);
+    background-color: var(--accent-color-opacity);
+  }
+}
+
+@keyframes shotAvailable {
+  from {
+    outline: 1px solid var(--accent-color);
+  }
+    to {
+    outline: 25px solid var(--accent-color-opacity);
   }
 }
 
@@ -139,11 +191,19 @@
   z-index:4;
 }
 
-.field div[data-max_hp="3"] {
+.field div[data-max_hp="3"],
+.field div[data-max_hp="4"][data-overlay="true"] {
   position: absolute !important;
   bottom: 5%;
   height: 10%;
   width: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.field div[data-max_hp="4"][data-overlay="true"] {
+  bottom: 3%;
+  width: 80%;
 }
 
 .field div:after,
@@ -156,8 +216,8 @@
   right: 0;
   text-align: center;
   line-height: 33%;
-  color: var(--secondary-color);
-  transform: rotate(-4deg);
+  color: var(--accent-color);
+  -webkit-text-stroke: 2px var(--background-color);
   transform-origin: top right;
 }
 
@@ -176,17 +236,15 @@
   width: 100%;
 }
 
-.field div[data-max_hp="4"][data-overlay="true"] {
-  position: absolute !important;
-  bottom: 27%;
-  left: 0;
-  height: 10%;
-  width: 60%;
-}
+
 
 .field div[data-overlay="true"]:after {
-  font-size: 75%;
+  font-size: 80%;
 }
+.field .overlay:hover div[data-overlay="true"]:after {
+  font-size: 100%;
+}
+
 
 .field div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
   content: "x";

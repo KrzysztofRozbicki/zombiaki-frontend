@@ -24,6 +24,14 @@ export function hide(element) {
     element.classList.add('hidden');
 }
 
+export function enable(element) {
+    element.classList.remove('disable');
+}
+
+export function disable(element) {
+    element.classList.add('disable');
+}
+
 export function hideAll(array) {
     array.forEach(el => el.classList.add('hidden'))
 }
