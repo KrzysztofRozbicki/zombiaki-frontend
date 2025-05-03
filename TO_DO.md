@@ -10,5 +10,6 @@
 10. Anulowanie zagranie karty. / ZROBIONE
 11. Zagranie karty strzałów (obrażenie + cofnięcie) / ZROBIONE
 12. Zrobienie przebicia obrażeń od serii. / ZROBIONE
+13. Zrobienie akcji 220V / ZROBIONE
 14. Zagranie KLIK jako reakcji.
 

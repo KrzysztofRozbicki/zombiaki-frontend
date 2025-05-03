@@ -12,8 +12,9 @@ body.background {
 
 #levels img,
 .field {
-  height: 19dvh;
+  height: 16dvh;
   object-fit: contain;
+  aspect-ratio: 0.66;
 }
 
 #streets {
@@ -22,7 +23,7 @@ body.background {
     position: relative;
   gap: 0.5rem;
   margin-inline: 1rem;
-  padding-block: 0.5rem;
+  padding-block: 5rem;
 }
 
 #streets > div {
@@ -33,6 +34,7 @@ body.background {
 }
 #levels {
   flex-direction: column-reverse !important;
+  justify-content: start;
 }
 .field img {
   width: 100%;
@@ -163,6 +165,61 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 2s alternate ease-in deathAnimation;
 }
 
+.tor_arrow {
+  position: absolute;
+  z-index: 4;
+  height: 8vh;
+  width: 100%;
+  top: -2.5rem;
+  background-image: url('../images/art/electricity.webp');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+   animation: 1s alternate infinite ease-in torArrow;
+}
+
+.tor_arrow:hover,
+.tor_arrow:focus {
+  transform: scale(1.5);
+}
+
+#streets > div:has(.tor_arrow:hover) .field {
+  animation: 1s alternate infinite ease-in shock;
+}
+
+#streets > div:has(.tor_arrow:hover) div[data-type="zombiak"] .field_image {
+  animation: 1s alternate infinite ease-in shockElement;
+}
+
+@keyframes shockElement {
+  from {
+    filter: none;
+    box-shadow: none;
+  }
+  to {
+    filter: hue-rotate(-115deg);
+    box-shadow: 0px 0px 20px 20px var(--color-blue-opacity);
+  }
+}
+
+@keyframes shock {
+  from {
+    background-color: var(--accent-color-opacity);
+  }
+  to {
+    background-color: var(--color-blue-opacity);
+  }
+}
+
+@keyframes torArrow {
+  from {
+    filter: none;
+  }
+  to {
+    filter: hue-rotate(115deg);
+  }
+}
+
 @keyframes deathAnimation {
   from {
     opacity: 1;
@@ -217,7 +274,6 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 
 .field div[data-max_hp="4"][data-overlay="true"] {
-  bottom: 3%;
   width: 80%;
 }
 
@@ -233,6 +289,7 @@ div[data-przecznica="5"]:has(img):hover > div {
   line-height: 33%;
   color: var(--accent-color);
   -webkit-text-stroke: 2px var(--background-color);
+  transform: rotate(-3deg);
   transform-origin: top right;
 }
 

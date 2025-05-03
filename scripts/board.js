@@ -247,7 +247,6 @@ function cancelCard(card) {
     const cancel_button = document.getElementById('cancel');
     show(cancel_button);
     cancel_button.classList.add(`${race}_active`);
-
     const handler = handleCancelCard(card);
     cancel_button.handler = handler;
     cancel_button.addEventListener('click', handler, { once: true });
@@ -275,5 +274,13 @@ function handleCancelCard(card) {
                 })
             }
         }
+        const all_fields = document.querySelectorAll('.field');
+        all_fields.forEach(field => enable(field));
+        const tor_elements = document.querySelectorAll('.tor_arrow');
+        tor_elements.forEach(el => {
+            hide(el);;
+            el.removeEventListener('click', el.handler);
+            el.handler = null;
+        });
     }
 }

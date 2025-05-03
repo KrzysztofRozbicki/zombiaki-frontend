@@ -2,7 +2,7 @@ import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace } from './menu.js';
 import { showAlert } from './utils.js';
-import { placeCard, updateBoard, resetUsableCards } from './board.js';
+import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
 import { testMode } from './test.js';
 
@@ -270,6 +270,8 @@ export function removeCard() {
         card_to_remove.dataset.name = 'blank';
         card_to_remove.removeEventListener('click', card_to_remove.handler);
     }
+    const all_fields = document.querySelectorAll('.field');
+    all_fields.forEach(field => enable(field));
     hide(chosen_card);
     hide(cancel_button);
 }

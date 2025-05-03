@@ -22,7 +22,7 @@ const second_test_card = {
     "type": "zombiak",
     "description": "Na początku twojej tury Zombiak przesuwa się o 1 pole do przodu.",
     "flavor": "Taki sobie, na trzy plus.",
-    "hp": 1,
+    "hp": 2,
     "max_hp": 3,
     "race": "zombiaki"
 }
@@ -56,7 +56,7 @@ const test_overlay_card = {
 }
 
 const TEST_FIELD = board[2][0];
-const SECOND_TEST_FIELD = board[1][0];
+const SECOND_TEST_FIELD = board[1][1];
 const THIRD_TEST_FIELD = board[3][0];
 
 

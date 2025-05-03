@@ -1,6 +1,7 @@
 import { board, unsetField, moveSingleZombiak } from "../board.js";
 import { removeCard } from "../index.js";
 import { deleteOverlay } from "../zombiaki/utils.js";
+import { disable } from "../utils.js";
 
 export function shot(card) {
     const { dmg, piercing } = card;
@@ -10,6 +11,9 @@ export function shot(card) {
             const { element, card } = board[i][j];
             if (!card) continue;
             if (card.mur) {
+                for (let k = i - 1; k >= 0; k--) {
+                    disable(board[k][j].element);
+                }
                 j++;
                 i = board.length - 1;
                 continue;
@@ -111,6 +115,11 @@ function killZombiak(field) {
 }
 
 
-function addDamage(dmg, field) {
-
+export function damageZombiak(dmg, field) {
+    const { element, card } = field;
+    card.hp -= 1;
+    if (card.hp <= 0) killZombiak(field);
+    const zombiak_element = element.querySelector('.field_image > div');
+    console.log(zombiak_element);
+    zombiak_element.dataset.current_hp = card.hp;
 }
