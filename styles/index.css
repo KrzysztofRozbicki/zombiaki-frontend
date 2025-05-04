@@ -131,7 +131,6 @@ button {
 .deck img:hover,
 .deck img:focus {
   filter: sepia(1.3) saturate(2) brightness(0.8);
-  transform-origin: top;
   z-index: 4;
 }
 
@@ -140,9 +139,10 @@ button {
   max-width: 100%; 
   height: 100%; 
   border-radius: 1rem;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(4px 4px 4px 4px rgba(0, 0, 0, 0.5));
   position: absolute;
   z-index: 2;
+  object-fit: contain
 }
 
 .deck .stack:hover,
@@ -165,12 +165,13 @@ button {
 .end_turn {
   grid-column: span 2;
   width: 100%;
-  height: 25dvh;
+  max-height: 25dvh;
   position: relative;
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center center;
   z-index: 1;
+  aspect-ratio: 1.3;
 }
 
 #rewers_stack_zombiaki:hover:before,
@@ -308,7 +309,8 @@ button {
 }
 
 #play_card,
-#play_overlay {
+#play_overlay,
+#play_other {
  background-image: url('../images/green_button.webp');
 }
 

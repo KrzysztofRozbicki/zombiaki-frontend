@@ -11,5 +11,8 @@
 11. Zagranie karty strzałów (obrażenie + cofnięcie) / ZROBIONE
 12. Zrobienie przebicia obrażeń od serii. / ZROBIONE
 13. Zrobienie akcji 220V / ZROBIONE
-14. Zagranie KLIK jako reakcji.
+14. Zagranie KLIK jako reakcji. / ZROBIONE
+15. Zrobienie systemu testowego w którym ręcznie wpisuje pierwsze 4 karty i ustawia plansze / ZROBIONE
+16. Zrobienie wszystkich strzałów ludzi (lepszy strzał, długa seria, snajper = SNAJPER IGNORUJE MUR).
+17. Przetestowanie KLIK na wszystkie strzały.
 

@@ -1,6 +1,6 @@
 
-import { chosen_card, chosen_card_picture, close_card, play_card, throw_card, checkTurn, removeCard } from "../index.js";
-import { show, hide, enable, disable } from '../utils.js';
+import { chosen_card, chosen_card_picture, close_card, play_card, throw_card, getTurn, removeCard } from "../index.js";
+import { show, hide, enable, disable, randomRotate } from '../utils.js';
 import { board } from "../board.js";
 const play_overlay = document.getElementById('play_overlay');
 
@@ -46,17 +46,15 @@ export function addOverlay(card, field_board, callback) {
     field_board.card_overlay = card;
     const { id, race, hp, max_hp } = card;
     element.classList.remove('overlay_available');
-    const degrees = Math.floor(Math.random() * (15 - -15) + -15);
 
-
-    const divElement = document.createElement('div');
-    divElement.style = `transform: rotate(${degrees}deg)`;
-    divElement.setAttribute('id', 'overlay');
-    divElement.classList.add('overlay')
+    const overlayElement = document.createElement('div');
+    randomRotate(15, overlayElement);
+    overlayElement.setAttribute('id', 'overlay');
+    overlayElement.classList.add('overlay')
 
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;
-    divElement.appendChild(imgElement);
+    overlayElement.appendChild(imgElement);
 
     if (hp) {
         const hpElement = document.createElement('div');
@@ -64,10 +62,10 @@ export function addOverlay(card, field_board, callback) {
         hpElement.dataset.current_hp = hp;
         hpElement.dataset.card_id = id;
         hpElement.dataset.overlay = true;
-        divElement.appendChild(hpElement);
+        overlayElement.appendChild(hpElement);
     };
 
-    element.appendChild(divElement);
+    element.appendChild(overlayElement);
 
     element.dataset.overlay = card.overlay_text;
 
@@ -83,7 +81,7 @@ export function addOverlay(card, field_board, callback) {
 
 function showOverlay(field_board, card, callback) {
     return function () {
-        if (checkTurn() === 'ludzie') return;
+        if (getTurn() === 'ludzie') return;
         const { element } = field_board;
         play_overlay.innerText = element.getAttribute('data-overlay');
         show(chosen_card);
@@ -138,6 +136,5 @@ export function deleteOverlay(field_board) {
     const overlay_element = element.querySelector('#overlay');
     overlay_element.remove();
     hide(chosen_card);
-    console.log(board);
     closeOverlay();
 }

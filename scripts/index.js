@@ -1,10 +1,10 @@
 import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace } from './menu.js';
-import { showAlert } from './utils.js';
+import { randomRotate, showAlert } from './utils.js';
 import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
-import { testMode } from './test.js';
+import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki } from './test.js';
 
 // const choose_ludzie = document.getElementById('choose-ludzie');
 // const choose_zombiaki = document.getElementById('choose-zombiaki');
@@ -30,11 +30,12 @@ export const close_card = document.getElementById('close_card');
 export const play_card = document.getElementById('play_card');
 export const throw_card = document.getElementById('throw_card');
 const cancel_button = document.getElementById('cancel');
+const reset_button = document.getElementById('reset');
 
 export const deck_json_ludzie = cards_ludzie_json;
 export const deck_json_zombiaki = cards_zombiaki_json;
 
-export const TEST_MODE = true;
+export const TEST_MODE = false;
 
 // choose_ludzie.addEventListener('click', () => start('ludzie'));
 // choose_zombiaki.addEventListener('click', () => start('zombiaki'));
@@ -77,6 +78,7 @@ function startDeck() {
     drawCards(true);
     playCard();
     throwCard();
+
 }
 
 
@@ -93,22 +95,31 @@ function createDeck() {
     deck_zombiaki = [];
     deck_ludzie = [];
 
-    for (let i = 0; i < deck_json_ludzie.length; i++) {
-        const { id, amount } = deck_json_ludzie[i];
-        const image_src = `images/cards/ludzie/${id}.webp`;
-        const card = { ...deck_json_ludzie[i], image_src };
-        for (let j = 0; j < amount; j++) {
-            deck_ludzie.push(card);
+
+    function processDeck(source_deck, target_deck, race) {
+        for (let i = 0; i < source_deck.length; i++) {
+            const { id, amount } = source_deck[i];
+            const image_src = `images/cards/${race}/${id}.webp`;
+            const card = { ...source_deck[i], image_src };
+            if (TEST_MODE) {
+                target_deck.push(card);
+                continue;
+            }
+            for (let j = 0; j < amount; j++) {
+                target_deck.push(card);
+            }
         }
     }
-    for (let i = 0; i < deck_json_zombiaki.length; i++) {
-        const { id, amount } = deck_json_zombiaki[i];
-        const image_src = `images/cards/zombiaki/${id}.webp`;
-        const card = { ...deck_json_zombiaki[i], image_src };
-        for (let j = 0; j < amount; j++) {
-            deck_zombiaki.push(card);
-        }
+
+    if (TEST_MODE) {
+        const test_deck_zombiaki = get_test_deck_zombiaki();
+        const test_deck_ludzie = get_test_deck_ludzie();
+        processDeck(test_deck_ludzie, deck_ludzie, 'ludzie');
+        processDeck(test_deck_zombiaki, deck_zombiaki, 'zombiaki');
+        return;
     }
+    processDeck(deck_json_ludzie, deck_ludzie, 'ludzie');
+    processDeck(deck_json_zombiaki, deck_zombiaki, 'zombiaki');
 }
 
 function shuffleDeck() {
@@ -161,6 +172,7 @@ function getCardsFromDeck(first_draw, deck) {
         if (card) {
             const { id, name } = card;
             if (card.name === 'ŚWIT') gameOver('ludzie');
+            randomRotate(10, deck[i]);
             deck[i].src = `images/cards/${turn}/${id}.webp`;
             deck[i].dataset.id = id;
             deck[i].dataset.name = name;
@@ -192,25 +204,42 @@ function drawCards(first_draw = false) {
 
 //ZAGRANIA KARTY
 
-function showCard(card) {
+function showCardHandler(card) {
     return function () {
-        chosen_card_picture.src = card.src;
-        active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
-        if (!active_card) {
-            return;
-        }
-        show(chosen_card);
-        close_card.addEventListener('click', () => {
-            hide(chosen_card);
-        }, { once: true });
+        showCard(card);
     }
 }
+
+function showCard(card) {
+    chosen_card_picture.src = card.src;
+    active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
+    if (!active_card) {
+        return;
+    }
+    if (turn === 'zombiaki' && active_card.name === 'KLIK') {
+        disable(play_card);
+    }
+    show(chosen_card);
+    const handler = closeCardHandler();
+    close_card.handler = handler;
+    close_card.addEventListener('click', handler, { once: true });
+}
+
+export function closeCardHandler() {
+    return function () {
+        enable(play_card);
+        hide(chosen_card);
+        close_card.removeEventListener('click', close_card.handler);
+        close_card.handler = null;
+    }
+}
+
 function setCards() {
     if (turn === "zombiaki") player_cards = cards_zombiaki;
     if (turn === "ludzie") player_cards = cards_ludzie;
 
     player_cards.forEach(card => {
-        const handler = showCard(card);
+        const handler = showCardHandler(card);
         card.handler = handler;
         card.addEventListener('click', handler);
     });
@@ -241,6 +270,7 @@ function playCard() {
     })
 }
 
+
 function throwCard() {
     throw_card.addEventListener('click', () => {
         if (turn === 'zombiaki') {
@@ -249,6 +279,7 @@ function throwCard() {
         cards_thrown++;
         if (cards_thrown >= MIN_CARD_THROWN) {
             show(play_card);
+            enable(play_card);
             hide(throw_card);
         }
         removeCard();
@@ -269,16 +300,24 @@ export function removeCard() {
         card_to_remove.dataset.id = 'blank';
         card_to_remove.dataset.name = 'blank';
         card_to_remove.removeEventListener('click', card_to_remove.handler);
+        card_to_remove.handler = null;
     }
     const all_fields = document.querySelectorAll('.field');
     all_fields.forEach(field => enable(field));
     hide(chosen_card);
     hide(cancel_button);
+    close_card.removeEventListener('click', close_card.handler);
+    close_card.handler = null;
 }
 
-function indexRemove(array) {
+export function indexRemove(array) {
     const index_remove = array.findIndex(el => el.id === active_card.id);
     array.splice(index_remove, 1);
+}
+
+export function removeCardZombiaki(id) {
+    const index_remove = active_cards_zombiaki.findIndex(el => el.id === active_card.id);
+    active_cards_zombiaki.splice(index_remove, 1);
 }
 
 function handleNewTurn() {
@@ -333,8 +372,12 @@ export function setActiveCard(card) {
     active_card = card;
 }
 
-export function checkTurn() {
+export function getTurn() {
     return turn;
+}
+
+export function getActiveCardsZombiaki() {
+    return active_cards_zombiaki;
 }
 
 document.addEventListener('dblclick', function (e) {
@@ -349,3 +392,7 @@ document.addEventListener('mousedown', () => {
 document.addEventListener('mouseup', () => {
     document.body.classList.remove('clicking');
 });
+
+reset_button.addEventListener('click', () => {
+    window.location.reload();
+})

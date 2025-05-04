@@ -35,3 +35,8 @@ export function disable(element) {
 export function hideAll(array) {
     array.forEach(el => el.classList.add('hidden'))
 }
+
+export function randomRotate(number, element) {
+    const degrees = Math.floor(Math.random() * (number - -number) + -number);
+    element.style = `transform:rotate(${degrees}deg);`
+}

@@ -1,7 +1,7 @@
 import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard, setActiveCard } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
-import { show, hide, enable, disable } from "./utils.js";
+import { show, hide, enable, disable, randomRotate } from "./utils.js";
 
 import { cards_ludzie_json } from "./ludzie/cards.js";
 import { cards_zombiaki_json } from "./zombiaki/cards.js";
@@ -123,7 +123,6 @@ export function moveSingleZombiak(old_field, card, direction) {
     const next_field = board[new_przecznica][new_tor];
     if (!next_field) return;
     const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
-    console.log(next_field_is_taken, next_field);
     if (next_field_is_taken) return;
     new_field = next_field;
 
@@ -202,10 +201,9 @@ function putPicture(field, card) {
 
     const { id, name, race, type, hp, max_hp } = card;
     const { element } = field;
-    const degrees = Math.floor(Math.random() * (10 - -10) + -10);
 
     const divElement = document.createElement('div');
-    divElement.style = `transform: rotate(${degrees}deg)`;
+    randomRotate(10, divElement);
     divElement.classList.add('field_image')
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;

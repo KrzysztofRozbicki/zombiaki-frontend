@@ -19,6 +19,7 @@ export const cards_ludzie_json = [
         "description": "Krótka seria trafia najbliższego Zombiaka na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze. Trafienie cofa Zombiaka o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Łykaj kule, aumarlaku!",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {
@@ -41,6 +42,7 @@ export const cards_ludzie_json = [
         "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 1 ranę. Dodatkowo, trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "A ten zupełnie za nic!",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {
@@ -64,6 +66,7 @@ export const cards_ludzie_json = [
         "description": "Długa seria trafia najbliższego Zombiaka na torze i zadaje 3 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze (itd.). Trafienie cofa Zombiaka o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Hasta la vista, baby!",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {
@@ -105,6 +108,7 @@ export const cards_ludzie_json = [
         "piercing": true,
         "type": "shot",
         "board": true,
+        "blockable": true,
         "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 2 rany. Dodatkowo trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "Prosto w tę zaropiałą gębę",
         "race": "ludzie"
@@ -123,10 +127,11 @@ export const cards_ludzie_json = [
         "id": 12,
         "amount": 1,
         "name": "JAJNIK",
-        "type": "shot",
+        "type": "other",
         "description": "Wybierz tor i wszystkie znajdującie się na nim Zombiaki (z wyjątkiem Psa i Kota) stają się one Zombiakami o sile 1.",
         "flavor": "Bierz ich!",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {
@@ -208,10 +213,11 @@ export const cards_ludzie_json = [
         "id": 20,
         "amount": 1,
         "name": "REFLEKTOR",
-        "type": "shot",
+        "type": "other",
         "description": "Covnij równocześnie o 1 pole wszystkie Zombiaki na jednym wybranym torze, o ile to możliwe.",
         "flavor": "Parę słów do mikrofonu...",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {
@@ -248,11 +254,12 @@ export const cards_ludzie_json = [
         "id": 24,
         "amount": 1,
         "name": "MIOTACZ",
-        "type": "shot",
+        "type": "other",
         "dmg": 5,
         "description": "Zagraj Miotacz na najbliższą przecznicę, na której znajduje się jakikolwiek Zombiak. Miotacz zadaje łącznie 5 razn, rozdzielanych przez ludzi (puste pole pochłania 1 punkt siły rażenia Miotacza).",
         "flavor": "Palenie szkodzi zdrowiu.",
         "board": true,
+        "blockable": true,
         "race": "ludzie"
     },
     {

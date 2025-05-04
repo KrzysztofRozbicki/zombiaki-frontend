@@ -1,52 +1,41 @@
 import { cards_ludzie, cards_zombiaki } from "./index.js";
-import { show, hide, showAll, hideAll } from "./utils.js";
-
-const reset_button = document.getElementById('reset');
+import { show, hide, showAll, hideAll, randomRotate } from "./utils.js";
 const intro = document.getElementById('intro');
 const board_element = document.getElementById('board');
 const menu_element = document.getElementById('menu');
 const choose_race = document.getElementById('choose-race');
 
+const end_turn_ludzie = document.getElementById('rewers_stack_ludzie');
+const end_turn_zombiaki = document.getElementById('rewers_stack_zombiaki');
+
 
 export function initMenu(race) {
     hideAll([intro, choose_race]);
     showAll([board_element, menu_element]);
-    reset_button.addEventListener('click', () => {
-        window.location.reload();
-    })
+    randomRotateDeck()
     chooseRace(race);
 }
 
-export function chooseRace(race) {
-    const end_turn_ludzie = document.getElementById('rewers_stack_ludzie');
-    const end_turn_zombiaki = document.getElementById('rewers_stack_zombiaki');
+function randomRotateDeck() {
+
     const stack_ludzie = end_turn_ludzie.querySelectorAll('.stack');
     const stack_zombiaki = end_turn_zombiaki.querySelectorAll('.stack');
     const whole_stack = [...stack_ludzie, ...stack_zombiaki];
-    for (let i = 0; i < whole_stack.length; i++) {
-        const degrees = Math.floor(Math.random() * (10 - -10) + -10);
-        whole_stack[i].style = `transform:rotate(${degrees}deg);`
-    }
 
-    if (race === 'ludzie') {
-        hide(end_turn_zombiaki);
-        show(end_turn_ludzie);
-        cards_ludzie.forEach(card =>
-            card.dataset.playable = true
-        )
-        cards_zombiaki.forEach(card =>
-            card.dataset.playable = false
-        )
-    }
+    whole_stack.forEach(el => randomRotate(15, el));
 
-    if (race === 'zombiaki') {
-        hide(end_turn_ludzie);
-        show(end_turn_zombiaki);
-        cards_zombiaki.forEach(card =>
-            card.dataset.playable = true
-        )
-        cards_ludzie.forEach(card =>
-            card.dataset.playable = false
-        )
-    }
+}
+
+export function chooseRace(race) {
+
+    const oppositeRace = race === 'ludzie' ? 'zombiaki' : 'ludzie';
+
+    hide(document.getElementById(`rewers_stack_${oppositeRace}`))
+    show(document.getElementById(`rewers_stack_${race}`));
+    cards_ludzie.forEach(card =>
+        card.dataset.playable = (race === 'ludzie')
+    );
+    cards_zombiaki.forEach(card =>
+        card.dataset.playable = (race === 'zombiaki')
+    );
 }
