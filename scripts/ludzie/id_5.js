@@ -3,7 +3,7 @@
 import { board } from "../board.js";
 import { removeCard } from '../index.js';
 import { damageZombiak } from "./utils.js";
-import { hide } from "../utils.js";
+import { hideCancelButton } from "../utils.js";
 export default function ludzie_id_5(card, field) {
     ropa(card);
 }
@@ -34,14 +34,17 @@ function activeRopa(field, card) {
     hideCancelButton();
     const targetCard = field.card;
     card.dmg -= 1;
+    setRopaHealth(card)
     clearBoard();
+    if (card.dmg === 0) {
+        damageZombiak(1, field);
+        return;
+    }
+    setRopaBoard(field, card);
 
     //dodanie nowych pól do aktywacji
     if (!targetCard || targetCard.race !== 'zombiaki') return;
     damageZombiak(1, field);
-    setRopaHealth(card)
-    if (card.dmg === 0) return;
-    setRopaBoard(field, card);
 }
 
 function setRopaBoard(field, card) {
@@ -56,7 +59,7 @@ function setRopaBoard(field, card) {
     for (let i = 0; i < cross.length; i++) {
         let t = tor + cross[i][0];
         let p = przecznica + cross[i][1];
-        if (t < 0 || t > 3) continue;
+        if (t < 0 || t > 2) continue;
         if (p < 0 || p > 4) continue;
         all_fields.push(board[p][t]);
     }
@@ -70,7 +73,6 @@ function setRopaBoard(field, card) {
         element.handler = handler;
     })
 }
-
 
 function setRopaHealth(card) {
     const { dmg } = card;
@@ -106,12 +108,6 @@ function setRopaHealth(card) {
     hp_element.dataset.current_hp = dmg;
 }
 
-function hideCancelButton() {
-    const cancel_button = document.getElementById('cancel');
-    hide(cancel_button);
-    cancel_button.removeEventListener('click', cancel_button.handler);
-    cancel_button.handler = null;
-}
 
 function clearBoard() {
     for (let i = 0; i < board.length; i++) {

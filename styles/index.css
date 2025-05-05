@@ -241,7 +241,8 @@ button {
 /* WYBRANA KARTA */
 
 #chosen_card,
-#alert {
+#alert,
+#raca {
   position: fixed;
   backdrop-filter: blur(15px) sepia(1);
   width: 100dvw;
@@ -255,11 +256,52 @@ button {
 }
 
 #chosen_card div,
-#alert div {
+#alert div,
+#raca div {
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+#raca > div {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+#raca .raca_image {
+  gap: 1rem;
+}
+
+#raca .button_box {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#raca button {
+  border: none;
+  padding: 2rem;
+ width: calc(50% - 2rem);
+  font-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+    cursor: url('../images/cursors/hover.ico'), auto;
+}
+
+#raca button:hover,
+#raca button:focus {
+  transform: scale(1.2);
+  color: var(--secondary-color);
+}
+#raca .delete_button {
+  background-image: url('../images/red_button.webp');
+}
+
+#raca .put_button {
+  background-image: url('../images/green_button.webp');
 }
 
 .close_backdrop {

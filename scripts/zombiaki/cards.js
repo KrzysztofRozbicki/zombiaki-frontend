@@ -404,4 +404,13 @@ export const cards_zombiaki_json = [
         "board": true,
         "race": "zombiaki"
     }
-]
+];
+
+export const zombiak_1 = {
+    'id': 'rewers',
+    'race': 'zombiaki',
+    'type': 'zombiak',
+    'hp': 1,
+    'max_hp': 1,
+    'board': true
+}

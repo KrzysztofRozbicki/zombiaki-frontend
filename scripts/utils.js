@@ -11,6 +11,14 @@ export function showAlert(text) {
     })
 };
 
+export function hideCancelButton() {
+    const cancel_button = document.getElementById('cancel');
+    hide(cancel_button);
+    cancel_button.removeEventListener('click', cancel_button.handler);
+    cancel_button.handler = null;
+}
+
+
 
 export function show(element) {
     element.classList.remove('hidden');

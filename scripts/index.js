@@ -378,6 +378,14 @@ export function getActiveCardsZombiaki() {
     return active_cards_zombiaki;
 }
 
+export function getDeckZombiaki() {
+    return deck_zombiaki;
+}
+
+export function setDeckZombiaki(array) {
+    deck_zombiaki = array;
+}
+
 document.addEventListener('dblclick', function (e) {
     e.preventDefault();
     return false;

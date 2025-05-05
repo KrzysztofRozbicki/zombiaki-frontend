@@ -169,7 +169,7 @@ export function unsetField(board_field) {
     board_field.card = null;
 }
 
-export function setField(field, card) {
+export function setField(field, card, other = false) {
     putPicture(field, card);
     board.forEach(przecznica => {
         przecznica.forEach(pole => {
@@ -182,10 +182,10 @@ export function setField(field, card) {
         })
     })
     const zombiaki_deck = document.getElementById('deck_zombiaki');
-    enable(zombiaki_deck);
+    if (!other) enable(zombiaki_deck);
     const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
-    removeCard();
+    if (!other) removeCard();
 }
 
 function setFieldHandler(field, card) {

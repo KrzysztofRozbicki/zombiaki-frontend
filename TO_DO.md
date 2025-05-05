@@ -15,5 +15,5 @@
 15. Zrobienie systemu testowego w którym ręcznie wpisuje pierwsze 4 karty i ustawia plansze / ZROBIONE
 16. Zrobienie wszystkich strzałów ludzi (lepszy strzał, długa seria, snajper , cegła). / ZROBIONE 
 17. Przetestowanie KLIK na wszystkie strzały. / ZROBIONE
-18. 
+18. Przygotowanie wszystkich kart ludzi.
 

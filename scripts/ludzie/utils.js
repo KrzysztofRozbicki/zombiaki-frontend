@@ -17,8 +17,6 @@ export function shot(card, sniper = false, cegła = false) {
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
-            console.log(i, j);
-            console.log(board[i][j]);
             const { element, card } = board[i][j];
             if (!card) continue;
             if (card.mur && !sniper) {
@@ -40,7 +38,6 @@ export function shot(card, sniper = false, cegła = false) {
                 el.shot_handler = handler;
                 el.addEventListener('click', handler, { once: true });
             })
-            console.log(card, i);
             if (i !== 0 && !sniper) {
                 j++;
                 i = board.length;
@@ -131,7 +128,6 @@ function killZombiak(field) {
 }
 
 export function damageZombiak(dmg, field) {
-    console.log('damage');
     const { element, card } = field;
     card.hp -= dmg;
     if (card.hp <= 0) killZombiak(field);

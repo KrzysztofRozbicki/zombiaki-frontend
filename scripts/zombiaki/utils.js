@@ -33,6 +33,14 @@ export function putOverlay(card, callback) {
     }
 }
 
+export const zombiak_1 = {
+    'id': 'rewers',
+    'race': 'zombiaki',
+    'type': 'zombiak',
+    'hp': 1,
+    'max_hp': 1,
+    'board': true
+}
 
 function overlayHandler(card, field, callback) {
     return function () {
