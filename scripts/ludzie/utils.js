@@ -13,18 +13,21 @@ import {
 import { deleteOverlay } from "../zombiaki/utils.js";
 import { disable, show, hide } from "../utils.js";
 
-export function shot(card) {
+export function shot(card, sniper = false, cegła = false) {
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
+            console.log(i, j);
+            console.log(board[i][j]);
             const { element, card } = board[i][j];
             if (!card) continue;
-            if (card.mur) {
+            if (card.mur && !sniper) {
                 for (let k = i - 1; k >= 0; k--) {
                     disable(board[k][j].element);
                 }
+
                 j++;
-                i = board.length - 1;
+                i = board.length;
                 continue;
             }
             if (card.race !== 'zombiaki') continue;
@@ -32,30 +35,35 @@ export function shot(card) {
 
             const cards_on_field = element.querySelectorAll('.field > div');
             cards_on_field.forEach(el => {
-                const handler = shotHandler(dmg, board[i][j], el, piercing);
+                const handler = shotHandler(dmg, board[i][j], el, piercing, cegła);
 
                 el.shot_handler = handler;
                 el.addEventListener('click', handler, { once: true });
             })
-            j++;
+            console.log(card, i);
+            if (i !== 0 && !sniper) {
+                j++;
+                i = board.length;
+            }
         }
     }
 }
 
-function shotHandler(dmg, field, specific_element, piercing) {
+function shotHandler(dmg, field, specific_element, piercing, cegła) {
     return async function () {
-        await shotZombiak(dmg, field, specific_element, piercing)
+        await shotZombiak(dmg, field, specific_element, piercing, cegła)
     }
 }
 
-async function shotZombiak(dmg, field, specific_element, piercing) {
+async function shotZombiak(dmg, field, specific_element, piercing, cegła = false) {
     clearShotElements();
     removeCard();
-    const clickPlayed = await checkClick();
-    if (clickPlayed) return;
-
+    if (!cegła) {
+        const clickPlayed = await checkClick();
+        if (clickPlayed) return;
+    }
     const { element, card, card_overlay } = field;
-    const { className } = specific_element
+    const { className } = specific_element;
     const hp_element = specific_element.querySelector('div');
     hp_element.dataset.current_hp = +hp_element.dataset.current_hp - dmg;
     if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
@@ -84,7 +92,7 @@ async function shotZombiak(dmg, field, specific_element, piercing) {
             }
             return;
         }
-        moveSingleZombiak(field, card, 'back');
+        if (!cegła) moveSingleZombiak(field, card, 'back');
     }
 
     if (card_overlay && card_overlay.hp <= 0) {
@@ -120,13 +128,12 @@ function killZombiak(field) {
     images.forEach(image => image.classList.add('death_animation'));
 
     setTimeout(() => unsetField(field), 2000);
-
 }
 
-
 export function damageZombiak(dmg, field) {
+    console.log('damage');
     const { element, card } = field;
-    card.hp -= 1;
+    card.hp -= dmg;
     if (card.hp <= 0) killZombiak(field);
     const zombiak_element = element.querySelector('.field_image > div');
     zombiak_element.dataset.current_hp = card.hp;
@@ -157,7 +164,6 @@ function checkClick() {
         show(play_other);
     })
 }
-
 
 
 function handlePlayClick(resolve) {

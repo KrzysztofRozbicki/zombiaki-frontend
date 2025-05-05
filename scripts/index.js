@@ -4,7 +4,7 @@ import { initMenu, chooseRace } from './menu.js';
 import { randomRotate, showAlert } from './utils.js';
 import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
-import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki } from './test.js';
+import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE } from './test.js';
 
 // const choose_ludzie = document.getElementById('choose-ludzie');
 // const choose_zombiaki = document.getElementById('choose-zombiaki');
@@ -35,8 +35,6 @@ const reset_button = document.getElementById('reset');
 export const deck_json_ludzie = cards_ludzie_json;
 export const deck_json_zombiaki = cards_zombiaki_json;
 
-export const TEST_MODE = false;
-
 // choose_ludzie.addEventListener('click', () => start('ludzie'));
 // choose_zombiaki.addEventListener('click', () => start('zombiaki'));
 start_button.addEventListener('click', () => start('zombiaki'));
@@ -63,7 +61,7 @@ let game_over = false;
 function start(race_chosen) {
     turn = race_chosen;
     prev_turn = 'ludzie';
-    if (TEST_MODE) startTest('ludzie');
+    if (TEST_MODE) startTest(TEST_MODE.race);
     startDeck();
 
     // Obsługa tur

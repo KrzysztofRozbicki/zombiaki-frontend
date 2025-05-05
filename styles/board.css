@@ -97,6 +97,17 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
+.ropa_available{
+  cursor: url('../images/cursors/barrel.ico'), auto;
+  animation: 0.7s infinite alternate ease-in-out ropaAvailable;
+}
+
+.ropa_available[data-type="zombiak"] > .field_image {
+    cursor: url('../images/cursors/barrel.ico'), auto;
+    border-radius: 1rem;
+    animation: 0.7s infinite alternate ease-in-out shotAvailable;
+}
+
 #streets .zombiaki:hover,
 #streets .zombiaki:focus {
   background-color: var(--accent-color);
@@ -162,7 +173,7 @@ div[data-przecznica="5"]:has(img):hover > div {
 
 .death_animation {
   cursor: url('../images/cursors/normal.ico'), auto;
-  animation: 2s alternate ease-in deathAnimation;
+  animation: 2s alternate ease-in deathAnimation !important;
 }
 
 .tor_arrow {
@@ -191,6 +202,15 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 1s alternate infinite ease-in shockElement;
 }
 
+
+@keyframes ropaAvailable {
+  from {
+    background-color: var(--background-color-opacity);
+  }
+  to {
+    background-color: var(--accent-color-opacity);
+  }
+}
 @keyframes shockElement {
   from {
     filter: none;
@@ -263,8 +283,11 @@ div[data-przecznica="5"]:has(img):hover > div {
   z-index:4;
 }
 
-.field div[data-max_hp="3"],
-.field div[data-max_hp="4"][data-overlay="true"] {
+div[data-max_hp="2"],
+div[data-max_hp="3"],
+div[data-max_hp="4"],
+div[data-max_hp="5"],
+div[data-max_hp="4"][data-overlay="true"] {
   position: absolute !important;
   bottom: 5%;
   height: 10%;
@@ -273,12 +296,74 @@ div[data-przecznica="5"]:has(img):hover > div {
   transform: translateX(-50%);
 }
 
-.field div[data-max_hp="4"][data-overlay="true"] {
+div[data-max_hp="5"] {
+  bottom: 6%;
+  width: 80%;
+  transform: translateX(-50%) rotate(-1deg);
+  font-size: 80%;
+}
+
+div[data-max_hp="5"][data-current_hp="4"]:after {
+  content: "x";
+  width: 20%;
+}
+div[data-max_hp="5"][data-current_hp="3"]:after {
+  content: "xx";
+  width: 40%;
+}
+div[data-max_hp="5"][data-current_hp="2"]:after {
+  content: "xxx";
+  width: 60%;
+}
+div[data-max_hp="5"][data-current_hp="1"]:after {
+  content: "xxxx";
+  width: 80%;
+}
+div[data-max_hp="5"][data-current_hp="0"]:after {
+  content: "xxxxx";
+  width: 100%;
+}
+
+div[data-max_hp="4"]{
+  width: 95%;
+}
+div[data-max_hp="4"][data-current_hp="3"]:after {
+  content: "x";
+  width: 25%;
+}
+div[data-max_hp="4"][data-current_hp="2"]:after {
+  content: "xx";
+  width: 50%;
+}
+div[data-max_hp="4"][data-current_hp="1"]:after {
+  content: "xxx";
+  width: 75%;
+}
+div[data-max_hp="4"][data-current_hp="0"]:after {
+  content: "xxxx";
+  width: 100%;
+}
+
+div[data-max_hp="2"]{
+  width: 50%;
+}
+div[data-max_hp="2"][data-current_hp="1"]:after {
+  content: "x";
+  width: 50%;
+}
+div[data-max_hp="2"][data-current_hp="0"]:after {
+  content: "xx";
+  width: 100%;
+}
+
+
+div[data-max_hp="4"][data-overlay="true"] {
   width: 80%;
 }
 
 .field div:after,
-#chosen_card_health:after {
+#chosen_card_health:after,
+.ropa_card div:after {
   content: "";
   font-size: 100%;
   height: 100%;
@@ -293,24 +378,34 @@ div[data-przecznica="5"]:has(img):hover > div {
   transform-origin: top right;
 }
 
-.field div[data-max_hp="3"][data-current_hp="2"]:after {
+.ropa_card div {
+  bottom: 3%;
+  width: 70%;
+  left: 45%;
+}
+.ropa_card div:after {
+  font-size: 300%;
+  transform: none;
+}
+
+div[data-max_hp="3"][data-current_hp="2"]:after {
   content: "x";
   width: 33%;
 }
 
-.field div[data-max_hp="3"][data-current_hp="1"]:after {
+div[data-max_hp="3"][data-current_hp="1"]:after {
   content: "xx";
   width: 66%;
 }
 
-.field div[data-max_hp="3"][data-current_hp="0"]:after {
+div[data-max_hp="3"][data-current_hp="0"]:after {
   content: "xxx";
   width: 100%;
 }
 
 
 
-.field div[data-overlay="true"]:after {
+div[data-overlay="true"]:after {
   font-size: 80%;
 }
 .field .overlay:hover div[data-overlay="true"]:after {
@@ -318,22 +413,22 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 
 
-.field div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
+div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
   content: "x";
   width: 25%;
 }
 
-.field div[data-max_hp="4"][data-current_hp="2"][data-overlay="true"]:after {
+div[data-max_hp="4"][data-current_hp="2"][data-overlay="true"]:after {
   content: "xx";
   width: 50%;
 }
 
-.field div[data-max_hp="4"][data-current_hp="1"][data-overlay="true"]:after {
+div[data-max_hp="4"][data-current_hp="1"][data-overlay="true"]:after {
   content: "xxx";
   width: 75%;
 }
 
-.field div[data-max_hp="4"][data-current_hp="0"][data-overlay="true"]:after {
+div[data-max_hp="4"][data-current_hp="0"][data-overlay="true"]:after {
   content: "xxxx";
   width: 100%;
 }

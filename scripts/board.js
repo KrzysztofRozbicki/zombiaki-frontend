@@ -260,9 +260,8 @@ function handleCancelCard(card) {
         for (let i = board.length - 1; i >= 0; i--) {
             for (let j = 0; j < board[i].length; j++) {
                 const { element } = board[i][j];
-                element.classList.remove('field_available');
-                element.classList.remove('overlay_available');
-                element.classList.remove('shot_available');
+                element.classList = null;
+                element.classList.add('field');
                 element.removeEventListener('click', element.handler);
                 element.handler = null;
                 const cards_on_field = element.querySelectorAll('.field > div');
