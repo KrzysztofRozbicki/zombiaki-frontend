@@ -33,14 +33,7 @@ export function putOverlay(card, callback) {
     }
 }
 
-export const zombiak_1 = {
-    'id': 'rewers',
-    'race': 'zombiaki',
-    'type': 'zombiak',
-    'hp': 1,
-    'max_hp': 1,
-    'board': true
-}
+
 
 function overlayHandler(card, field, callback) {
     return function () {
@@ -74,7 +67,6 @@ export function addOverlay(card, field_board, callback) {
     };
 
     element.appendChild(overlayElement);
-
     element.dataset.overlay = card.overlay_text;
 
     const cancel_button = document.getElementById('cancel');

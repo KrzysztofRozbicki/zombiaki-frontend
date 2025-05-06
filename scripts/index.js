@@ -29,6 +29,8 @@ export const chosen_card_picture = document.getElementById('chosen_card_picture'
 export const close_card = document.getElementById('close_card');
 export const play_card = document.getElementById('play_card');
 export const throw_card = document.getElementById('throw_card');
+export const deck_ludzie_element = document.getElementById('deck_ludzie');
+export const deck_zombiaki_element = document.getElementById('deck_zombiaki');
 const cancel_button = document.getElementById('cancel');
 const reset_button = document.getElementById('reset');
 

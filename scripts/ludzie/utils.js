@@ -8,12 +8,14 @@ import {
     close_card,
     play_card,
     closeCardHandler,
-    removeCardZombiaki
+    removeCardZombiaki,
+    deck_ludzie_element
 } from "../index.js";
 import { deleteOverlay } from "../zombiaki/utils.js";
-import { disable, show, hide } from "../utils.js";
+import { disable, enable, show, hide } from "../utils.js";
 
 export function shot(card, sniper = false, cegła = false) {
+    disable(deck_ludzie_element);
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
@@ -55,6 +57,7 @@ function shotHandler(dmg, field, specific_element, piercing, cegła) {
 async function shotZombiak(dmg, field, specific_element, piercing, cegła = false) {
     clearShotElements();
     removeCard();
+    enable(deck_ludzie_element);
     if (!cegła) {
         const clickPlayed = await checkClick();
         if (clickPlayed) return;

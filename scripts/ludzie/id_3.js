@@ -1,7 +1,7 @@
 //220V
 import { board } from '../board.js';
-import { show, hide } from '../utils.js';
-import { removeCard } from '../index.js';
+import { show, hide, enable, disable } from '../utils.js';
+import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from './utils.js';
 export default function ludzie_id_3(card, field) {
     shockFunction(card);
@@ -9,6 +9,7 @@ export default function ludzie_id_3(card, field) {
 
 
 function shockFunction(card) {
+    disable(deck_ludzie_element);
     const tor_elements = document.querySelectorAll('.tor_arrow');
     tor_elements.forEach(el => {
         show(el);
@@ -37,7 +38,7 @@ function shockTor(tor, card) {
 
         damageZombiak(1, field);
     }
-
+    enable(deck_ludzie_element);
     removeCard(card);
     const tor_elements = document.querySelectorAll('.tor_arrow');
     tor_elements.forEach(el => {

@@ -97,6 +97,29 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
+.web_available > .field_image {
+  cursor: url('../images/cursors/web.ico'), pointer;
+  animation: 0.7s infinite alternate ease-in-out webAvailable;
+  background-color: var(--color-green-opacity);
+  border-radius: 1rem;
+}
+
+.webbed > .field_image {
+  position: relative;
+}
+
+.webbed > .field_image:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/web-upper-corner.webp'), url('../images/web-bottom-corner.webp');
+  background-size: contain, contain;
+  background-repeat: no-repeat, no-repeat;
+  background-position: top left, bottom right;
+  transform: none;
+}
+
+
 .ropa_available{
   cursor: url('../images/cursors/barrel.ico'), auto;
   animation: 0.7s infinite alternate ease-in-out ropaAvailable;
@@ -131,11 +154,6 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 0.75rem;
   transform: rotate(-10deg);
   z-index: 4;
-}
-
-.field.shot_available > div:hover,
-.field.shot_available > div:focus {
-  filter: none;
 }
 
 
@@ -259,6 +277,14 @@ div[data-przecznica="5"]:has(img):hover > div {
   }
 }
 
+@keyframes webAvailable {
+  from {
+    outline: 1px solid var(--color-green);
+  }
+   to {
+    outline: 25px solid var(--color-green-opacity);
+   }
+}
 @keyframes shotAvailable {
   from {
     outline: 1px solid var(--accent-color);
