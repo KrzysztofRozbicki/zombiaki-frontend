@@ -97,11 +97,15 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
-.web_available > .field_image {
+.web_available > .field_image,
+.gas_available > .field_image {
   cursor: url('../images/cursors/web.ico'), pointer;
   animation: 0.7s infinite alternate ease-in-out webAvailable;
   background-color: var(--color-green-opacity);
   border-radius: 1rem;
+}
+.gas_available > .field_image{
+  cursor: url('../images/cursors/gas_green.ico'), auto;
 }
 
 .webbed > .field_image {
@@ -120,7 +124,8 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 
 
-.ropa_available{
+
+.ropa_available {
   cursor: url('../images/cursors/barrel.ico'), auto;
   animation: 0.7s infinite alternate ease-in-out ropaAvailable;
 }

@@ -1,6 +1,6 @@
 //ROPA
 
-import { board } from "../board.js";
+import { board, clearBoard } from "../board.js";
 import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from "./utils.js";
 import { hideCancelButton, enable, disable } from "../utils.js";
@@ -36,7 +36,7 @@ function activeRopa(field, card) {
     const targetCard = field.card;
     card.dmg -= 1;
     setRopaHealth(card)
-    clearBoard();
+    clearBoard('ropa_available');
     if (card.dmg === 0) {
         enable(deck_ludzie_element);
         damageZombiak(1, field);
@@ -108,18 +108,4 @@ function setRopaHealth(card) {
     const parent_div = ropa_card.parentNode;
     const hp_element = parent_div.querySelector('div[data-hp_name="ROPA"');
     hp_element.dataset.current_hp = dmg;
-}
-
-
-function clearBoard() {
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[0].length; j++) {
-            const field = board[i][j];
-            const { element } = field;
-            element.classList.remove('ropa_available');
-
-            element.removeEventListener('click', element.handler);
-            element.handler = null;
-        }
-    }
 }

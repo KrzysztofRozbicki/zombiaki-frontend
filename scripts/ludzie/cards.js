@@ -120,7 +120,8 @@ export const cards_ludzie_json = [
         "description": "Wystaw Beczkę na dowolnym polu pierwszej przecznicy. Co turę przesuń ją o 1 pole do przodu. Beczka zabija pierwszego na swojej drodze. Jeśli Zombiak wejdzie na Beczkę, ginie automatycznie. Beczka rozbija się o Mur i Auto, wpada do Dziury, a także detonuję Minę.",
         "flavor": "Wytoczę mocniejszy argument",
         "board": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        'walkable': true
     },
     {
         "id": 12,

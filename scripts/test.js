@@ -25,7 +25,7 @@ const test_board = [
         'hp': 2,
     },
     {
-        "field": board[1][2],
+        "field": board[2][2],
         "card": "ZENEK",
         'hp': 3,
     },

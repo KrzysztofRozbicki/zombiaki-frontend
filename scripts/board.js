@@ -125,14 +125,17 @@ export function moveSingleZombiak(old_field, card, direction) {
     const new_tor = tor + tor_offset;
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
     const next_field = board[new_przecznica][new_tor];
+    let is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
     if (!next_field) return;
     const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
     if (next_field_is_taken) return;
     new_field = next_field;
-
+    if (is_beczka) unsetField(new_field);
     putPicture(new_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, new_field);
     unsetField(old_field);
+    if (is_beczka) killZombiak(next_field);
+
 }
 
 
@@ -155,7 +158,6 @@ function moveLudzie() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const { card } = board[i][j];
-            console.log(board[i][j]);
             if (!card || card.name !== 'BECZKA') continue;
             unsetField(board[i][j]);
             if (i === 0) continue;
@@ -175,8 +177,6 @@ function moveLudzie() {
                 killZombiak(new_field);
                 continue;
             }
-            console.log('beczka hop');
-
         }
     }
 
@@ -316,5 +316,18 @@ function handleCancelCard(card) {
             el.removeEventListener('click', el.handler);
             el.handler = null;
         });
+    }
+}
+
+export function clearBoard(className) {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            const field = board[i][j];
+            const { element } = field;
+            element.classList.remove(className);
+
+            element.removeEventListener('click', element.handler);
+            element.handler = null;
+        }
     }
 }

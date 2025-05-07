@@ -1,3 +1,4 @@
+
 export function showAlert(text) {
     const alert = document.getElementById('alert');
     const close_alert = document.getElementById('close_alert');
@@ -17,8 +18,6 @@ export function hideCancelButton() {
     cancel_button.removeEventListener('click', cancel_button.handler);
     cancel_button.handler = null;
 }
-
-
 
 export function show(element) {
     element.classList.remove('hidden');
