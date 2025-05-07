@@ -15,25 +15,33 @@ let test_deck_zombiaki = cards_zombiaki_json;
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
 const start_cards_zombiaki = ['KLIK', 'CZESIEK', 'MARIUSZ', 'IWAN'];
-const start_cards_ludzie = ['STRZAŁ. TEN LEPSZY', 'ROPA', 'SIEĆ', 'RACA ŚWIETLNA'];
+const start_cards_ludzie = ['JAJNIK', 'BECZKA', 'SIEĆ', 'GAZ ROZWESELAJĄCY'];
 
 const test_board = [
     {
-        "field": board[2][0],
+        "field": board[1][0],
         "card": 'WACEK',
         'overlay': 'MIŚ',
+        'hp': 2,
     },
     {
-        "field": board[1][1],
-        'card': 'MARIUSZ',
+        "field": board[1][2],
+        "card": "ZENEK",
+        'hp': 3,
     },
     {
-        "field": board[3][0],
+        "field": board[0][2],
+        'card': 'KRZYSZTOF',
+        'hp': 2,
+    },
+    {
+        "field": board[2][0],
         'card': 'MUR'
     },
     {
-        "field": board[2][1],
-        "card": "CZESIEK"
+        "field": board[3][2],
+        "card": "CZESIEK",
+        "hp": 2,
     }
 ]
 
@@ -47,9 +55,9 @@ export function testMode() {
 
 function putCardsOnBoard() {
     for (let i = 0; i < test_board.length; i++) {
-        const { field, card, overlay } = test_board[i];
+        const { field, card, overlay, hp } = test_board[i];
         const test_card = all_cards.find(crd => crd.name === card);
-        test_card.hp = 2;
+        test_card.hp = hp;
         setField(field, test_card);
         if (overlay) {
             const overlay_card = all_cards.find(card => card.name === overlay);

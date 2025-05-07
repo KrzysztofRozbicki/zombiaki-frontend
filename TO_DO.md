@@ -16,4 +16,5 @@
 16. Zrobienie wszystkich strzałów ludzi (lepszy strzał, długa seria, snajper , cegła). / ZROBIONE 
 17. Przetestowanie KLIK na wszystkie strzały. / ZROBIONE
 18. Przygotowanie wszystkich kart ludzi.
+19. Sytuacja skrajna - zombiak jest na murze - beczka rozbija się o mur.
 

@@ -19,6 +19,9 @@ export function shot(card, sniper = false, cegła = false) {
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
+            console.log(board[0].length);
+            console.log(i, j);
+            console.log(board[i][j]);
             const { element, card } = board[i][j];
             if (!card) continue;
             if (card.mur && !sniper) {
@@ -27,6 +30,7 @@ export function shot(card, sniper = false, cegła = false) {
                 }
 
                 j++;
+                if (j >= board[0].length) return;
                 i = board.length;
                 continue;
             }
@@ -42,6 +46,7 @@ export function shot(card, sniper = false, cegła = false) {
             })
             if (i !== 0 && !sniper) {
                 j++;
+                if (j >= board[0].length) return;
                 i = board.length;
             }
         }
@@ -122,7 +127,7 @@ function clearShotElements() {
 
 }
 
-function killZombiak(field) {
+export function killZombiak(field) {
     const { element } = field;
     const images = element.querySelectorAll('.field > div')
     images.forEach(image => image.classList.add('death_animation'));

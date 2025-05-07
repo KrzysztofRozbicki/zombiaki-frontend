@@ -1,10 +1,8 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard, setActiveCard } from "./index.js";
+import { gameOver, removeCard } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate } from "./utils.js";
-
-import { cards_ludzie_json } from "./ludzie/cards.js";
-import { cards_zombiaki_json } from "./zombiaki/cards.js";
+import { killZombiak } from "./ludzie/utils.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
 const T2_P5 = document.querySelector('div[data-tor="2"][data-przecznica="5"]');
@@ -49,6 +47,7 @@ export function putZombiak(card) {
     }
 }
 
+
 export function updateBoard(prev_turn) {
     const overlay_elements = document.querySelectorAll('#overlay');
     overlay_elements.forEach(element => {
@@ -64,6 +63,10 @@ export function updateBoard(prev_turn) {
             }
         });
     }
+    const web_elements = document.querySelectorAll('.webbed');
+    web_elements.forEach(element =>
+        element.classList.remove('webbed')
+    )
     if (prev_turn === 'zombiaki') moveLudzie();
 
 
@@ -104,6 +107,7 @@ function moveZombiaki() {
 
 export function moveSingleZombiak(old_field, card, direction) {
     const { element } = old_field;
+    if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
 
@@ -148,10 +152,37 @@ function moveOverlay(old_field, new_field) {
 }
 
 function moveLudzie() {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            const { card } = board[i][j];
+            console.log(board[i][j]);
+            if (!card || card.name !== 'BECZKA') continue;
+            unsetField(board[i][j]);
+            if (i === 0) continue;
+            const new_field = board[i - 1][j];
+            if (!new_field.card) {
+                setField(new_field, card);
+                continue;
+            }
+            if (new_field.card.name === 'DZIURA') {
+                unsetField(new_field);
+                continue;
+            }
+            if (new_field.card.name === 'MUR' ||
+                new_field.card.name === 'RUPIECI' ||
+                new_field.card.name === 'AUTO') continue;
+            if (new_field.card.type === 'zombiak') {
+                killZombiak(new_field);
+                continue;
+            }
+            console.log('beczka hop');
+
+        }
+    }
 
 }
 
-function putCard(field, card) {
+export function putCard(field, card) {
     const { element } = field;
     element.classList.add('field_available', `${card.race}`);
     const handler = setFieldHandler(field, card);
@@ -181,11 +212,17 @@ export function setField(field, card, other = false) {
             }
         })
     })
-    const zombiaki_deck = document.getElementById('deck_zombiaki');
-    if (!other) enable(zombiaki_deck);
+    if (!other) removeCard();
     const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
-    if (!other) removeCard();
+    if (card.race === 'zombiaki') {
+        const zombiaki_deck = document.getElementById('deck_zombiaki');
+        if (!other) enable(zombiaki_deck);
+    }
+    if (card.race === 'ludzie') {
+        const ludzie_deck = document.getElementById('deck_ludzie');
+        if (!other) enable(ludzie_deck);
+    }
 }
 
 function setFieldHandler(field, card) {
@@ -273,7 +310,7 @@ function handleCancelCard(card) {
         }
         const all_fields = document.querySelectorAll('.field');
         all_fields.forEach(field => enable(field));
-        const tor_elements = document.querySelectorAll('.tor_arrow');
+        const tor_elements = document.querySelectorAll('.tor_electricity');
         tor_elements.forEach(el => {
             hide(el);;
             el.removeEventListener('click', el.handler);

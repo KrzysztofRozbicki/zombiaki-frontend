@@ -308,6 +308,7 @@ export function removeCard() {
     hide(cancel_button);
     close_card.removeEventListener('click', close_card.handler);
     close_card.handler = null;
+    active_card = null;
 }
 
 export function indexRemove(array) {

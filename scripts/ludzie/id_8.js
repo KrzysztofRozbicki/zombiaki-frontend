@@ -3,12 +3,12 @@ import { board } from './../board.js';
 import { hideCancelButton, enable, disable } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 export default function ludzie_id_8(card, field) {
-    web(card);
+    web();
 }
 
 
 let MAX_STRENGTH = 6;
-function web(card) {
+function web() {
     disable(deck_ludzie_element);
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[0].length; j++) {
@@ -18,7 +18,7 @@ function web(card) {
             if (card.hp > MAX_STRENGTH) continue;
             element.classList.add('web_available');
 
-            const handler = webHandler(field, card)
+            const handler = webHandler(field)
             element.addEventListener('click', handler, { once: true });
             element.handler = handler;
         }
@@ -26,13 +26,16 @@ function web(card) {
 }
 
 
-function webHandler(field, webCard) {
+function webHandler(field) {
     return function () {
         hideCancelButton();
-        removeCard(webCard);
+        removeCard();
         const { element, card } = field;
         MAX_STRENGTH -= card.hp;
-        if (MAX_STRENGTH < 0) return;
+        if (MAX_STRENGTH < 0) {
+            enable(deck_ludzie_element);
+            return;
+        }
         element.classList.add('webbed')
         const all_web_elements = document.querySelectorAll('.web_available');
         all_web_elements.forEach((element) => {
@@ -40,12 +43,12 @@ function webHandler(field, webCard) {
             element.removeEventListener('click', element.handler);
             element.handler = null;
         })
-        setWebBoard(field, webCard)
+        setWebBoard(field)
     }
 }
 
 
-function setWebBoard(field, card) {
+function setWebBoard(field) {
     const { element } = field;
 
     const tor = +element.dataset.tor - 1;
@@ -59,11 +62,25 @@ function setWebBoard(field, card) {
         let p = przecznica + cross[i][1];
         if (t < 0 || t > 2) continue;
         if (p < 0 || p > 4) continue;
+        const { element, card } = board[p][t];
+        const is_webbed = element.classList.contains('webbed');
+        if (!card || card.race !== 'zombiaki') continue;
+        if (card.hp > MAX_STRENGTH) continue;
+        if (is_webbed) continue;
+
         all_fields.push(board[p][t]);
     }
-
+    console.log(all_fields);
+    if (all_fields.length === 0) {
+        MAX_STRENGTH = 0;
+        enable(deck_ludzie_element);
+        return;
+    }
     all_fields.forEach((field) => {
-        const { element } = field;
+        const { element, card } = field;
         element.classList.add('web_available');
+        const handler = webHandler(field, card)
+        element.addEventListener('click', handler, { once: true });
+        element.handler = handler;
     })
 }

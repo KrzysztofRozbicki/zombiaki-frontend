@@ -4,29 +4,29 @@ import { show, hide, enable, disable } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from './utils.js';
 export default function ludzie_id_3(card, field) {
-    shockFunction(card);
+    shockFunction();
 }
 
 
-function shockFunction(card) {
+function shockFunction() {
     disable(deck_ludzie_element);
-    const tor_elements = document.querySelectorAll('.tor_arrow');
+    const tor_elements = document.querySelectorAll('.tor_electricity');
     tor_elements.forEach(el => {
         show(el);
         const tor = el.parentNode;
-        const handler = shockTorHandler(tor, card);
+        const handler = shockTorHandler(tor);
         el.handler = handler;
         el.addEventListener('click', handler, { once: true });
     });
 }
 
-function shockTorHandler(tor, card) {
+function shockTorHandler(tor) {
     return function () {
-        shockTor(tor, card);
+        shockTor(tor);
     }
 }
 
-function shockTor(tor, card) {
+function shockTor(tor) {
     const id = tor.getAttribute('id');
     const tor_index = +id.slice(-1) - 1;
 
@@ -39,8 +39,8 @@ function shockTor(tor, card) {
         damageZombiak(1, field);
     }
     enable(deck_ludzie_element);
-    removeCard(card);
-    const tor_elements = document.querySelectorAll('.tor_arrow');
+    removeCard();
+    const tor_elements = document.querySelectorAll('.tor_electricity');
     tor_elements.forEach(el => {
         hide(el);
         el.removeEventListener('click', el.handler);

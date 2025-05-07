@@ -194,7 +194,9 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 2s alternate ease-in deathAnimation !important;
 }
 
-.tor_arrow {
+.tor_electricity,
+.tor_fire,
+.tor_jajnik {
   position: absolute;
   z-index: 4;
   height: 8vh;
@@ -206,18 +208,45 @@ div[data-przecznica="5"]:has(img):hover > div {
   background-repeat: no-repeat;
    animation: 1s alternate infinite ease-in torArrow;
 }
+.tor_fire {
+  background-image: url('../images/art/street_fire.webp');
+}
 
-.tor_arrow:hover,
-.tor_arrow:focus {
+.tor_jajnik {
+  background-image: url('../images/art/jajnik.webp');
+}
+
+.tor_electricity:hover,
+.tor_electricity:focus,
+.tor_fire:hover,
+.tor_fire:focus,
+.tor_jajnik:hover,
+.tor_jajnik:focus {
   transform: scale(1.5);
 }
 
-#streets > div:has(.tor_arrow:hover) .field {
+
+
+#streets > div:has(.tor_electricity:hover) .field,
+#streets > div:has(.tor_jajnik:hover) .jajnik_available  {
   animation: 1s alternate infinite ease-in shock;
 }
 
-#streets > div:has(.tor_arrow:hover) div[data-type="zombiak"] .field_image {
+#streets > div:has(.tor_fire:hover) .field {
+  animation: 1s alternate infinite ease-in fire;
+}
+
+#streets > div:has(.tor_jajnik:hover) .jajnik_available .field_image {
+  animation: 1s alternate infinite ease-in shotAvailable;
+  border-radius: 1rem;
+}
+
+#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_image {
   animation: 1s alternate infinite ease-in shockElement;
+}
+
+#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_image {
+  animation: 1s alternate infinite ease-in fireElement;
 }
 
 
@@ -240,12 +269,34 @@ div[data-przecznica="5"]:has(img):hover > div {
   }
 }
 
+@keyframes fireElement {
+  from {
+    filter: none;
+    box-shadow: none;
+  }
+  to {
+    filter: hue-rotate(45deg);
+    box-shadow: 0px 0px 20px 30px rgba(255, 0, 0, 0.75);
+  }
+}
+
+
 @keyframes shock {
   from {
     background-color: var(--accent-color-opacity);
   }
   to {
     background-color: var(--color-blue-opacity);
+  }
+}
+
+
+@keyframes fire {
+  from {
+    background-color: var(--accent-color-opacity);
+  }
+  to {
+    background-color: rgba(255, 0, 0, 0.5);
   }
 }
 
