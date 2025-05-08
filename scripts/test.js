@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 export const TEST_MODE = {
-    race: 'zombiaki',
+    race: 'ludzie',
     board: true,
 };
 
@@ -15,7 +15,7 @@ let test_deck_zombiaki = cards_zombiaki_json;
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
 const start_cards_zombiaki = ['KLIK', 'CZESIEK', 'MARIUSZ', 'IWAN'];
-const start_cards_ludzie = ['MUR', 'KREW', 'BECZKA', 'ZMIATAJ'];
+const start_cards_ludzie = ['MUR', 'STAĆ', 'WYNOCHA', 'JAJNIK'];
 
 const test_board = [
     // {
@@ -24,29 +24,28 @@ const test_board = [
     //     'overlay': 'MIŚ',
     //     'hp': 2,
     // },
-    // {
-    //     "field": board[1][2],
-    //     "card": "ZENEK",
-    //     'hp': 3,
-    // },
-    // {
-    //     "field": board[0][2],
-    //     'card': 'KRZYSZTOF',
-
-    // },
-    // {
-    //     "field": board[1][2],
-    //     'card': 'IWAN'
-    // },
-    // {
-    //     "field": board[3][2],
-    //     'card': 'MUR Z RUPIECI'
-    // },
-    // {
-    //     "field": board[3][2],
-    //     "card": "CZESIEK",
-    //     "hp": 2,
-    // }
+    {
+        "field": board[3][1],
+        "card": "ZENEK",
+        'hp': 3,
+    },
+    {
+        "field": board[2][1],
+        'card': 'KRZYSZTOF',
+    },
+    {
+        "field": board[2][2],
+        'card': 'IWAN'
+    },
+    {
+        "field": board[3][2],
+        'card': 'MUR Z RUPIECI'
+    },
+    {
+        "field": board[3][2],
+        "card": "CZESIEK",
+        "hp": 2,
+    }
 ]
 
 

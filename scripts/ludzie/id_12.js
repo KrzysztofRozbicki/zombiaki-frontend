@@ -24,15 +24,14 @@ function prepareTrack(track) {
     let active_fields = [];
     for (let i = board.length - 1; i >= 0; i--) {
         const field = board[i][track_index];
-        const { element, card } = field;
-        if (mur) disable(element);
-        if (!mur && card?.name !== 'MUR' && card?.name !== 'MUR Z RUPIECI') {
-            active_fields.push(field);
+        const { element, card_board, card } = field;
+        if (mur) {
+            disable(element);
+            continue;
         }
+        if (card_board?.mur) mur = true;
         if (!card) continue;
-        if (card.name === 'MUR' || card.name === "MUR Z RUPIECI") {
-            mur = true;
-        }
+        if (card && card?.type === 'zombiak') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('jajnik_available'))
     const handler = jajnikTrackHandler(active_fields)
@@ -55,7 +54,6 @@ function jajnikTrackHandler(fields) {
         }
     }
 }
-
 
 function clearBoard() {
     removeCard();
