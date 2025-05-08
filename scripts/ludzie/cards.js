@@ -76,7 +76,6 @@ export const cards_ludzie_json = [
         "type": "other",
         "description": "Weź maksymalnie 3 karty z wierzchu stosu kart Zombiaków (z wyjątkiem Świtu), odrzuć 1 z nich na Śmietnik, a pozostałe odłóż z powrotem w wybranej kolejności. Dodatkowo dołóż na V przecznicy tyle Zombiaków o sile 1 ile jest możliwe.",
         "flavor": "Zakazuje się używać rac na stadionie.",
-        "board": 'deck',
         "race": "ludzie"
     },
     {
@@ -234,9 +233,8 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "CHUCK",
         "type": "other",
-        "description": "Odrzuć na Śmietnik wierzchnią kartę ze stotsu kart Zombiaków",
+        "description": "Odrzuć na Śmietnik wierzchnią kartę ze stosu kart Zombiaków",
         "flavor": "Chuck it out!",
-        "board": 'deck',
         "race": "ludzie"
     },
     {

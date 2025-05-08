@@ -260,7 +260,7 @@ function playCard() {
         cards_played++;
 
         placeCard(active_card);
-        if (!active_card.board) {
+        if (!active_card?.board) {
             removeCard();
             return;
         }
