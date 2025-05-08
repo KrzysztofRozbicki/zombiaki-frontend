@@ -55,7 +55,6 @@ export function updateBoard(prev_turn) {
     });
     if (prev_turn === 'ludzie') {
         moveZombiaki();
-
         const overlay_elements = document.querySelectorAll('#overlay');
         overlay_elements.forEach(element => {
             if (!element.classList.contains('disable')) {
@@ -86,19 +85,14 @@ function moveZombiaki() {
     }
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
-            const card = board[i][j].card;
+            const old_field = board[i][j];
+            const { element, card } = old_field;
             if (!card) continue;
             if (card.type === "zombiak" && !card.special) {
-                //SPRAWDZENIE ZWYCIĘSTWA 
                 if (i === 4) {
                     gameOver('zombiaki');
                     return;
                 }
-
-                //funkcja sprawdzająca mur i sume zombiaków
-                //sprawdzenie czy zombiak nie wszedł na minę / beczkę
-
-                const old_field = board[i][j];
                 moveSingleZombiak(old_field, card, 'front');
             }
         }
@@ -107,21 +101,12 @@ function moveZombiaki() {
 
 export function moveSingleZombiak(old_field, card, direction) {
     const { element } = old_field;
+
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
+    if (checkZapora(tor)) return;
 
-    function checkZapora() {
-        const field = board[4][tor];
-        console.log(field);
-        const card_przecznica = field.card;
-        if (!card_przecznica) return false;
-        if (card_przecznica.name === 'ZAPORA') return true;
-    }
-    const is_zapora = checkZapora();
-    if (is_zapora) return;
-
-    let new_field = null;
     const direction_offset = {
         'front': [1, 0],
         'back': [-1, 0],
@@ -135,21 +120,22 @@ export function moveSingleZombiak(old_field, card, direction) {
     const new_tor = tor + tor_offset;
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
     const next_field = board[new_przecznica][new_tor];
-    let is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
-    let is_dziura = next_field?.card &&
-        next_field?.card.name === 'DZIURA' &&
+
+    let is_beczka = next_field?.card_board && next_field?.card_board.name === 'BECZKA';
+    let is_dziura = next_field?.card_board &&
+        next_field?.card_board.name === 'DZIURA' &&
         old_field.card.hp <= 2;
+
+    if (checkMur(new_tor, przecznica, next_field)) return;
 
     if (!next_field) return;
     const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
     if (next_field_is_taken) return;
-    new_field = next_field;
-    if (is_beczka || is_dziura) unsetField(new_field);
-    putPicture(new_field, card);
-    if (old_field.card_overlay) moveOverlay(old_field, new_field);
+    if (is_beczka || is_dziura) unsetField(next_field);
+    putPicture(next_field, card);
+    if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field);
-
 }
 
 
@@ -207,13 +193,22 @@ export function putCard(field, card) {
     element.addEventListener('click', handler);
 }
 
-export function unsetField(board_field) {
-    const field = board_field.element;
-    field.innerHTML = ``
-    field.dataset.id = null;
-    field.dataset.name = null;
-    field.dataset.type = null;
-    field.dataset.overlay = null;
+export function unsetField(board_field, board_card = false) {
+    const { element } = board_field;
+
+    if (board_card) {
+        element.innerHTML = '';
+        board_field.card_board = null;
+    }
+
+    const card_element = element.querySelector('.field_image');
+    card_element.remove();
+    const overlay_element = element.querySelector('#overlay');
+    if (overlay_element) overlay_element.remove();
+    element.dataset.id = null;
+    element.dataset.name = null;
+    element.dataset.type = null;
+    element.dataset.overlay = null;
     board_field.card = null;
 }
 
@@ -252,7 +247,6 @@ function setFieldHandler(field, card) {
 }
 
 function putPicture(field, card) {
-
     const { id, name, race, type, hp, max_hp } = card;
     const { element } = field;
 
@@ -276,6 +270,12 @@ function putPicture(field, card) {
     element.dataset.id = id;
     element.dataset.name = name;
     element.dataset.type = type;
+    if (card.board && card.walkable && card.name !== 'BECZKA') {
+        field.card_board = card;
+        divElement.classList.remove('field_image');
+        divElement.classList.add('field_board');
+        return;
+    }
     field.card = card;
 }
 
@@ -348,4 +348,26 @@ export function clearBoard() {
             }
         }
     }
+}
+
+function checkZapora(tor) {
+    const field = board[4][tor];
+
+    const card_przecznica = field.card;
+    if (!card_przecznica) return false;
+    if (card_przecznica.name === 'ZAPORA') return true;
+}
+
+function checkMur(tor, przecznica, next_field) {
+    let is_mur = next_field?.card_board && next_field?.card_board.mur;
+    if (!is_mur) return false;
+    const mur_hp = next_field.card_board.hp;
+    let summary_hp = 0;
+    for (let i = przecznica; i >= 0; i--) {
+        if (board[i][tor]?.card && board[i][tor]?.card.type === 'zombiak') {
+            summary_hp += +board[i][tor].card.hp;
+        }
+    }
+    if (mur_hp > summary_hp) return true;
+    return false;
 }

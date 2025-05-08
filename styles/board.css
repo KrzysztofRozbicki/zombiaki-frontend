@@ -4,6 +4,19 @@
 
 }
 
+.deck .remove_card {
+  cursor: url('../images/cursors/remove.ico'), auto;
+  filter: none;
+}
+
+.deck .remove_card:hover,
+.deck .remove_card:focus {
+  filter: none;
+  transform: scale(2) !important;
+  z-index: 5;
+    transform-origin: top center;
+}
+
 body.background {
   background-image: url('../images/board_6.webp');
   background-size: cover;
@@ -56,11 +69,24 @@ body.background {
 }
 
 .field:has(img) {
-   cursor: url('../images/cursors/hover.ico'), auto;
+  cursor: url('../images/cursors/hover.ico'), auto;
   background: none;
 }
 
+.field_board {
+  position: absolute;
+}
+
+.field:has(.field_board) .field_image {
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  bottom: -0.75rem;
+  right: -0.75rem;
+}
+
 .field_image:hover,
+.field_board:hover,
 .overlay:hover {
   position: absolute;
   top: 0;

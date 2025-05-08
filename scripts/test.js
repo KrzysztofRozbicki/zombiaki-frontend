@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 export const TEST_MODE = {
-    race: 'ludzie',
+    race: 'zombiaki',
     board: true,
 };
 
@@ -15,34 +15,38 @@ let test_deck_zombiaki = cards_zombiaki_json;
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
 const start_cards_zombiaki = ['KLIK', 'CZESIEK', 'MARIUSZ', 'IWAN'];
-const start_cards_ludzie = ['DZIURA', 'KREW', 'SIEĆ', 'ZAPORA'];
+const start_cards_ludzie = ['MUR', 'KREW', 'BECZKA', 'ZMIATAJ'];
 
 const test_board = [
-    {
-        "field": board[1][0],
-        "card": 'WACEK',
-        'overlay': 'MIŚ',
-        'hp': 2,
-    },
-    {
-        "field": board[2][2],
-        "card": "ZENEK",
-        'hp': 3,
-    },
-    {
-        "field": board[0][2],
-        'card': 'KRZYSZTOF',
-        'hp': 2,
-    },
-    {
-        "field": board[2][0],
-        'card': 'MUR'
-    },
-    {
-        "field": board[3][2],
-        "card": "CZESIEK",
-        "hp": 2,
-    }
+    // {
+    //     "field": board[2][2],
+    //     "card": 'WACEK',
+    //     'overlay': 'MIŚ',
+    //     'hp': 2,
+    // },
+    // {
+    //     "field": board[1][2],
+    //     "card": "ZENEK",
+    //     'hp': 3,
+    // },
+    // {
+    //     "field": board[0][2],
+    //     'card': 'KRZYSZTOF',
+
+    // },
+    // {
+    //     "field": board[1][2],
+    //     'card': 'IWAN'
+    // },
+    // {
+    //     "field": board[3][2],
+    //     'card': 'MUR Z RUPIECI'
+    // },
+    // {
+    //     "field": board[3][2],
+    //     "card": "CZESIEK",
+    //     "hp": 2,
+    // }
 ]
 
 
@@ -57,7 +61,7 @@ function putCardsOnBoard() {
     for (let i = 0; i < test_board.length; i++) {
         const { field, card, overlay, hp } = test_board[i];
         const test_card = all_cards.find(crd => crd.name === card);
-        test_card.hp = hp;
+        test_card.hp = hp || test_card.max_hp || test_card.hp;
         setField(field, test_card);
         if (overlay) {
             const overlay_card = all_cards.find(card => card.name === overlay);

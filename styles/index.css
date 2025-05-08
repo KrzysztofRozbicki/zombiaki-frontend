@@ -122,7 +122,8 @@ button {
   height: 100%;
 }
 
-.deck img {
+.deck img,
+.deck .ropa_card {
   max-height: 35vh;
   max-width: 12vw;
   z-index: 3;

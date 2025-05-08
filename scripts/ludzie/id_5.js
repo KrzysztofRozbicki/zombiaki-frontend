@@ -37,16 +37,17 @@ function activeRopa(field, card) {
     card.dmg -= 1;
     setRopaHealth(card)
     clearBoard();
-    if (card.dmg === 0) {
-        enable(deck_ludzie_element);
-        damageZombiak(1, field);
-        return;
-    }
-    setRopaBoard(field, card);
+
 
     //dodanie nowych pól do aktywacji
     if (!targetCard || targetCard.race !== 'zombiaki') return;
     damageZombiak(1, field);
+    if (card.dmg === 0) {
+        enable(deck_ludzie_element);
+        return;
+    }
+
+    setRopaBoard(field, card);
 }
 
 function setRopaBoard(field, card) {

@@ -46,8 +46,7 @@ function jajnikTrackHandler(fields) {
 
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            const { element, card } = field;
-            console.log(field);
+            const { card } = field;
             if (card && card.type === 'zombiak' && !card.special) {
                 unsetField(field);
                 setField(field, zombiak_1, { other: true });

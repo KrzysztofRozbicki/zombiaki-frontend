@@ -65,8 +65,6 @@ function start(race_chosen) {
     prev_turn = 'ludzie';
     if (TEST_MODE) startTest(TEST_MODE.race);
     startDeck();
-
-    // Obsługa tur
     handleNewTurn();
 }
 

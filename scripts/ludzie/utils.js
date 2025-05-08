@@ -1,4 +1,4 @@
-import { board, unsetField, moveSingleZombiak } from "../board.js";
+import { board, unsetField, moveSingleZombiak, putCard } from "../board.js";
 import {
     removeCard,
     getActiveCardsZombiaki,
@@ -19,9 +19,6 @@ export function shot(card, sniper = false, cegła = false) {
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
-            console.log(board[0].length);
-            console.log(i, j);
-            console.log(board[i][j]);
             const { element, card } = board[i][j];
             if (!card) continue;
             if (card.mur && !sniper) {
@@ -129,7 +126,7 @@ function clearShotElements() {
 
 export function killZombiak(field) {
     const { element } = field;
-    const images = element.querySelectorAll('.field > div')
+    const images = element.querySelectorAll('.field > .field_image')
     images.forEach(image => image.classList.add('death_animation'));
 
     setTimeout(() => unsetField(field), 2000);
@@ -207,4 +204,28 @@ function closeCardClickHandler(resolve) {
         show(play_card);
         play_other.innerText = '';
     }
+}
+
+export function placeMur(card) {
+    disable(deck_ludzie_element);
+    for (let i = 1; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            const neighbour_field_is_taken = neighbourFieldIsTaken(i, j);
+            if (neighbour_field_is_taken) continue;
+            putCard(board[i][j], card);
+        }
+    }
+}
+
+function neighbourFieldIsTaken(i, j) {
+    const cross = [[0, 0], [1, 1], [1, -1], [-1, 1], [-1, -1], [0, 1], [0, -1], [-1, 0], [1, 0]];
+    for (let k = 0; k < cross.length; k++) {
+        let t = j + cross[k][0];
+        let p = i + cross[k][1];
+        if (t < 0 || t > 2) continue;
+        if (p < 0 || p > 4) continue;
+        const field_is_taken = !!(board[p][t].card && board[p][t].card.type === "zombiak");
+        if (field_is_taken) return true;
+    }
+    return false;
 }

@@ -15,6 +15,6 @@
 15. Zrobienie systemu testowego w którym ręcznie wpisuje pierwsze 4 karty i ustawia plansze / ZROBIONE
 16. Zrobienie wszystkich strzałów ludzi (lepszy strzał, długa seria, snajper , cegła). / ZROBIONE 
 17. Przetestowanie KLIK na wszystkie strzały. / ZROBIONE
-18. Przygotowanie wszystkich kart ludzi.
-19. Sytuacja skrajna - zombiak jest na murze - beczka rozbija się o mur.
+18. SKOŃCZENIE ROPY NA PUSTYM POLU. - bugfix // ZROBIONE
+19. Zrobienie tak żeby zombiaki mogły wchodzić na mur / dziure / auto / mine i z niego schodzić; / STYLOWANIE
 

@@ -64,7 +64,6 @@ function setAvailableFields(field) {
 function setNewField(old_field, new_field) {
     return function () {
         clearBoard();
-        console.log(new_field);
         moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.style.backgroundImage = ``;
         removeCard();
