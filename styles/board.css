@@ -32,10 +32,12 @@ body.background {
   gap: 0.5rem;
   position: relative;
 }
+
 #levels {
   flex-direction: column-reverse !important;
   justify-content: start;
 }
+
 .field img {
   width: 100%;
   height: 100%;
@@ -57,7 +59,6 @@ body.background {
    cursor: url('../images/cursors/hover.ico'), auto;
   background: none;
 }
-
 
 .field_image:hover,
 .overlay:hover {
@@ -106,6 +107,11 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 .gas_available > .field_image{
   cursor: url('../images/cursors/gas_green.ico'), auto;
+}
+
+.move_available > .field_image {
+  animation: 0.7s infinite alternate ease-in-out moveElement;
+  border-radius: 1rem;
 }
 
 .webbed > .field_image {
@@ -264,7 +270,6 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 1s alternate infinite ease-in fireElement;
 }
 
-
 @keyframes moveAvailable {
   from {
     background-color: var(--accent-color-opacity);
@@ -350,6 +355,15 @@ div[data-przecznica="5"]:has(img):hover > div {
   to {
     background-color: var(--accent-color-opacity);
   }
+}
+
+@keyframes moveElement {
+  from {
+    outline: 1px solid var(--color-blue);
+  }
+   to {
+    outline: 25px solid var(--color-blue-opacity);
+   }
 }
 
 @keyframes webAvailable {

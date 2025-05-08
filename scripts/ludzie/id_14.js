@@ -1,7 +1,8 @@
 //GAZ ROZWESELAJĄCY
 import { board, clearBoard, moveSingleZombiak } from "../board.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable } from "../utils.js";
+import { disable, enable, hideCancelButton } from "../utils.js";
+
 
 let gas_amount = 2;
 
@@ -11,6 +12,7 @@ export default function ludzie_id_14(card, field) {
 }
 
 function happyGas() {
+    if (gas_amount === 1) hideCancelButton();
     if (gas_amount === 0) {
         removeCard();
         enable(deck_ludzie_element);
