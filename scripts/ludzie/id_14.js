@@ -1,8 +1,7 @@
 //GAZ ROZWESELAJĄCY
-import { board, clearBoard } from "../board.js";
+import { board, clearBoard, moveSingleZombiak } from "../board.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable, hide, show } from "../utils.js";
-import { setField, unsetField } from "../board.js";
+import { disable, enable } from "../utils.js";
 
 let gas_amount = 2;
 
@@ -46,8 +45,9 @@ function setAvailableFields(field) {
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
 
-    const cross = [[1, 0], [-1, 0], [0, -1], [0, 1]];
+    const cross = [[0, 1], [0, -1], [-1, 0], [1, 0]];
     const all_fields = [];
+    const direction_offset = ['front', 'back', 'left', 'right'];
 
     for (let i = 0; i < cross.length; i++) {
         let t = tor + cross[i][0];
@@ -56,6 +56,7 @@ function setAvailableFields(field) {
         if (p < 0 || p > 4) continue;
         const field_is_taken = !!(board[p][t].card && !board[p][t].card.walkable);
         if (field_is_taken) continue;
+        board[p][t].direction = direction_offset[i];
         all_fields.push(board[p][t]);
     }
 
@@ -70,12 +71,13 @@ function setAvailableFields(field) {
         element.handler = handler;
     })
 }
+
 function setNewField(old_field, new_field) {
     return function () {
         clearBoard('move_on');
         clearBoard('no_image');
-        setField(new_field, old_field.card, { other: true });
-        unsetField(old_field);
+        console.log(new_field);
+        moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.classList.add('gased');
         gasHandler();
         new_field.element.style.backgroundImage = ``;
@@ -83,6 +85,7 @@ function setNewField(old_field, new_field) {
         happyGas();
     }
 }
+
 function hoverHandler(old_field, new_field) {
     return function () {
         const handler = outHandler(old_field, new_field);

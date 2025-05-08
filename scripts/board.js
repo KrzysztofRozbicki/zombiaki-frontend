@@ -112,7 +112,6 @@ export function moveSingleZombiak(old_field, card, direction) {
     const przecznica = +element.dataset.przecznica - 1;
 
     let new_field = null;
-
     const direction_offset = {
         'front': [1, 0],
         'back': [-1, 0],
@@ -120,26 +119,31 @@ export function moveSingleZombiak(old_field, card, direction) {
         'right': [0, 1],
     }
 
+
     const [przecznica_offset, tor_offset] = direction_offset[direction];
     const new_przecznica = przecznica + przecznica_offset;
     const new_tor = tor + tor_offset;
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
     const next_field = board[new_przecznica][new_tor];
     let is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
+    let is_dziura = next_field?.card &&
+        next_field?.card.name === 'DZIURA' &&
+        old_field.card.hp <= 2;
+
     if (!next_field) return;
     const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
     if (next_field_is_taken) return;
     new_field = next_field;
-    if (is_beczka) unsetField(new_field);
+    if (is_beczka || is_dziura) unsetField(new_field);
     putPicture(new_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, new_field);
+    if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field);
-    if (is_beczka) killZombiak(next_field);
 
 }
 
 
-function moveOverlay(old_field, new_field) {
+export function moveOverlay(old_field, new_field) {
     const overlay = old_field.element.getAttribute('data-overlay');
     if (!overlay || overlay === "null") return;
 

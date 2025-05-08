@@ -16,7 +16,7 @@ export const cards_ludzie_json = [
         "piercing": true,
         "name": "KRÓTKA SERIA",
         "type": "shot",
-        "description": "Krótka seria trafia najbliższego Zombiaka na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze. Trafienie cofa Zombiaka o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
+        "description": "Krótka seria trafia najbliższego Zombiaka na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze.Trafienie cofa Zombiaka o 1 pole.Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Łykaj kule, aumarlaku!",
         "board": true,
         "blockable": true,
