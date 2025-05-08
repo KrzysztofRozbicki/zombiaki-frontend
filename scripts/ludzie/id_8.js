@@ -72,7 +72,6 @@ function setWebBoard(field) {
 
         all_fields.push(board[p][t]);
     }
-    console.log(all_fields);
     if (all_fields.length === 0) {
         MAX_STRENGTH = 0;
         enable(deck_ludzie_element);

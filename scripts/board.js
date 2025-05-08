@@ -111,6 +111,16 @@ export function moveSingleZombiak(old_field, card, direction) {
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
 
+    function checkZapora() {
+        const field = board[4][tor];
+        console.log(field);
+        const card_przecznica = field.card;
+        if (!card_przecznica) return false;
+        if (card_przecznica.name === 'ZAPORA') return true;
+    }
+    const is_zapora = checkZapora();
+    if (is_zapora) return;
+
     let new_field = null;
     const direction_offset = {
         'front': [1, 0],
@@ -162,7 +172,10 @@ function moveLudzie() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const { card } = board[i][j];
-            if (!card || card.name !== 'BECZKA') continue;
+            if (!card) continue;
+            if (card.name === 'ZAPORA') unsetField(board[i][j]);
+            if (card.name !== 'BECZKA') continue;
+
             unsetField(board[i][j]);
             if (i === 0) continue;
             const new_field = board[i - 1][j];
@@ -294,25 +307,11 @@ function cancelCard(card) {
 function handleCancelCard(card) {
     return function () {
         const { race } = card;
-        clearBoard('');
+        clearBoard();
         const cancel_button = document.getElementById('cancel');
         hide(cancel_button);
         const deck = document.getElementById(`deck_${race}`);
         enable(deck);
-        for (let i = board.length - 1; i >= 0; i--) {
-            for (let j = 0; j < board[i].length; j++) {
-                const { element } = board[i][j];
-                element.classList = null;
-                element.classList.add('field');
-                element.removeEventListener('click', element.handler);
-                element.handler = null;
-                const cards_on_field = element.querySelectorAll('.field > div');
-                cards_on_field.forEach(el => {
-                    el.removeEventListener('click', el.shot_handler);
-                    el.shot_handler = null;
-                })
-            }
-        }
         const all_fields = document.querySelectorAll('.field');
         all_fields.forEach(field => enable(field));
         const tor_elements = document.querySelectorAll('.tor_electricity');
@@ -324,13 +323,19 @@ function handleCancelCard(card) {
     }
 }
 
-export function clearBoard(className) {
+export function clearBoard() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             const field = board[i][j];
             const { element } = field;
-            if (className) element.classList.remove(className);
-
+            if (element.classList.contains('webbed')) element.className = 'webbed';
+            else element.className = '';
+            element.classList.add('field');
+            const cards_on_field = element.querySelectorAll('.field > div');
+            cards_on_field.forEach(el => {
+                el.removeEventListener('click', el.shot_handler);
+                el.shot_handler = null;
+            })
             element.removeEventListener('click', element.handler);
             element.handler = null;
             if (element.handler_mouseover) {

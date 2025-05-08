@@ -36,7 +36,7 @@ function activeRopa(field, card) {
     const targetCard = field.card;
     card.dmg -= 1;
     setRopaHealth(card)
-    clearBoard('ropa_available');
+    clearBoard();
     if (card.dmg === 0) {
         enable(deck_ludzie_element);
         damageZombiak(1, field);

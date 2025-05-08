@@ -16,7 +16,7 @@ function happyGas() {
     if (gas_amount === 0) {
         removeCard();
         enable(deck_ludzie_element);
-        clearBoard('gased');
+        clearBoard();
         return;
     }
     disable(deck_ludzie_element);
@@ -25,7 +25,7 @@ function happyGas() {
             const field = board[i][j];
             const { element, card } = field;
             if (!card) continue;
-            if (card.type !== 'zombiak' || element.classList.contains('gased')) continue;
+            if (card.type !== 'zombiak' || element.classList.contains('gased') || element.classList.contains('webbed')) continue;
             element.classList.add('gas_available');
             const handler = gasHandler(field);
             element.handler = handler;
@@ -36,7 +36,7 @@ function happyGas() {
 
 function gasHandler(field) {
     return function () {
-        clearBoard('gas_available');
+        clearBoard();
         setAvailableFields(field);
     }
 }
@@ -76,8 +76,7 @@ function setAvailableFields(field) {
 
 function setNewField(old_field, new_field) {
     return function () {
-        clearBoard('move_on');
-        clearBoard('no_image');
+        clearBoard();
         console.log(new_field);
         moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.classList.add('gased');
@@ -96,7 +95,7 @@ function hoverHandler(old_field, new_field) {
         new_field.element.classList.add('background_image');
         const { card } = old_field;
         const { id, race } = card;
-        new_field.element.style.backgroundImage = `url('../images/cards/${race}/${id}.webp')`;
+        new_field.element.style.setProperty('--bg-image', `url('../images/cards/${race}/${id}.webp')`)
         old_field.element.classList.add('no_image');
     }
 }
@@ -104,7 +103,7 @@ function hoverHandler(old_field, new_field) {
 function outHandler(old_field, new_field) {
     return function () {
         new_field.element.classList.remove('background_image');
-        new_field.element.style.backgroundImage = ``;
+        new_field.element.style.removeProperty('--bg-image');
         old_field.element.classList.remove('no_image');
     }
 }

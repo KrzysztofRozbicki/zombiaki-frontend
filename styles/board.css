@@ -109,10 +109,7 @@ div[data-przecznica="5"]:has(img):hover > div {
   cursor: url('../images/cursors/gas_green.ico'), auto;
 }
 
-.move_available > .field_image {
-  animation: 0.7s infinite alternate ease-in-out moveElement;
-  border-radius: 1rem;
-}
+
 
 .webbed > .field_image {
   position: relative;
@@ -131,6 +128,12 @@ div[data-przecznica="5"]:has(img):hover > div {
 
 .move_on {
   animation: 0.7s infinite alternate ease-in-out moveAvailable;
+}
+
+.move_available > .field_image,
+.move_on > .field_image {
+  animation: 0.7s infinite alternate ease-in-out moveElement;
+  border-radius: 1rem;
 }
 
 .ropa_available {
@@ -170,6 +173,26 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 
 .background_image {
+
+  position: relative;
+}
+
+
+.background_image *:hover {
+  transform-origin: center center !important;
+  transform: scale(1) !important;
+}
+
+.background_image::after {
+  z-index: 4;
+  opacity: 0.75;
+  background-image: var(--bg-image, none);
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;

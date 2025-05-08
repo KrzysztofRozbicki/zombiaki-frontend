@@ -13,7 +13,7 @@ function krew() {
             const field = board[i][j];
             const { element, card } = field;
             if (!card) continue;
-            if (card.type !== 'zombiak') continue;
+            if (card.type !== 'zombiak' || element.classList.contains('webbed')) continue;
             element.classList.add('move_available');
             const handler = moveHandler(field);
             element.handler = handler;
@@ -24,14 +24,13 @@ function krew() {
 
 function moveHandler(field) {
     return function () {
-        clearBoard('move_available');
+        clearBoard();
         setAvailableFields(field);
     }
 }
 
 function setAvailableFields(field) {
     const { element } = field;
-
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
 
@@ -64,12 +63,12 @@ function setAvailableFields(field) {
 
 function setNewField(old_field, new_field) {
     return function () {
-        clearBoard('move_on');
-        clearBoard('no_image');
+        clearBoard();
         console.log(new_field);
         moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.style.backgroundImage = ``;
         removeCard();
+        enable(deck_ludzie_element);
     }
 }
 
@@ -77,11 +76,11 @@ function hoverHandler(old_field, new_field) {
     return function () {
         const handler = outHandler(old_field, new_field);
         new_field.element.addEventListener('mouseout', handler, { once: true })
-        new_field.element.handler_mouseout = handler;
         new_field.element.classList.add('background_image');
+        new_field.element.handler_mouseout = handler;
         const { card } = old_field;
         const { id, race } = card;
-        new_field.element.style.backgroundImage = `url('../images/cards/${race}/${id}.webp')`;
+        new_field.element.style.setProperty('--bg-image', `url('../images/cards/${race}/${id}.webp')`)
         old_field.element.classList.add('no_image');
     }
 }
@@ -89,7 +88,7 @@ function hoverHandler(old_field, new_field) {
 function outHandler(old_field, new_field) {
     return function () {
         new_field.element.classList.remove('background_image');
-        new_field.element.style.backgroundImage = ``;
+        new_field.element.style.removeProperty('--bg-image');
         old_field.element.classList.remove('no_image');
     }
 }
