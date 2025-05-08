@@ -123,7 +123,9 @@ div[data-przecznica="5"]:has(img):hover > div {
   transform: none;
 }
 
-
+.move_on {
+  animation: 0.7s infinite alternate ease-in-out moveAvailable;
+}
 
 .ropa_available {
   cursor: url('../images/cursors/barrel.ico'), auto;
@@ -161,7 +163,15 @@ div[data-przecznica="5"]:has(img):hover > div {
   z-index: 4;
 }
 
+.background_image {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
+.no_image {
+  opacity: 0.4;
+}
 
 #cancel {
   width: 27%;
@@ -254,6 +264,15 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 1s alternate infinite ease-in fireElement;
 }
 
+
+@keyframes moveAvailable {
+  from {
+    background-color: var(--accent-color-opacity);
+  }
+  to {
+    background-color: var(--color-blue-opacity);
+  }
+}
 
 @keyframes ropaAvailable {
   from {

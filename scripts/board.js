@@ -290,6 +290,7 @@ function cancelCard(card) {
 function handleCancelCard(card) {
     return function () {
         const { race } = card;
+        clearBoard('');
         const cancel_button = document.getElementById('cancel');
         hide(cancel_button);
         const deck = document.getElementById(`deck_${race}`);
@@ -324,10 +325,18 @@ export function clearBoard(className) {
         for (let j = 0; j < board[0].length; j++) {
             const field = board[i][j];
             const { element } = field;
-            element.classList.remove(className);
+            if (className) element.classList.remove(className);
 
             element.removeEventListener('click', element.handler);
             element.handler = null;
+            if (element.handler_mouseover) {
+                element.removeEventListener('mouseover', element.handler_mouseover);
+                element.handler_mouseover = null;
+            }
+            if (element.handler_mouseout) {
+                element.removeEventListener('mouseout', element.handler_mouseout);
+                element.handler_mouseout = null;
+            }
         }
     }
 }

@@ -2,12 +2,14 @@
 import { board } from './../board.js';
 import { hideCancelButton, enable, disable } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
+let MAX_STRENGTH = 6;
 export default function ludzie_id_8(card, field) {
     web();
+    MAX_STRENGTH = 6;
 }
 
 
-let MAX_STRENGTH = 6;
+
 function web() {
     disable(deck_ludzie_element);
     for (let i = board.length - 1; i >= 0; i--) {
