@@ -173,6 +173,17 @@ div[data-przecznica="5"]:has(img):hover > div {
     animation: 0.7s infinite alternate ease-in-out shotAvailable;
 }
 
+.miotacz_available {
+  cursor: url('../images/cursors/miotacz.ico'), auto;
+  animation: 0.7s infinite alternate ease-in-out miotaczAvailable;
+}
+
+.miotacz_available[data-type="zombiak"] > .field_image {
+    cursor: url('../images/cursors/miotacz.ico'), auto;
+    border-radius: 1rem;
+    animation: 0.7s infinite alternate ease-in-out shotAvailable;
+}
+
 #streets .zombiaki:hover,
 #streets .zombiaki:focus {
   background-color: var(--accent-color);
@@ -355,6 +366,16 @@ div[data-przecznica="5"]:has(img):hover > div {
     background-color: var(--accent-color-opacity);
   }
 }
+
+@keyframes miotaczAvailable {
+  from {
+    background-color: var(--accent-color);
+  }
+  to {
+    background-color: var(--accent-color-opacity);
+  }
+}
+
 @keyframes shockElement {
   from {
     filter: none;
@@ -501,7 +522,7 @@ div[data-max_hp="4"][data-overlay="true"] {
 
 div[data-max_hp="5"] {
   bottom: 6%;
-  width: 80%;
+  width: 80% !important;
   transform: translateX(-50%) rotate(-1deg);
   font-size: 80%;
 }
@@ -566,7 +587,7 @@ div[data-max_hp="4"][data-overlay="true"] {
 
 .field div:after,
 #chosen_card_health:after,
-.ropa_card div:after {
+.hp_card div:after {
   content: "";
   font-size: 100%;
   height: 100%;
@@ -581,12 +602,12 @@ div[data-max_hp="4"][data-overlay="true"] {
   transform-origin: top right;
 }
 
-.ropa_card div {
+.hp_card div {
   bottom: 3%;
   width: 70%;
   left: 45%;
 }
-.ropa_card div:after {
+.hp_card div:after {
   font-size: 300%;
   transform: none;
 }

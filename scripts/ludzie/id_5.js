@@ -38,15 +38,8 @@ function activeRopa(field, card) {
     setRopaHealth(card)
     clearBoard();
 
-
-    //dodanie nowych pól do aktywacji
-    if (!targetCard || targetCard.race !== 'zombiaki') return;
-    damageZombiak(1, field);
-    if (card.dmg === 0) {
-        enable(deck_ludzie_element);
-        return;
-    }
-
+    if (targetCard && targetCard.type === 'zombiak') damageZombiak(1, field);
+    if (card.dmg === 0) return;
     setRopaBoard(field, card);
 }
 
@@ -80,33 +73,34 @@ function setRopaBoard(field, card) {
 function setRopaHealth(card) {
     const { dmg } = card;
     if (dmg === 0) {
-        const div_element = document.querySelector('.ropa_card');
-        const ropa_card = div_element.querySelector('.card_ludzie');
+        const div_element = document.querySelector('.hp_card');
+        const hp_card = div_element.querySelector('.card_ludzie');
         const parent_div = div_element.parentNode;
-        parent_div.insertBefore(ropa_card, div_element);
+        parent_div.insertBefore(hp_card, div_element);
         div_element.remove();
+        enable(deck_ludzie_element);
         removeCard();
         return;
     }
 
     if (dmg === 3) {
-        const ropa_card = document.querySelector('.card_ludzie[data-name="ROPA"]');
-        const parent_div = ropa_card.parentNode;
+        const hp_card = document.querySelector('.card_ludzie[data-name="ROPA"]');
+        const parent_div = hp_card.parentNode;
         const div_element = document.createElement('div');
-        parent_div.insertBefore(div_element, ropa_card);
-        div_element.appendChild(ropa_card);
+        parent_div.insertBefore(div_element, hp_card);
+        div_element.appendChild(hp_card);
         div_element.style = 'position: relative';
-        div_element.style.transform = ropa_card.style.transform;
-        div_element.classList.add('ropa_card', 'disable');
+        div_element.style.transform = hp_card.style.transform;
+        div_element.classList.add('hp_card', 'disable');
         const hp_element = document.createElement('div');
         hp_element.dataset.max_hp = 4;
         hp_element.dataset.hp_name = "ROPA"
-        ropa_card.style = '';
+        hp_card.style = '';
         div_element.appendChild(hp_element);
     }
 
-    const ropa_card = document.querySelector('.card_ludzie[data-name="ROPA"]');
-    const parent_div = ropa_card.parentNode;
+    const hp_card = document.querySelector('.card_ludzie[data-name="ROPA"]');
+    const parent_div = hp_card.parentNode;
     const hp_element = parent_div.querySelector('div[data-hp_name="ROPA"');
     hp_element.dataset.current_hp = dmg;
 }
