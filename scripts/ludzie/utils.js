@@ -212,6 +212,7 @@ export function placeMur(card) {
         for (let j = 0; j < board[i].length; j++) {
             const neighbour_field_is_taken = neighbourFieldIsTaken(i, j);
             if (neighbour_field_is_taken) continue;
+            if (board[i][j].card_board) continue;
             putCard(board[i][j], card);
         }
     }

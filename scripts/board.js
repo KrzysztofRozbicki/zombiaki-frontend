@@ -2,7 +2,7 @@ import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate } from "./utils.js";
-import { killZombiak } from "./ludzie/utils.js";
+import { killZombiak, damageZombiak } from "./ludzie/utils.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
 const T2_P5 = document.querySelector('div[data-tor="2"][data-przecznica="5"]');
@@ -136,8 +136,50 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field);
+    checkMina(next_field);
 }
 
+function checkMina(field) {
+    const { card_board } = field;
+    if (!card_board) return;
+    if (card_board.name !== 'MINA') return;
+    setTimeout(() => blowMina(field), 10);
+}
+
+function blowMina(field) {
+    const { card_board, card, element } = field;
+    if (card && card.type === 'zombiak') damageZombiak(card_board.dmg, field);
+    field.card_board = null;
+
+
+    const tor = +element.dataset.tor - 1;
+    const przecznica = +element.dataset.przecznica - 1;
+
+    const cross = [[1, 0], [-1, 0], [0, -1], [0, 1]];
+    const all_fields = [board[przecznica][tor]];
+
+    for (let i = 0; i < cross.length; i++) {
+        let t = tor + cross[i][0];
+        let p = przecznica + cross[i][1];
+        if (t < 0 || t > 2) continue;
+        if (p < 0 || p > 4) continue;
+        all_fields.push(board[p][t]);
+    }
+
+    for (let i = 0; i < all_fields.length; i++) {
+        const { card } = all_fields[i];
+        if (!card) continue;
+        //AKTYWACJA AUTA
+        console.log(all_fields[i].element);
+        console.log(all_fields[i].card);
+        if (card.type === 'zombiak') {
+            console.log('zombiak');
+            damageZombiak(1, all_fields[i])
+        }
+    }
+    const mina_element = element.querySelector('.field_board');
+    mina_element.remove();
+}
 
 export function moveOverlay(old_field, new_field) {
     const overlay = old_field.element.getAttribute('data-overlay');
@@ -202,7 +244,7 @@ export function unsetField(board_field, board_card = false) {
     }
 
     const card_element = element.querySelector('.field_image');
-    card_element.remove();
+    if (card_element) card_element.remove();
     const overlay_element = element.querySelector('#overlay');
     if (overlay_element) overlay_element.remove();
     element.dataset.id = null;

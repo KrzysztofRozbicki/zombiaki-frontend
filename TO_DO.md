@@ -18,5 +18,5 @@
 18. SKOŃCZENIE ROPY NA PUSTYM POLU. - bugfix / ZROBIONE
 19. Zrobienie tak żeby zombiaki mogły wchodzić na mur / dziure / auto / mine i z niego schodzić; / 
 ZROBIONE
-20. MIOTACZ / MINA / BETONOWE BUCIKI / GRANAT / AUTO 
+20. Aktywacja miny przez miotacz, ulica w ogniu, rope, granat, auto
 
