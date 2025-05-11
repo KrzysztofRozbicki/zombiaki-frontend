@@ -155,7 +155,6 @@ export function checkBlowField(field, move = false) {
 }
 
 function blowField(field) {
-    console.log('blow: ', field);
     const { card_board, card, element } = field;
     if (card && card.type === 'zombiak') damageZombiak(card_board.dmg, field);
     field.card_board = null;
@@ -168,7 +167,7 @@ function blowField(field) {
     if (card_board.name === 'AUTO') {
         cross = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, -1], [0, 1]]
     }
-    const all_fields = [board[przecznica][tor]];
+    const all_fields = [];
 
     for (let i = 0; i < cross.length; i++) {
         let t = tor + cross[i][0];

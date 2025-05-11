@@ -19,9 +19,9 @@ export function shot(card, sniper = false, cegła = false) {
     const { dmg, piercing } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
-            const { element, card } = board[i][j];
-            if (!card) continue;
-            if (card.mur && !sniper) {
+            const { element, card, card_board } = board[i][j];
+            if (!card && !card_board) continue;
+            if (card?.mur && !sniper) {
                 for (let k = i - 1; k >= 0; k--) {
                     disable(board[k][j].element);
                 }
@@ -31,7 +31,7 @@ export function shot(card, sniper = false, cegła = false) {
                 i = board.length;
                 continue;
             }
-            if (card.race !== 'zombiaki') continue;
+            if (card?.race !== 'zombiaki' && card_board?.name !== 'AUTO') continue;
             element.classList.add('shot_available')
 
             const cards_on_field = element.querySelectorAll('.field > div');
@@ -66,10 +66,16 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
     }
     const { element, card, card_overlay } = field;
     const { className } = specific_element;
+
+    if (className === 'field_board') {
+        if (field.card_board.name === 'AUTO') {
+            checkBlowField(field);
+        }
+        return;
+    }
     const hp_element = specific_element.querySelector('div');
     hp_element.dataset.current_hp = +hp_element.dataset.current_hp - dmg;
     if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
-
 
     if (className === 'overlay') card_overlay.hp -= dmg;
     if (className === 'field_image') {

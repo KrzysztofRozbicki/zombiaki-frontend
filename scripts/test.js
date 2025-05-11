@@ -15,27 +15,26 @@ let test_deck_zombiaki = cards_zombiaki_json;
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
 const start_cards_zombiaki = ['KLIK', 'CZESIEK', 'MARIUSZ', 'MIŚ'];
-const start_cards_ludzie = ['BETONOWE BUCIKI', 'MIOTACZ', 'AUTO', 'GRANAT'];
+const start_cards_ludzie = ['BETONOWE BUCIKI', 'DŁUGA SERIA', 'AUTO', 'GRANAT'];
 
 const test_board = [
-    // {
-    //     "field": board[2][2],
-    //     "card": 'WACEK',
-    //     'overlay': 'MIŚ',
-    //     'hp': 2,
-    // },
-    // {
-    //     "field": board[3][1],
-    //     "card": "AUTO",
-    // },
-    // {
-    //     'field': board[3][1],
-    //     'card': "ZENEK"
-    // },
-    // {
-    //     "field": board[2][1],
-    //     'card': 'KRZYSZTOF',
-    // },
+    {
+        "field": board[2][2],
+        "card": 'WACEK',
+        'overlay': 'MIŚ',
+    },
+    {
+        "field": board[3][1],
+        "card": "AUTO",
+    },
+    {
+        'field': board[1][1],
+        'card': "ZENEK"
+    },
+    {
+        "field": board[2][1],
+        'card': 'KRZYSZTOF',
+    },
     {
         "field": board[0][2],
         'card': 'IWAN'
@@ -68,7 +67,6 @@ function putCardsOnBoard() {
         if (overlay) {
             const overlay_card = all_cards.find(card => card.name === overlay);
             const { id, race } = overlay_card;
-            overlay_card.hp = 1;
             addOverlay(overlay_card, field, raceFunctions[`${race}_id_${id}_callback`])
         }
     }
