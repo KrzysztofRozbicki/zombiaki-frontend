@@ -1,6 +1,6 @@
 
 //ULICA W OGNIU
-import { board } from '../board.js';
+import { board, checkBlowField } from '../board.js';
 import { show, hide, enable, disable } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from './utils.js';
@@ -34,6 +34,7 @@ function fireTor(tor) {
     for (let i = 0; i < board.length; i++) {
         const field = board[i][tor_index];
         const { card } = field;
+        checkBlowField(field);
         if (!card) continue;
         if (card.type !== 'zombiak') continue;
 

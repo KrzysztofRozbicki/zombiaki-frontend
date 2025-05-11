@@ -67,18 +67,16 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
     const { element, card, card_overlay } = field;
     const { className } = specific_element;
 
-    if (className === 'field_board') {
-        if (field.card_board.name === 'AUTO') {
-            checkBlowField(field);
-        }
-        return;
+    if (className === 'overlay' || className === 'field_image') {
+        const hp_element = specific_element.querySelector('div');
+        hp_element.dataset.current_hp = +hp_element.dataset.current_hp - dmg;
+        if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
     }
-    const hp_element = specific_element.querySelector('div');
-    hp_element.dataset.current_hp = +hp_element.dataset.current_hp - dmg;
-    if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
 
     if (className === 'overlay') card_overlay.hp -= dmg;
     if (className === 'field_image') {
+
+
         card.hp -= dmg;
         if (card.hp <= 0) {
             killZombiak(field);
@@ -101,6 +99,29 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
             return;
         }
         if (!cegła) moveSingleZombiak(field, card, 'back');
+    }
+
+    if (className === 'field_board') {
+        if (field.card_board.name === 'AUTO') {
+            checkBlowField(field);
+            if (dmg > 1 && piercing) {
+                const piercing_dmg = dmg - 1;
+                const tor = +element.dataset.tor - 1;
+                const przecznica = +element.dataset.przecznica - 1;
+                for (let i = przecznica - 1; i >= 0; i--) {
+                    const field = board[i][tor];
+                    const { element, card } = field;
+                    if (!card) continue;
+                    if (card.mur) return;
+                    if (card.type === 'zombiak') {
+                        const zombie_card = element.querySelector('.field_image');
+                        setTimeout(() => shotZombiak(piercing_dmg, field, zombie_card, piercing), 2100);
+                        return;
+                    }
+                }
+            }
+        }
+        return;
     }
 
     if (card_overlay && card_overlay.hp <= 0) {

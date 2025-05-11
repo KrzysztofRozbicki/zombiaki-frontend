@@ -332,7 +332,7 @@ function putPicture(field, card) {
 
 function cardFunction(card) {
     const { id, race, type, special } = card;
-    if (type === "zombiak" && !special) {
+    if (type === "zombiak") {
         putZombiak(card);
         return;
     }
