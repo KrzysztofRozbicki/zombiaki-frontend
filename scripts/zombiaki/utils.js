@@ -15,7 +15,6 @@ export function useOverlay(field_board) {
 export function putOverlay(card, callback) {
     const zombiaki_deck = document.getElementById('deck_zombiaki');
     disable(zombiaki_deck);
-    let no_zombiak = true;
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
             const { element } = board[i][j];
@@ -24,7 +23,6 @@ export function putOverlay(card, callback) {
             const { type, name } = temp_card;
 
             if (type !== 'zombiak' && (name === 'KOT' || name === 'PIES')) continue;
-            no_zombiak = false;
             element.classList.add('overlay_available');
             const handler = overlayHandler(card, board[i][j], callback);
             element.overlay_handler = handler;
@@ -41,8 +39,10 @@ function overlayHandler(card, field, callback) {
     }
 }
 export function addOverlay(card, field_board, callback) {
-    const zombiaki_deck = document.getElementById('deck_zombiaki');
-    enable(zombiaki_deck);
+    if (card.race === 'zombiaki') {
+        const zombiaki_deck = document.getElementById('deck_zombiaki');
+        enable(zombiaki_deck);
+    }
     const { element } = field_board;
     field_board.card_overlay = card;
     const { id, race, hp, max_hp } = card;
@@ -71,11 +71,12 @@ export function addOverlay(card, field_board, callback) {
 
     const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
-
-    const overlay = element.querySelector('#overlay');
-    const handler = showOverlay(field_board, field_board.card_overlay, callback);
-    overlay.handler = handler;
-    overlay.addEventListener('click', handler);
+    if (callback) {
+        const overlay = element.querySelector('#overlay');
+        const handler = showOverlay(field_board, field_board.card_overlay, callback);
+        overlay.handler = handler;
+        overlay.addEventListener('click', handler);
+    }
     removeCard();
 }
 

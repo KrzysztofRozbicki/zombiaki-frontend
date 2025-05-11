@@ -1,4 +1,4 @@
-import { board, unsetField, moveSingleZombiak, putCard } from "../board.js";
+import { board, unsetField, moveSingleZombiak, putCard, clearBoard, checkBlowField } from "../board.js";
 import {
     removeCard,
     getActiveCardsZombiaki,
@@ -12,7 +12,7 @@ import {
     deck_ludzie_element
 } from "../index.js";
 import { deleteOverlay } from "../zombiaki/utils.js";
-import { disable, enable, show, hide } from "../utils.js";
+import { disable, enable, show, hide, hideCancelButton } from "../utils.js";
 
 export function shot(card, sniper = false, cegła = false) {
     disable(deck_ludzie_element);
@@ -229,4 +229,87 @@ function neighbourFieldIsTaken(i, j) {
         if (field_is_taken) return true;
     }
     return false;
+}
+
+
+export function aoeHandler(field, card) {
+    return function () {
+        activeAoe(field, card);
+    }
+}
+function activeAoe(field, card) {
+    const { element } = field;
+    hideCancelButton();
+    const targetCard = field.card;
+    card.dmg -= 1;
+    setAoeCardHealth(card)
+    clearBoard();
+    checkBlowField(field);
+    if (targetCard && targetCard.type === 'zombiak') damageZombiak(1, field);
+    if (card.dmg === 0) return;
+    setAoeBoard(field, card);
+}
+
+function setAoeBoard(field, card) {
+    const { element } = field;
+    const { name } = card;
+
+    const tor = +element.dataset.tor - 1;
+    const przecznica = +element.dataset.przecznica - 1;
+    let cross = [];
+    if (name === 'ROPA') cross = [[1, 0], [-1, 0], [0, -1], [0, 1]];
+    if (name === 'MIOTACZ') cross = [[1, 0], [-1, 0]];
+    const all_fields = [board[przecznica][tor]];
+
+    for (let i = 0; i < cross.length; i++) {
+        let t = tor + cross[i][0];
+        let p = przecznica + cross[i][1];
+        if (t < 0 || t > 2) continue;
+        if (p < 0 || p > 4) continue;
+        all_fields.push(board[p][t]);
+    }
+
+    all_fields.forEach((field) => {
+        const { element } = field;
+        element.classList.add(`${name.toLowerCase()}_available`);
+
+        const handler = aoeHandler(field, card);
+        element.addEventListener('click', handler);
+        element.handler = handler;
+    })
+}
+
+function setAoeCardHealth(card) {
+    const { dmg, max_dmg, name } = card;
+    if (dmg === 0) {
+        const div_element = document.querySelector('.hp_card');
+        const hp_card = div_element.querySelector('.card_ludzie');
+        const parent_div = div_element.parentNode;
+        parent_div.insertBefore(hp_card, div_element);
+        div_element.remove();
+        enable(deck_ludzie_element);
+        removeCard();
+        return;
+    }
+
+    if (dmg === max_dmg - 1) {
+        const hp_card = document.querySelector(`.card_ludzie[data-name="${name}"]`);
+        const parent_div = hp_card.parentNode;
+        const div_element = document.createElement('div');
+        parent_div.insertBefore(div_element, hp_card);
+        div_element.appendChild(hp_card);
+        div_element.style = 'position: relative';
+        div_element.style.transform = hp_card.style.transform;
+        div_element.classList.add('hp_card', 'disable');
+        const hp_element = document.createElement('div');
+        hp_element.dataset.max_hp = 4;
+        hp_element.dataset.hp_name = name
+        hp_card.style = '';
+        div_element.appendChild(hp_element);
+    }
+
+    const hp_card = document.querySelector(`.card_ludzie[data-name="${name}"]`);
+    const parent_div = hp_card.parentNode;
+    const hp_element = parent_div.querySelector(`div[data-hp_name="${name}"`);
+    hp_element.dataset.current_hp = dmg;
 }

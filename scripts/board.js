@@ -121,10 +121,11 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
     const next_field = board[new_przecznica][new_tor];
 
-    let is_beczka = next_field?.card_board && next_field?.card_board.name === 'BECZKA';
-    let is_dziura = next_field?.card_board &&
+    const is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
+    const is_dziura = next_field?.card_board &&
         next_field?.card_board.name === 'DZIURA' &&
         old_field.card.hp <= 2;
+    checkConcreteShoes(old_field);
 
     if (checkMur(new_tor, przecznica, next_field)) return;
 
@@ -136,26 +137,37 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field);
-    checkMina(next_field);
+    checkBlowField(next_field, { move: true });
 }
 
-function checkMina(field) {
+function checkConcreteShoes(old_field) {
+    if (!old_field.card_overlay) return;
+    if (old_field.card_overlay.name !== 'BETONOWE BUCIKI') return;
+    damageZombiak(old_field.card_overlay.dmg, old_field);
+}
+
+export function checkBlowField(field, move = false) {
     const { card_board } = field;
     if (!card_board) return;
-    if (card_board.name !== 'MINA') return;
-    setTimeout(() => blowMina(field), 10);
+    if (card_board.name !== 'MINA' && card_board.name !== 'AUTO') return;
+    if (move && card_board.name === 'AUTO') return;
+    setTimeout(() => blowField(field), 10);
 }
 
-function blowMina(field) {
+function blowField(field) {
+    console.log('blow: ', field);
     const { card_board, card, element } = field;
     if (card && card.type === 'zombiak') damageZombiak(card_board.dmg, field);
     field.card_board = null;
-
-
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
-
-    const cross = [[1, 0], [-1, 0], [0, -1], [0, 1]];
+    let cross = []
+    if (card_board.name === 'MINA') {
+        cross = [[1, 0], [-1, 0], [0, -1], [0, 1]];
+    }
+    if (card_board.name === 'AUTO') {
+        cross = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, -1], [0, 1]]
+    }
     const all_fields = [board[przecznica][tor]];
 
     for (let i = 0; i < cross.length; i++) {
@@ -167,18 +179,14 @@ function blowMina(field) {
     }
 
     for (let i = 0; i < all_fields.length; i++) {
-        const { card } = all_fields[i];
-        if (!card) continue;
-        //AKTYWACJA AUTA
-        console.log(all_fields[i].element);
-        console.log(all_fields[i].card);
-        if (card.type === 'zombiak') {
-            console.log('zombiak');
-            damageZombiak(1, all_fields[i])
+        const { card, board_card } = all_fields[i];
+        checkBlowField(all_fields[i]);
+        if (card && card?.type === 'zombiak') {
+            damageZombiak(card_board.blow_dmg, all_fields[i])
         }
     }
-    const mina_element = element.querySelector('.field_board');
-    mina_element.remove();
+    const blow_element = element.querySelector('.field_board');
+    blow_element.remove();
 }
 
 export function moveOverlay(old_field, new_field) {
@@ -203,28 +211,27 @@ function moveLudzie() {
             if (!card) continue;
             if (card.name === 'ZAPORA') unsetField(board[i][j]);
             if (card.name !== 'BECZKA') continue;
-
             unsetField(board[i][j]);
             if (i === 0) continue;
             const new_field = board[i - 1][j];
-            if (!new_field.card) {
+            if (!new_field.card && !new_field.card_board) {
                 setField(new_field, card);
                 continue;
             }
-            if (new_field.card.name === 'DZIURA') {
+            if (new_field?.card_board?.name === 'DZIURA') {
                 unsetField(new_field);
                 continue;
             }
-            if (new_field.card.name === 'MUR' ||
-                new_field.card.name === 'RUPIECI' ||
-                new_field.card.name === 'AUTO') continue;
-            if (new_field.card.type === 'zombiak') {
-                killZombiak(new_field);
+            if (new_field?.card_board?.name === 'MUR' ||
+                new_field?.card_board?.name === 'MUR Z RUPIECI' ||
+                new_field?.card_board?.name === 'AUTO') continue;
+            checkBlowField(new_field);
+            if (new_field?.card?.type === 'zombiak') {
+                unsetField(new_field);
                 continue;
             }
         }
     }
-
 }
 
 export function putCard(field, card) {
@@ -297,7 +304,10 @@ function putPicture(field, card) {
     divElement.classList.add('field_image')
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;
+    imgElement.dataset.name = name;
     divElement.appendChild(imgElement);
+
+
 
     if (hp) {
         const hpElement = document.createElement('div');
