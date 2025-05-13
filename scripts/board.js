@@ -1,7 +1,7 @@
 import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
-import { show, hide, enable, disable, randomRotate } from "./utils.js";
+import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
@@ -78,15 +78,25 @@ export function resetUsableCards() {
     })
 }
 
-function moveZombiaki() {
+async function moveZombiaki() {
     if (!move_zombiaki) {
         move_zombiaki = true;
         return;
     }
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
+            const field = board[i][j];
+            const { card } = field;
+            if (!card) continue;
+            if (card.name === 'PIES' || card.name === 'KOT') {
+                await movePet(field);
+            }
+        }
+    }
+    for (let i = board.length - 1; i >= 0; i--) {
+        for (let j = 0; j < board[i].length; j++) {
             const old_field = board[i][j];
-            const { element, card } = old_field;
+            const { card } = old_field;
             if (!card) continue;
             if (card.type === "zombiak" && !card.special) {
                 if (i === 4) {
@@ -98,6 +108,57 @@ function moveZombiaki() {
         }
     }
 }
+
+function movePet(field) {
+    const { element, card } = field;
+    const { name } = card;
+
+    return new Promise((resolve) => {
+        showAlert(`NA POCZĄTKU TURY PRZESUŃ KARTĘ "${name}"`);
+        element.classList.add('move_available');
+        const handler = movePetHandler(field, resolve);
+        element.handler = handler;
+        element.addEventListener('click', handler, { once: true });
+    })
+}
+
+function movePetHandler(field, resolve) {
+    return function () {
+        setAvailableFields(field, resolve);
+    }
+}
+
+function setAvailableFields(field, resolve) {
+    const { element } = field;
+    const tor = +element.dataset.tor - 1;
+    const przecznica = +element.dataset.przecznica - 1;
+
+    const cross = [[-1, 0], [1, 0], [0, 1], [0, -1]];
+    const all_fields = [];
+    const direction_offset = ['left', 'right', 'front', 'back'];
+
+    for (let i = 0; i < cross.length; i++) {
+        let t = tor + cross[i][0];
+        let p = przecznica + cross[i][1];
+        if (t < 0 || t > 2) continue;
+        if (p < 0 || p > 4) continue;
+        board[p][t].direction = direction_offset[i];
+        all_fields.push(board[p][t]);
+    }
+
+    all_fields.forEach((new_field) => {
+        const { element } = new_field;
+        element.classList.add('move_on');
+        const handler_mouseover = hoverHandler(field, new_field);
+        element.handler_mouseover = handler_mouseover;
+        element.addEventListener('mouseover', handler_mouseover);
+        const handler = setNewField(field, new_field);
+        element.addEventListener('click', handler, { once: true });
+        element.handler = handler;
+    })
+}
+
+
 
 export function moveSingleZombiak(old_field, card, direction) {
     const { element } = old_field;

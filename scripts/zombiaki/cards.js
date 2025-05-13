@@ -47,7 +47,8 @@ export const cards_zombiaki_json = [
         "max_hp": 2,
         "special": true,
         "board": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "pet": true,
     },
     {
         "id": 5,
@@ -164,7 +165,8 @@ export const cards_zombiaki_json = [
         "max_hp": 1,
         "special": true,
         "board": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "pet": true
     },
     {
         "id": 15,
