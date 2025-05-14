@@ -1,5 +1,5 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard } from "./index.js";
+import { gameOver, removeCard, deck_ludzie_element, deck_zombiaki_element } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
@@ -67,8 +67,6 @@ export function updateBoard(prev_turn) {
         element.classList.remove('webbed')
     )
     if (prev_turn === 'zombiaki') moveLudzie();
-
-
 }
 
 export function resetUsableCards() {
@@ -79,6 +77,7 @@ export function resetUsableCards() {
 }
 
 async function moveZombiaki() {
+    disable(deck_zombiaki_element);
     if (!move_zombiaki) {
         move_zombiaki = true;
         return;
@@ -110,23 +109,16 @@ async function moveZombiaki() {
 }
 
 function movePet(field) {
+
     const { element, card } = field;
     const { name } = card;
 
     return new Promise((resolve) => {
         showAlert(`NA POCZĄTKU TURY PRZESUŃ KARTĘ "${name}"`);
-        element.classList.add('move_available');
-        const handler = movePetHandler(field, resolve);
-        element.handler = handler;
-        element.addEventListener('click', handler, { once: true });
+        setAvailableFields(field, resolve);
     })
 }
 
-function movePetHandler(field, resolve) {
-    return function () {
-        setAvailableFields(field, resolve);
-    }
-}
 
 function setAvailableFields(field, resolve) {
     const { element } = field;
@@ -156,8 +148,37 @@ function setAvailableFields(field, resolve) {
         element.addEventListener('click', handler, { once: true });
         element.handler = handler;
     })
+
+}
+function setNewField(old_field, new_field) {
+    return function () {
+        clearBoard();
+        moveSingleZombiak(old_field, old_field.card, new_field.direction);
+        new_field.element.style.backgroundImage = ``;
+        enable(deck_zombiaki_element);
+    }
 }
 
+function hoverHandler(old_field, new_field) {
+    return function () {
+        const handler = outHandler(old_field, new_field);
+        new_field.element.addEventListener('mouseout', handler, { once: true })
+        new_field.element.classList.add('background_image');
+        new_field.element.handler_mouseout = handler;
+        const { card } = old_field;
+        const { id, race } = card;
+        new_field.element.style.setProperty('--bg-image', `url('../images/cards/${race}/${id}.webp')`)
+        old_field.element.classList.add('no_image');
+    }
+}
+
+function outHandler(old_field, new_field) {
+    return function () {
+        new_field.element.classList.remove('background_image');
+        new_field.element.style.removeProperty('--bg-image');
+        old_field.element.classList.remove('no_image');
+    }
+}
 
 
 export function moveSingleZombiak(old_field, card, direction) {
