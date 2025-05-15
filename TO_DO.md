@@ -1,5 +1,6 @@
 -> ZROBIENIE RUCHU KOTA I PSA
 -> ALERT O RUCHU - ZIELONE MIEJSCA NA RUCH - TAK JAK FUNKCJONALNOSC KARTY KREW ITP.
 -> zrobienie nowej karty card_pet na pety
+-> Aktualizacja funkcji dmgZombiak()
 -> OBRAŻENIA DLA PSA / KOTA ZAMIAST ZOMBIAKA
 -> REFAKTOR FUNKCJI SHOT
