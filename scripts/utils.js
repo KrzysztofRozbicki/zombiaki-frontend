@@ -1,3 +1,4 @@
+import { deck_zombiaki_element } from "./index.js";
 
 export function showAlert(text) {
     const alert = document.getElementById('alert');
@@ -9,7 +10,10 @@ export function showAlert(text) {
 
     close_alert.addEventListener('click', () => {
         alert.classList.add('hidden');
-    })
+        if (text === 'NA POCZĄTKU TURY PRZESUŃ KARTĘ "KOT"' || text === 'NA POCZĄTKU TURY PRZESUŃ KARTĘ "PIES"') {
+            disable(deck_zombiaki_element);
+        }
+    }, { once: true })
 };
 
 export function hideCancelButton() {

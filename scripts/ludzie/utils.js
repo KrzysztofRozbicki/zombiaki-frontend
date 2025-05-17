@@ -153,9 +153,12 @@ function clearShotElements() {
 
 export function killZombiak(field) {
     const { element } = field;
-    const images = element.querySelectorAll('.field > .field_image')
-    images.forEach(image => image.classList.add('death_animation'));
 
+    const images = element.querySelectorAll('.field > .field_image');
+    const pet_images = element.querySelectorAll('.field > .field_pet');
+    pet_images.forEach(image => image.classList.add('death_animation'));
+    images.forEach(image => image.classList.add('death_animation'));
+    clearBoard();
     setTimeout(() => unsetField(field), 2000);
 }
 

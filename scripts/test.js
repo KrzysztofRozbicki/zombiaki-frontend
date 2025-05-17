@@ -24,7 +24,7 @@ const test_board = [
     //     'overlay': 'MIŚ',
     // },
     {
-        "field": board[1][2],
+        "field": board[0][0],
         "card": "KOT",
     },
     {
@@ -39,10 +39,10 @@ const test_board = [
         "field": board[0][1],
         'card': 'IWAN'
     },
-    // {
-    //     "field": board[3][2],
-    //     'card': 'MUR Z RUPIECI'
-    // },
+    {
+        "field": board[2][1],
+        'card': 'BECZKA'
+    },
     // {
     //     "field": board[3][2],
     //     "card": "CZESIEK",

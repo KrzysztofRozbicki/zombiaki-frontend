@@ -22,7 +22,7 @@ const T3_P1 = document.querySelector('div[data-tor="3"][data-przecznica="1"]');
 
 let active_field = null;
 let move_zombiaki = true;
-
+let pet_moves = 0;
 
 
 export const board = [
@@ -85,9 +85,9 @@ async function moveZombiaki() {
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
-            const { card } = field;
-            if (!card) continue;
-            if (card.name === 'PIES' || card.name === 'KOT') {
+            const { card_pet } = field;
+            if (!card_pet) continue;
+            if (card_pet) {
                 await movePet(field);
             }
         }
@@ -110,17 +110,26 @@ async function moveZombiaki() {
 
 function movePet(field) {
 
-    const { element, card } = field;
-    const { name } = card;
+    const { card_pet } = field;
+    const { name, pet_move } = card_pet;
+    pet_moves = pet_move;
 
     return new Promise((resolve) => {
         showAlert(`NA POCZĄTKU TURY PRZESUŃ KARTĘ "${name}"`);
-        setAvailableFields(field, resolve);
+        setAvailablePetFields(field, resolve);
     })
 }
 
 
-function setAvailableFields(field, resolve) {
+function setAvailablePetFields(field, resolve) {
+
+    if (pet_moves === 0) {
+        enable(deck_zombiaki_element);
+        resolve(true);
+        return;
+        //HIDE CANCEL ITP ITD.
+    }
+
     const { element } = field;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
@@ -141,38 +150,42 @@ function setAvailableFields(field, resolve) {
     all_fields.forEach((new_field) => {
         const { element } = new_field;
         element.classList.add('move_on');
-        const handler_mouseover = hoverHandler(field, new_field);
+        const handler_mouseover = hoverPetHandler(field, new_field);
         element.handler_mouseover = handler_mouseover;
         element.addEventListener('mouseover', handler_mouseover);
-        const handler = setNewField(field, new_field);
+        const handler = setNewPetField(field, new_field, resolve);
         element.addEventListener('click', handler, { once: true });
         element.handler = handler;
     })
-
 }
-function setNewField(old_field, new_field) {
+
+function setNewPetField(old_field, new_field, resolve) {
     return function () {
         clearBoard();
-        moveSingleZombiak(old_field, old_field.card, new_field.direction);
+        setAvailablePetFields(new_field, resolve);
+        moveSingleZombiak(old_field, old_field.card_pet, new_field.direction);
         new_field.element.style.backgroundImage = ``;
-        enable(deck_zombiaki_element);
+        new_field.element.classList.remove('background_image');
+        new_field.element.style.removeProperty('--bg-image');
+        old_field.element.classList.remove('no_image');
+        pet_moves--;
     }
 }
 
-function hoverHandler(old_field, new_field) {
+function hoverPetHandler(old_field, new_field) {
     return function () {
-        const handler = outHandler(old_field, new_field);
+        const handler = outPetHandler(old_field, new_field);
         new_field.element.addEventListener('mouseout', handler, { once: true })
         new_field.element.classList.add('background_image');
         new_field.element.handler_mouseout = handler;
-        const { card } = old_field;
-        const { id, race } = card;
+        const { card_pet } = old_field;
+        const { id, race } = card_pet;
         new_field.element.style.setProperty('--bg-image', `url('../images/cards/${race}/${id}.webp')`)
         old_field.element.classList.add('no_image');
     }
 }
 
-function outHandler(old_field, new_field) {
+function outPetHandler(old_field, new_field) {
     return function () {
         new_field.element.classList.remove('background_image');
         new_field.element.style.removeProperty('--bg-image');
@@ -212,8 +225,10 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (checkMur(new_tor, przecznica, next_field)) return;
 
     if (!next_field) return;
-    const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
-    if (next_field_is_taken) return;
+    if (!card.pet) {
+        const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
+        if (next_field_is_taken) return;
+    }
     if (is_beczka || is_dziura) unsetField(next_field);
     putPicture(next_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
@@ -332,9 +347,12 @@ export function unsetField(board_field, board_card = false) {
     }
 
     const card_element = element.querySelector('.field_image');
-    if (card_element) card_element.remove();
+    const pet_element = element.querySelector('.field_pet');
     const overlay_element = element.querySelector('#overlay');
+    if (card_element && !pet_element) card_element.remove();
+    if (pet_element) pet_element.remove();
     if (overlay_element) overlay_element.remove();
+    if (card_element && pet_element) return;
     element.dataset.id = null;
     element.dataset.name = null;
     element.dataset.type = null;
@@ -377,6 +395,7 @@ function setFieldHandler(field, card) {
 }
 
 function putPicture(field, card) {
+
     const { id, name, race, type, hp, max_hp } = card;
     const { element } = field;
 
@@ -399,10 +418,18 @@ function putPicture(field, card) {
     }
 
     element.append(divElement);
-
     element.dataset.id = id;
     element.dataset.name = name;
     element.dataset.type = type;
+
+    if (card.pet) {
+        field.card_pet = card;
+        divElement.classList.remove('field_image');
+        divElement.classList.add('field_pet');
+        return;
+    }
+
+
     if (card.board && card.walkable && card.name !== 'BECZKA') {
         field.card_board = card;
         divElement.classList.remove('field_image');

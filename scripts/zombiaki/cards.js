@@ -49,6 +49,7 @@ export const cards_zombiaki_json = [
         "board": true,
         "race": "zombiaki",
         "pet": true,
+        "pet_move": 2
     },
     {
         "id": 5,
@@ -166,7 +167,8 @@ export const cards_zombiaki_json = [
         "special": true,
         "board": true,
         "race": "zombiaki",
-        "pet": true
+        "pet": true,
+        "pet_move": 3
     },
     {
         "id": 15,
