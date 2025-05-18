@@ -82,16 +82,7 @@ async function moveZombiaki() {
         move_zombiaki = true;
         return;
     }
-    for (let i = board.length - 1; i >= 0; i--) {
-        for (let j = 0; j < board[i].length; j++) {
-            const field = board[i][j];
-            const { card_pet } = field;
-            if (!card_pet) continue;
-            if (card_pet) {
-                await movePet(field);
-            }
-        }
-    }
+    await checkPet();
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
             const old_field = board[i][j];
@@ -108,12 +99,25 @@ async function moveZombiaki() {
     }
 }
 
+async function checkPet() {
+    for (let i = board.length - 1; i >= 0; i--) {
+        for (let j = 0; j < board[i].length; j++) {
+            const field = board[i][j];
+            const { card_pet } = field;
+            if (!card_pet) continue;
+            if (card_pet) {
+                await movePet(field);
+                return;
+            }
+        }
+    }
+}
+
 function movePet(field) {
 
     const { card_pet } = field;
     const { name, pet_move } = card_pet;
     pet_moves = pet_move;
-
     return new Promise((resolve) => {
         showAlert(`NA POCZĄTKU TURY PRZESUŃ KARTĘ "${name}"`);
         setAvailablePetFields(field, resolve);
@@ -125,10 +129,16 @@ function setAvailablePetFields(field, resolve) {
 
     if (pet_moves === 0) {
         enable(deck_zombiaki_element);
+        const cancel_button = document.getElementById('cancel');
+        cancel_button.removeEventListener('click', cancel_button.handler);
+        cancel_button.handler = null;
+        hide(cancel_button);
         resolve(true);
         return;
         //HIDE CANCEL ITP ITD.
     }
+
+
 
     const { element } = field;
     const tor = +element.dataset.tor - 1;
@@ -161,6 +171,7 @@ function setAvailablePetFields(field, resolve) {
 
 function setNewPetField(old_field, new_field, resolve) {
     return function () {
+        pet_moves--;
         clearBoard();
         setAvailablePetFields(new_field, resolve);
         moveSingleZombiak(old_field, old_field.card_pet, new_field.direction);
@@ -168,7 +179,9 @@ function setNewPetField(old_field, new_field, resolve) {
         new_field.element.classList.remove('background_image');
         new_field.element.style.removeProperty('--bg-image');
         old_field.element.classList.remove('no_image');
-        pet_moves--;
+        if (pet_moves === new_field.card_pet.pet_move - 1) {
+            cancelCard(new_field.card_pet, resolve);
+        }
     }
 }
 
@@ -230,6 +243,7 @@ export function moveSingleZombiak(old_field, card, direction) {
         if (next_field_is_taken) return;
     }
     if (is_beczka || is_dziura) unsetField(next_field);
+
     putPicture(next_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
@@ -346,13 +360,16 @@ export function unsetField(board_field, board_card = false) {
         board_field.card_board = null;
     }
 
+    const board_element = element.querySelector('.field_board');
     const card_element = element.querySelector('.field_image');
     const pet_element = element.querySelector('.field_pet');
     const overlay_element = element.querySelector('#overlay');
-    if (card_element && !pet_element) card_element.remove();
+    console.log(board_field);
+    if (card_element) card_element.remove();
+    if (card_element && pet_element) return;
     if (pet_element) pet_element.remove();
     if (overlay_element) overlay_element.remove();
-    if (card_element && pet_element) return;
+    if (board_element) board_element.remove();
     element.dataset.id = null;
     element.dataset.name = null;
     element.dataset.type = null;
@@ -453,18 +470,18 @@ export function setMoveZombiaki(value) {
     move_zombiaki = value;
 }
 
-function cancelCard(card) {
+function cancelCard(card, resolve = null) {
     const { board, race } = card;
     if (!board) return;
     const cancel_button = document.getElementById('cancel');
     show(cancel_button);
     cancel_button.classList.add(`${race}_active`);
-    const handler = handleCancelCard(card);
+    const handler = handleCancelCard(card, resolve);
     cancel_button.handler = handler;
     cancel_button.addEventListener('click', handler, { once: true });
 }
 
-function handleCancelCard(card) {
+function handleCancelCard(card, resolve = null) {
     return function () {
         const { race } = card;
         clearBoard();
@@ -480,6 +497,13 @@ function handleCancelCard(card) {
             el.removeEventListener('click', el.handler);
             el.handler = null;
         });
+        const fire_elements = document.querySelectorAll('.tor_fire');
+        fire_elements.forEach(el => {
+            hide(el);;
+            el.removeEventListener('click', el.handler);
+            el.handler = null;
+        });
+        if (resolve) resolve(true);
     }
 }
 

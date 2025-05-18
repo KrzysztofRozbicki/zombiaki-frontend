@@ -25,10 +25,10 @@ const test_board = [
     // },
     {
         "field": board[0][0],
-        "card": "KOT",
+        "card": "PIES",
     },
     {
-        'field': board[1][1],
+        'field': board[0][1],
         'card': "KRZYSZTOF"
     },
     {
@@ -36,12 +36,12 @@ const test_board = [
         'card': 'ZENEK',
     },
     {
-        "field": board[0][1],
+        "field": board[1][1],
         'card': 'IWAN'
     },
     {
         "field": board[2][1],
-        'card': 'BECZKA'
+        'card': 'DZIURA'
     },
     // {
     //     "field": board[3][2],

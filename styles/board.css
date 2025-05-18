@@ -362,7 +362,8 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
-#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_image {
+#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_image,
+#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_pet {
   animation: 1s alternate infinite ease-in fireElement;
 }
 
