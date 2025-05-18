@@ -1,2 +1,1 @@
---> ROZWIĄZANIE PROBLEMU RUCHU PETA PRZEZ POLE ZOMBIAKÓW I ZOMBIAKÓW PRZEZ POLA PETA - funkcja unsetField nie działa poprawnie - trzba sprawdzić co i kiedy ma unsetować w zależności od tego czy wchodzi / schodzi na pole pet czy zombiak;
---> Obrażenia dla kota i psa dziura / beczka / strzał/ jakiekolwiek obrażenia.
+--> STYLOWANIE PSA I KOTA

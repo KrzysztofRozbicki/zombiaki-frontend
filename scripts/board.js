@@ -242,12 +242,25 @@ export function moveSingleZombiak(old_field, card, direction) {
         const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
         if (next_field_is_taken) return;
     }
-    if (is_beczka || is_dziura) unsetField(next_field);
+    let pet_status = null;
 
+    if (card.pet) {
+        pet_status = 'OUT';
+    }
+    if (!card.pet && old_field.card_pet) {
+        pet_status = 'STAY';
+    }
+
+    if (is_beczka || is_dziura) unsetField(next_field);
     putPicture(next_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
-    unsetField(old_field);
+    console.log(pet_status);
+    unsetField(old_field, false, pet_status);
+    if (card.pet) {
+        const pet_element = element.querySelector('.field_pet');
+        if (pet_element) pet_element.remove();
+    }
     checkBlowField(next_field, { move: true });
 }
 
@@ -352,22 +365,29 @@ export function putCard(field, card) {
     element.addEventListener('click', handler);
 }
 
-export function unsetField(board_field, board_card = false) {
+export function unsetField(board_field, board_card = false, pet = null) {
     const { element } = board_field;
+    const board_element = element.querySelector('.field_board');
+    const card_element = element.querySelector('.field_image');
+    const pet_element = element.querySelector('.field_pet');
+    const overlay_element = element.querySelector('#overlay');
 
     if (board_card) {
         element.innerHTML = '';
         board_field.card_board = null;
     }
 
-    const board_element = element.querySelector('.field_board');
-    const card_element = element.querySelector('.field_image');
-    const pet_element = element.querySelector('.field_pet');
-    const overlay_element = element.querySelector('#overlay');
-    console.log(board_field);
+    if (pet === 'OUT') {
+        if (pet_element) pet_element.remove();
+        board_field.card_pet = null;
+        return;
+    }
+    if (pet === 'STAY') {
+        if (card_element) card_element.remove();
+    }
+
     if (card_element) card_element.remove();
-    if (card_element && pet_element) return;
-    if (pet_element) pet_element.remove();
+    if (pet_element && pet !== 'STAY') pet_element.remove();
     if (overlay_element) overlay_element.remove();
     if (board_element) board_element.remove();
     element.dataset.id = null;

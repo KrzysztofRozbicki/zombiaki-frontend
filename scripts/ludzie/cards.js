@@ -12,7 +12,7 @@ export const cards_ludzie_json = [
     {
         "id": 2,
         "amount": 1,
-        "dmg": 3,
+        "dmg": 2,
         "piercing": true,
         "name": "KRÓTKA SERIA",
         "type": "shot",

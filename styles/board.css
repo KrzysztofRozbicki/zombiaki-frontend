@@ -77,24 +77,28 @@ body.background {
   position: absolute;
 }
 
-.field:has(.field_board) .field_image {
+.field:has(.field_board) .field_image,
+.field:has(.field_image) .field_pet {
   position: absolute;
   width: 75%;
   height: 75%;
   bottom: -0.75rem;
   right: -0.75rem;
+  z-index: 5;
 }
 
 .field_image:hover,
 .field_board:hover,
-.overlay:hover {
+.overlay:hover,
+.field_pet:hover {
   position: absolute;
   transform: scale(4) !important;
   width: 100% !important;
   height: 100% !important;
-  z-index: 5;
+  z-index: 6;
 }
-.overlay:hover {
+.overlay:hover,
+.field_pet:hover {
   width: 100%;
   height: 100%;
 }
@@ -348,16 +352,19 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 1s alternate infinite ease-in fire;
 }
 
-#streets > div:has(.tor_jajnik:hover) .jajnik_available .field_image {
+#streets > div:has(.tor_jajnik:hover) .jajnik_available .field_image,
+#streets > div:has(.tor_jajnik:hover) .jajnik_available .field_pet {
   animation: 1s alternate infinite ease-in shotAvailable;
   border-radius: 1rem;
 }
 
-#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_image {
+#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_image,
+#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_pet {
   animation: 1s alternate infinite ease-in shockElement;
 }
 
-#streets > div:has(.tor_reflektor:hover) .reflektor_available .field_image{
+#streets > div:has(.tor_reflektor:hover) .reflektor_available .field_image,
+#streets > div:has(.tor_reflektor:hover) .reflektor_available .field_pet {
   animation: 1s alternate infinite ease-in reflektorElement;
   border-radius: 1rem;
 }
