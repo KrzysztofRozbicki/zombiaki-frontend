@@ -10,7 +10,6 @@
 --> GALARETA        8/10
 --> GŁÓD            4/10
 --> MASA            8/10
---> MIĘSO           3/10
 --> PAPU            2/10
 --> KOŃ TROJAŃSKI   9/10
 --> SPADAJ          7/10
