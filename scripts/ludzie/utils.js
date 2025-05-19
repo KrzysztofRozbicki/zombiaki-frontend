@@ -16,12 +16,12 @@ import { disable, enable, show, hide, hideCancelButton } from "../utils.js";
 
 export function shot(card, sniper = false, cegła = false) {
     disable(deck_ludzie_element);
-    const { dmg, piercing } = card;
+    const { dmg, piercing, name } = card;
     for (let j = 0; j < board[0].length; j++) {
         for (let i = board.length - 1; i >= 0; i--) {
             const { element, card, card_board } = board[i][j];
             if (!card && !card_board) continue;
-            if (card?.mur && !sniper) {
+            if (card_board?.mur && !sniper) {
                 for (let k = i - 1; k >= 0; k--) {
                     disable(board[k][j].element);
                 }
@@ -32,6 +32,7 @@ export function shot(card, sniper = false, cegła = false) {
                 continue;
             }
             if (card?.race !== 'zombiaki' && card_board?.name !== 'AUTO') continue;
+            if (card?.name === 'KULOODPORNY' && name !== 'CEGŁA') continue;
             element.classList.add('shot_available')
 
             const cards_on_field = element.querySelectorAll('.field > div');

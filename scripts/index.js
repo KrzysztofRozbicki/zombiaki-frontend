@@ -387,6 +387,14 @@ export function setDeckZombiaki(array) {
     deck_zombiaki = array;
 }
 
+export function getActiveCardsLudzie() {
+    return active_cards_ludzie;
+}
+
+export function setActiveCardsLudzie(array) {
+    active_cards_ludzie = array;
+}
+
 document.addEventListener('dblclick', function (e) {
     e.preventDefault();
     return false;

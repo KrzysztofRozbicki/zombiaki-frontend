@@ -4,9 +4,21 @@
 
 }
 
-.deck .remove_card {
+.deck .remove_card,
+.throw_available {
   cursor: url('../images/cursors/remove.ico'), auto;
   filter: none;
+}
+.throw_available {
+  animation: 0.7s infinite alternate ease-in-out shotAvailable;
+  background-color: var(--accent-color-opacity);
+  border-radius: 1rem;
+}
+.throw_available:hover,
+.throw_available:focus {
+  transform: scale(1.2) !important;
+  transform-origin: top center;
+  filter: grayscale(0.5) !important;
 }
 
 .deck .remove_card:hover,

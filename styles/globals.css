@@ -35,14 +35,14 @@ cursor: url('../images/cursors/click.ico'), auto;
 }
 
 * {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out, z-index 0s;
 }
 *:hover,
 *:focus,
 *:after,
 *:before {
   font-family: "Klathy", sans-serif;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out, z-index 0s;
 }
 
 body {

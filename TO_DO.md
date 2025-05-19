@@ -1,1 +1,17 @@
---> STYLOWANIE PSA I KOTA
+--> KRYSTYNKA       8/10
+--> KILOF           3/10
+--> CZŁOWIEK        7/10
+--> WIADRO          5/10
+--> TERROR          4/10
+--> MŁODY           8/10
+--> PAZURY          4/10
+--> BOSS            9/10
+--> SYJAMCZYK       9/10
+--> GALARETA        8/10
+--> GŁÓD            4/10
+--> MASA            8/10
+--> MIĘSO           3/10
+--> PAPU            2/10
+--> KOŃ TROJAŃSKI   9/10
+--> SPADAJ          7/10
+--> UGRYZIENIE      6/10
