@@ -143,18 +143,23 @@ div[data-przecznica="5"]:has(img):hover > div {
 
 .web_available > .field_image,
 .gas_available > .field_image,
-.papu_available > .field_image {
+.papu_available > .field_image,
+.kilof_available {
   cursor: url('../images/cursors/web.ico'), pointer;
   animation: 0.7s infinite alternate ease-in-out webAvailable;
   background-color: var(--color-green-opacity);
   border-radius: 1rem;
 }
 
-.papu_available > .field_image{
+.kilof_available {
+  cursor: url('../images/cursors/pickaxe.ico'), pointer;
+}
+
+.papu_available > .field_image {
   cursor: url('../images/cursors/heal.ico'), pointer;
 }
 
-.gas_available > .field_image{
+.gas_available > .field_image {
   cursor: url('../images/cursors/gas_green.ico'), auto;
 }
 

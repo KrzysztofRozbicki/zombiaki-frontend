@@ -330,10 +330,10 @@ export function moveOverlay(old_field, new_field) {
 function moveLudzie() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
-            const { card } = board[i][j];
-            if (!card) continue;
-            if (card.name === 'ZAPORA') unsetField(board[i][j]);
-            if (card.name !== 'BECZKA') continue;
+            const { card_board } = board[i][j];
+            if (!card_board) continue;
+            if (card_board.name === 'ZAPORA') unsetField(board[i][j]);
+            if (card_board.name !== 'BECZKA') continue;
             unsetField(board[i][j]);
             if (i === 0) continue;
             const new_field = board[i - 1][j];
@@ -467,7 +467,7 @@ function putPicture(field, card) {
     }
 
 
-    if (card.board && card.walkable && card.name !== 'BECZKA') {
+    if (card.board) {
         field.card_board = card;
         divElement.classList.remove('field_image');
         divElement.classList.add('field_board');
@@ -537,6 +537,9 @@ export function clearBoard() {
             element.classList.add('field');
             const cards_on_field = element.querySelectorAll('.field > div');
             cards_on_field.forEach(el => {
+                el.removeEventListener('click', el.handler);
+                el.handler = null;
+                el.classList.remove('kilof_available');
                 el.removeEventListener('click', el.shot_handler);
                 el.shot_handler = null;
             })
