@@ -63,6 +63,11 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
     enable(deck_ludzie_element);
     let damage = dmg;
 
+    if (field?.card_overlay?.name === "CZŁOWIEK") {
+        deleteOverlay(field);
+        return
+    }
+
     if (!cegła) {
         const clickPlayed = await checkClick();
         if (clickPlayed) return;
@@ -185,6 +190,10 @@ export function killPet(field) {
 export function damageZombiak(dmg, field) {
     const { element, card, card_pet } = field;
     let damage = dmg;
+    if (field?.card_overlay?.name === "CZŁOWIEK") {
+        deleteOverlay(field);
+        return;
+    }
 
     if (card_pet) {
         damage = dmg - card_pet.hp;

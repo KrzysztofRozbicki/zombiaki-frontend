@@ -2,6 +2,7 @@
 import { chosen_card, chosen_card_picture, close_card, play_card, throw_card, getTurn, removeCard } from "../index.js";
 import { show, hide, enable, disable, randomRotate } from '../utils.js';
 import { board } from "../board.js";
+import { clearBoard } from './../board.js';
 const play_overlay = document.getElementById('play_overlay');
 
 export function useOverlay(field_board) {
@@ -25,7 +26,7 @@ export function putOverlay(card, callback) {
             if (type !== 'zombiak' && (name === 'KOT' || name === 'PIES')) continue;
             element.classList.add('overlay_available');
             const handler = overlayHandler(card, board[i][j], callback);
-            element.overlay_handler = handler;
+            element.handler = handler;
             element.addEventListener('click', handler, { once: true });
         }
     }
@@ -78,6 +79,7 @@ export function addOverlay(card, field_board, callback) {
         overlay.addEventListener('click', handler);
     }
     removeCard();
+    clearBoard();
 }
 
 function showOverlay(field_board, card, callback) {

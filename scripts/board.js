@@ -209,7 +209,6 @@ function outPetHandler(old_field, new_field) {
 
 export function moveSingleZombiak(old_field, card, direction) {
     const { element } = old_field;
-    console.log(element);
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
@@ -547,7 +546,6 @@ export function clearBoard() {
                 el.shot_handler = null;
             })
             element.removeEventListener('click', element.handler);
-            element.handler = null;
             if (element.handler_mouseover) {
                 element.removeEventListener('mouseover', element.handler_mouseover);
                 element.handler_mouseover = null;

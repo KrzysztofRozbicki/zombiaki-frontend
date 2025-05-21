@@ -311,7 +311,6 @@ export function removeCard() {
     active_card = null;
     const terror_played = is_terror && cards_played > 0 && turn === 'ludzie';
     if (terror_played) {
-        console.log('terror played')
         is_terror = false;
         setTimeout(() => endTurn(), 50);
     }

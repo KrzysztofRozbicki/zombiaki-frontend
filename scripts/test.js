@@ -14,8 +14,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['TERROR', 'PAZURY', 'KILOF', 'GŁÓD'];
-const start_cards_ludzie = ['ROPA', '220V', 'ZAPORA', 'SIEĆ'];
+const start_cards_zombiaki = ['TERROR', 'PAZURY', 'MIŚ', 'CZŁOWIEK'];
+const start_cards_ludzie = ['ROPA', '220V', 'DŁUGA SERIA', 'ULICA W OGNIU'];
 
 const test_board = [
     // {
@@ -39,17 +39,18 @@ const test_board = [
     //     "field": board[3][0],
     //     'card': 'MINA'
     // },
-    {
-        'field': board[2][0],
-        'card': "KULOODPORNY"
-    },
+    // {
+    //     'field': board[2][0],
+    //     'card': "KULOODPORNY"
+    // },
     // {
     //     "field": board[0][2],
     //     'card': 'KOT',
     // },
     {
-        "field": board[1][1],
+        "field": board[1][2],
         'card': 'IWAN',
+        'overlay': 'CZŁOWIEK',
     },
     // {
     //     "field": board[1][1],
@@ -64,7 +65,6 @@ const test_board = [
     //     "card": "MUR",
     // }
 ]
-
 
 export function testMode() {
     if (TEST_MODE.board) putCardsOnBoard();
