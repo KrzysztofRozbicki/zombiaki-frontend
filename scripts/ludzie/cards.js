@@ -19,7 +19,8 @@ export const cards_ludzie_json = [
         "description": "Krótka seria trafia najbliższego Zombiaka na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze.Trafienie cofa Zombiaka o 1 pole.Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Łykaj kule, aumarlaku!",
         "blockable": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 3,
@@ -29,7 +30,8 @@ export const cards_ludzie_json = [
         "type": "AOE",
         "description": "Zagraj 200V na dowolny tor. Urwany drut wysokiego napięcia zadaje 1 ranę każdemu Zombiakowi znajdującemu się na tym torze.",
         "flavor": "Chyba cię pokopało?",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 4,
@@ -40,7 +42,8 @@ export const cards_ludzie_json = [
         "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 1 ranę. Dodatkowo, trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "A ten zupełnie za nic!",
         "blockable": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 5,
@@ -51,7 +54,8 @@ export const cards_ludzie_json = [
         "type": "AOE",
         "description": "Zagraj Ropę na dowolne pole i (opcjonalnie) wskaż kolejne pola jej działania (nie po skosie). Ropa zadaje łącznie 4 rany. Puste pole pochłania 1 punkt siły rażenia Ropy.",
         "flavor": "A teraz coś z rurociągu Przyjaźń",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 6,
@@ -63,7 +67,8 @@ export const cards_ludzie_json = [
         "description": "Długa seria trafia najbliższego Zombiaka na torze i zadaje 3 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze (itd.). Trafienie cofa Zombiaka o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Hasta la vista, baby!",
         "blockable": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 7,
@@ -81,7 +86,8 @@ export const cards_ludzie_json = [
         "type": "AOE",
         "description": "Zagraj Sieć na sąsiadujące ze sobą Zombiaki (nie po skosie) o łącznej sile 6 lub mniej. Sieć unieruchamia Zombiaki aż do początku następnej tury ludzi.",
         "flavor": "Chyba trochę się zamotałeś.",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 9,
@@ -91,7 +97,8 @@ export const cards_ludzie_json = [
         "type": "AOE",
         "description": "Zagraj tę kartę na jeden dowolny tor oprócz środkowego. Każdy Zombiak na tym torze otrzymuje 1 ranę.",
         "flavor": "I tak był do rozbiórki.",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 10,
@@ -102,7 +109,8 @@ export const cards_ludzie_json = [
         "blockable": true,
         "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 2 rany. Dodatkowo trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "Prosto w tę zaropiałą gębę",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 11,
@@ -123,7 +131,8 @@ export const cards_ludzie_json = [
         "description": "Wybierz tor i wszystkie znajdującie się na nim Zombiaki (z wyjątkiem Psa i Kota) stają się one Zombiakami o sile 1.",
         "flavor": "Bierz ich!",
         "blockable": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 13,
@@ -133,7 +142,8 @@ export const cards_ludzie_json = [
         "type": "other",
         "description": "Strzał Snajpera trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiaka na planszy i zadaje mu 2 rany. Dodatkowo, trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "Już go kiedyś sprzątnąłem...",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 14,
@@ -142,7 +152,8 @@ export const cards_ludzie_json = [
         "type": "other",
         "description": "Zagraj Gaz rozweselający na maksymalnie 2 wybrane przez siebie Zombiaki. Przesuń każdego z nich o 1 pole w dowolnym kierunku (nie po skosie), o ile to możliwe.",
         "flavor": "Hi, hi, he, he, ho ,ho!",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 15,
@@ -162,7 +173,8 @@ export const cards_ludzie_json = [
         "type": "other",
         "description": "PRzesuń jednego dowolnego Zombiaka w bok na sąsiedny tor, o ile jest możliwe.",
         "flavor": "A rh+. Moja ulubiona.",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true
     },
     {
         "id": 17,
@@ -205,7 +217,8 @@ export const cards_ludzie_json = [
         "description": "Covnij równocześnie o 1 pole wszystkie Zombiaki na jednym wybranym torze, o ile to możliwe.",
         "flavor": "Parę słów do mikrofonu...",
         "blockable": true,
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 21,
@@ -233,7 +246,8 @@ export const cards_ludzie_json = [
         "dmg": 1,
         "description": "Cegła trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiaka na planszy i zadaje mu 1 ranę. Trafiony Zombiak nie cofa się.",
         "flavor": "Podaj cegłę",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 24,
@@ -245,6 +259,7 @@ export const cards_ludzie_json = [
         "description": "Zagraj Miotacz na najbliższą przecznicę, na której znajduje się jakikolwiek Zombiak. Miotacz zadaje łącznie 5 ran, rozdzielanych przez ludzi (puste pole pochłania 1 punkt siły rażenia Miotacza).",
         "flavor": "Palenie szkodzi zdrowiu.",
         "blockable": true,
+        "board": true,
         "race": "ludzie"
     },
     {
@@ -283,7 +298,8 @@ export const cards_ludzie_json = [
         'dmg': 1,
         "description": "Zagraj Betonowe Buciki na wybranego przez siebie Zombiaka. Za każdym razem, kiedy Zombiak się poruszy (w dowolnym kierunku, również do tyłu), otrzymuję 1 ranę. Człowiek nie chroni w żaden sposób przed Betonowymi bucikami.",
         "flavor": "Na rzeźbę łydek idealne.",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 28,
@@ -292,7 +308,8 @@ export const cards_ludzie_json = [
         'type': 'other',
         "description": "Zagraj Granat na dowolne pole planszy. Granat automatycznie niszczy wszystkie karty znajdujące się na tym polu. Przed Granatem nie chroni Człowiek.",
         "flavor": "Wyrwij zawlęczkę i policz do trzech.",
-        "race": "ludzie"
+        "race": "ludzie",
+        "board": true,
     },
     {
         "id": 29,

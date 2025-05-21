@@ -16,7 +16,6 @@ export default function zombiaki_id_28(card, field) {
     const ludzie_cards_elements = deck_ludzie_element.querySelectorAll('img.card_ludzie:not(.card_blank)');
     disable(deck_zombiaki_element);
     enable(deck_ludzie_element);
-    console.log(ludzie_cards_temp);
     ludzie_cards_elements.forEach(element => {
         element.classList.add('throw_available');
         const handler = removeCardHandler(element, ludzie_cards_temp, ludzie_cards_elements);
@@ -44,7 +43,6 @@ function handleCancelCard(elements) {
 function removeCardHandler(element, cards_deck, elements) {
     return function () {
         const id = element.getAttribute('data-id');
-        console.log(id);
         element.src = `images/cards/ludzie/rewers.webp`;
         element.classList.add('card_blank');
         element.dataset.id = 'blank';

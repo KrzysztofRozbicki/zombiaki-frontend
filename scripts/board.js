@@ -1,5 +1,5 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard, deck_ludzie_element, deck_zombiaki_element } from "./index.js";
+import { gameOver, removeCard, deck_ludzie_element, deck_zombiaki_element, getTurn, getTerror } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
@@ -255,7 +255,6 @@ export function moveSingleZombiak(old_field, card, direction) {
     putPicture(next_field, card);
     if (old_field.card_overlay) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
-    console.log(pet_status);
     unsetField(old_field, false, pet_status);
     if (card.pet) {
         const pet_element = element.querySelector('.field_pet');
@@ -467,7 +466,7 @@ function putPicture(field, card) {
     }
 
 
-    if (card.board) {
+    if (card.board && card.race === 'ludzie') {
         field.card_board = card;
         divElement.classList.remove('field_image');
         divElement.classList.add('field_board');

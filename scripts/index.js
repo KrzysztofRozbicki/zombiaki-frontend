@@ -50,6 +50,7 @@ let bear_played = false;
 let player_cards = [];
 let cards_thrown = 0;
 let cards_played = 0;
+let is_terror = false;
 let active_card = null;
 let deck_zombiaki = [];
 let deck_ludzie = [];
@@ -260,6 +261,7 @@ function playCard() {
         cards_played++;
 
         placeCard(active_card);
+
         if (!active_card?.board) {
             removeCard();
             return;
@@ -307,6 +309,12 @@ export function removeCard() {
     close_card.removeEventListener('click', close_card.handler);
     close_card.handler = null;
     active_card = null;
+    const terror_played = is_terror && cards_played > 0 && turn === 'ludzie';
+    if (terror_played) {
+        console.log('terror played')
+        is_terror = false;
+        setTimeout(() => endTurn(), 50);
+    }
 }
 
 export function indexRemove(array) {
@@ -393,6 +401,13 @@ export function getActiveCardsLudzie() {
 
 export function setActiveCardsLudzie(array) {
     active_cards_ludzie = array;
+}
+
+export function setTerror(boolean) {
+    is_terror = boolean;
+}
+export function getTerror() {
+    return is_terror;
 }
 
 document.addEventListener('dblclick', function (e) {

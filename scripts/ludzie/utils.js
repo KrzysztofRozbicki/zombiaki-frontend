@@ -71,13 +71,11 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
     const { className } = specific_element;
 
     if (card_pet) {
-        console.log('dmg: ', dmg, 'card_pet: ', card_pet.hp);
         damage = dmg - card_pet.hp;
         card_pet.hp -= dmg;
         if (card_pet.hp <= 0) killPet(field);
         const pet_element = element.querySelector('.field_pet > div');
         pet_element.dataset.current_hp = card.hp;
-        console.log(damage);
     }
 
     if (className === 'overlay' || className === 'field_image') {

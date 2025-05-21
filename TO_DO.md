@@ -1,8 +1,6 @@
 --> KRYSTYNKA       8/10
---> KILOF           3/10
 --> CZŁOWIEK        7/10
 --> WIADRO          5/10
---> TERROR          4/10
 --> MŁODY           8/10
 --> PAZURY          4/10
 --> BOSS            9/10

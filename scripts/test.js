@@ -14,8 +14,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['KOT', 'PAPU', 'KILOF', 'MIĘSO'];
-const start_cards_ludzie = ['MUR', 'DZIURA', 'ZAPORA', 'GAZ ROZWESELAJĄCY'];
+const start_cards_zombiaki = ['TERROR', 'PAPU', 'KILOF', 'ZENEK'];
+const start_cards_ludzie = ['MUR', 'DZIURA', 'ZAPORA', 'CHUCK'];
 
 const test_board = [
     // {
@@ -27,44 +27,44 @@ const test_board = [
     //     "field": board[0][2],
     //     "card": "PIES",
     // },
-    {
-        "field": board[2][2],
-        'card': 'DZIURA'
-    },
-    {
-        "field": board[4][2],
-        'card': 'ZAPORA'
-    },
-    {
-        "field": board[3][0],
-        'card': 'MINA'
-    },
-    {
-        'field': board[3][0],
-        'card': "KULOODPORNY",
-        'hp': 1
-    },
-    {
-        "field": board[0][2],
-        'card': 'KRZYSZTOF',
-    },
-    {
-        "field": board[1][1],
-        'card': 'IWAN',
-        "hp": 1
-    },
-    {
-        "field": board[1][1],
-        'card': 'AUTO'
-    },
-    {
-        "field": board[3][1],
-        'card': 'BECZKA'
-    },
-    {
-        "field": board[2][1],
-        "card": "MUR",
-    }
+    // {
+    //     "field": board[2][2],
+    //     'card': 'DZIURA'
+    // },
+    // {
+    //     "field": board[4][2],
+    //     'card': 'ZAPORA'
+    // },
+    // {
+    //     "field": board[3][0],
+    //     'card': 'MINA'
+    // },
+    // {
+    //     'field': board[3][0],
+    //     'card': "KULOODPORNY",
+    //     'hp': 1
+    // },
+    // {
+    //     "field": board[0][2],
+    //     'card': 'KRZYSZTOF',
+    // },
+    // {
+    //     "field": board[1][1],
+    //     'card': 'IWAN',
+    //     "hp": 1
+    // },
+    // {
+    //     "field": board[1][1],
+    //     'card': 'AUTO'
+    // },
+    // {
+    //     "field": board[3][1],
+    //     'card': 'BECZKA'
+    // },
+    // {
+    //     "field": board[2][1],
+    //     "card": "MUR",
+    // }
 ]
 
 

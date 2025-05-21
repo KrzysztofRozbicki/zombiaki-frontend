@@ -10,7 +10,8 @@ export const cards_zombiaki_json = [
         "hp": 4,
         "max_hp": 4,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 2,
@@ -20,7 +21,8 @@ export const cards_zombiaki_json = [
         "description": "Możesz zagrać Klik w turze Ludzi jako odpowiedź na Strzał, Serię lub Snajpera. Klik niweluje działanie jednej takiej karty.",
         "flavor": "Johnowi Rambo się to nie zdarzało.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 3,
@@ -31,7 +33,8 @@ export const cards_zombiaki_json = [
         "flavor": "Taki sobie, na trzy plus.",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 4,
@@ -45,7 +48,8 @@ export const cards_zombiaki_json = [
         "special": true,
         "race": "zombiaki",
         "pet": true,
-        "pet_move": 2
+        "pet_move": 2,
+        "board": true
     },
     {
         "id": 5,
@@ -57,7 +61,8 @@ export const cards_zombiaki_json = [
         "hp": 3,
         "max_hp": 3,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 6,
@@ -68,7 +73,8 @@ export const cards_zombiaki_json = [
         "flavor": "Za życia też go nikt nie lubił.",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 7,
@@ -79,7 +85,8 @@ export const cards_zombiaki_json = [
         "flavor": "Powróżyć Ci?",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 8,
@@ -89,7 +96,8 @@ export const cards_zombiaki_json = [
         "description": "Odrzuć na Śmietnik dowolną, leżącą na planszy kartę planszy z talii ludzi (z wyjątkiem Dziury).",
         "flavor": "Niestety to mi przeszkadza.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        'board': true,
     },
     {
         "id": 9,
@@ -100,7 +108,8 @@ export const cards_zombiaki_json = [
         "description": "Połóż Człowieka na dowolnym Zombiaku. Człowiek absorbuje wszystkie obrażenia wynikające z jednej karty zadane temu Zombiakowi, po czym ginie.",
         "flavor": "Do kumpla będziesz strzelał?",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 10,
@@ -110,7 +119,8 @@ export const cards_zombiaki_json = [
         "description": "Nie możesz tej karty odrzucić. Musisz ją zagrać jako pierwszą kartę w turze, w której ją dociągnąłeś – wybierz dowolnego Zombiaka i porusz go o 1 pole do tyłu. Jeśli żaden Zombiak nie jest w stanie poruszyć się do tyłu, to wybrany przez ciebie Zombiak otrzymuje 1 ranę.",
         "flavor": "Hełm z ograniczoną widocznością.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 11,
@@ -121,7 +131,8 @@ export const cards_zombiaki_json = [
         "flavor": "Kwiaty we włosach potargał wiatr...",
         "hp": 4,
         "max_hp": 4,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 12,
@@ -132,7 +143,8 @@ export const cards_zombiaki_json = [
         "flavor": "Wszystkie Mariusze to fajne chłopaki",
         "hp": 4,
         "max_hp": 4,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 13,
@@ -156,7 +168,8 @@ export const cards_zombiaki_json = [
         "special": true,
         "race": "zombiaki",
         "pet": true,
-        "pet_move": 3
+        "pet_move": 3,
+        "board": true
     },
     {
         "id": 15,
@@ -168,7 +181,8 @@ export const cards_zombiaki_json = [
         "hp": 2,
         "max_hp": 4,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 16,
@@ -179,7 +193,8 @@ export const cards_zombiaki_json = [
         "description": "ZAgraj Pazury na wybranego Zombiaka. Pazury zwiększają siłę Zombiaka o 1.",
         "flavor": "Może małe manicure?",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 17,
@@ -190,7 +205,8 @@ export const cards_zombiaki_json = [
         "flavor": "Atrakcyjny to on nie jest.",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 18,
@@ -201,7 +217,8 @@ export const cards_zombiaki_json = [
         "flavor": "Mięso armatnie. Raczej tatar niż schabowe.",
         "hp": 2,
         "max_hp": 2,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 19,
@@ -212,7 +229,8 @@ export const cards_zombiaki_json = [
         "description": "Połóż Bossa na dowolnym Zombiaku. Boss może wydać 3 rozkazy (1 na turę) pozwalające na dodatkowy ruch innego Zombiaka. Rozkazów słuchają Zombiaki o sile 3 i mniejszej. Gdy Zombiak-Boss zginie, wszystkie Zombiaki cofają się o 1 pole.",
         "flavor": "Teraz ja tu rządzę.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 20,
@@ -223,7 +241,8 @@ export const cards_zombiaki_json = [
         "flavor": "Marian zaprasza do tańca.",
         "hp": 4,
         "max_hp": 4,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 21,
@@ -234,7 +253,8 @@ export const cards_zombiaki_json = [
         "flavor": "Taki mały władca much.",
         "hp": 2,
         "max_hp": 2,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 22,
@@ -246,7 +266,8 @@ export const cards_zombiaki_json = [
         "hp": 2,
         "max_hp": 2,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 23,
@@ -258,7 +279,8 @@ export const cards_zombiaki_json = [
         "hp": 3,
         "max_hp": 3,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 24,
@@ -268,7 +290,8 @@ export const cards_zombiaki_json = [
         "description": "Przesuń dowolnego Zombiaka o 1 pole do przodu o ile jest to możliwe",
         "flavor": "Bierz go!",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 25,
@@ -279,7 +302,8 @@ export const cards_zombiaki_json = [
         "flavor": "Jak się bawiłeś na mojej stypie?",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 26,
@@ -290,7 +314,8 @@ export const cards_zombiaki_json = [
         "flavor": "Setka na wzmocnienie Mietka.",
         "hp": 3,
         "max_hp": 3,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 27,
@@ -300,7 +325,8 @@ export const cards_zombiaki_json = [
         "description": "Przesuń dowolnego Zombiaka na sąsiednie pole zajmowane przez innego Zombiaka (również jeśli obaj są zasieciowani). Obaj traktowani są jak nowy Zombiak o sile równej sumie ich sił. Jeśli zmasujesz Zombiaka z cechą specjalną, to przestaje ona obowiązywać.",
         "flavor": "Kupy nikt nie rusza.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 28,
@@ -321,7 +347,8 @@ export const cards_zombiaki_json = [
         "description": "Usuń do 2 znaczników ran z wybranego Zombiaka.",
         "flavor": "Dietę zaczynam od jutra.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 30,
@@ -333,7 +360,8 @@ export const cards_zombiaki_json = [
         "hp": 2,
         "max_hp": 2,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 31,
@@ -343,7 +371,8 @@ export const cards_zombiaki_json = [
         "description": "Zamień miejscami dwa Zombiaki sąsiadujące ze sobą (nie po skosie), o ile żaden z nich nie jest splątany siecią. Karta nie działa na Psa ani Kota.",
         "flavor": "Miejsce dla mądrzejszego!",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 32,
@@ -353,7 +382,8 @@ export const cards_zombiaki_json = [
         "description": "Zamień Człowieka w nowego Zombiaka o sile 1, umieść go na sąsiednim polu (z tyłu lub z boku). Jeżeli wszystkie sąsiednie pola są zablokowane, Ugryzienie nie może zostać zagrane.",
         "flavor": "Pajęczyca.",
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 33,
@@ -364,7 +394,8 @@ export const cards_zombiaki_json = [
         "flavor": "IWAN: chłopak na piątkę.",
         "hp": 5,
         "max_hp": 5,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     },
     {
         "id": 34,
@@ -376,7 +407,8 @@ export const cards_zombiaki_json = [
         "hp": 3,
         "max_hp": 3,
         "special": true,
-        "race": "zombiaki"
+        "race": "zombiaki",
+        "board": true
     }
 ];
 

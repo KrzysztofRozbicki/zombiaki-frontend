@@ -47,7 +47,6 @@ function removeCardHandler(card) {
             card.handler = null;
         }
         const id = +card.dataset.id;
-        console.log(id);
         card.src = `images/cards/zombiaki/rewers.webp`;
         card.classList.add('card_blank');
         card.dataset.id = 'blank';
