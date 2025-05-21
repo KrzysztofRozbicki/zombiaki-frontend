@@ -1,4 +1,4 @@
---> KRYSTYNKA       8/10
+PAZURY VISUAL EFFECT - ZDJĘCIE PAZURÓW PRZY DAMAGE`U
 --> CZŁOWIEK        7/10
 --> WIADRO          5/10
 --> MŁODY           8/10
