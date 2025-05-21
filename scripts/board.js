@@ -62,11 +62,14 @@ export function updateBoard(prev_turn) {
             }
         });
     }
-    const web_elements = document.querySelectorAll('.webbed');
-    web_elements.forEach(element =>
-        element.classList.remove('webbed')
-    )
-    if (prev_turn === 'zombiaki') moveLudzie();
+
+    if (prev_turn === 'zombiaki') {
+        const web_elements = document.querySelectorAll('.webbed');
+        web_elements.forEach(element =>
+            element.classList.remove('webbed')
+        )
+        moveLudzie();
+    }
 }
 
 export function resetUsableCards() {
@@ -88,7 +91,7 @@ async function moveZombiaki() {
             const old_field = board[i][j];
             const { card } = old_field;
             if (!card) continue;
-            if (card.type === "zombiak" && !card.special) {
+            if (card.type === "zombiak" && !card.pet) {
                 if (i === 4) {
                     gameOver('zombiaki');
                     return;
@@ -135,10 +138,7 @@ function setAvailablePetFields(field, resolve) {
         hide(cancel_button);
         resolve(true);
         return;
-        //HIDE CANCEL ITP ITD.
     }
-
-
 
     const { element } = field;
     const tor = +element.dataset.tor - 1;
@@ -209,7 +209,7 @@ function outPetHandler(old_field, new_field) {
 
 export function moveSingleZombiak(old_field, card, direction) {
     const { element } = old_field;
-
+    console.log(element);
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
@@ -222,11 +222,14 @@ export function moveSingleZombiak(old_field, card, direction) {
         'right': [0, 1],
     }
 
-
     const [przecznica_offset, tor_offset] = direction_offset[direction];
     const new_przecznica = przecznica + przecznica_offset;
     const new_tor = tor + tor_offset;
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
+    if (new_przecznica === 5) {
+        gameOver('zombiaki');
+        return;
+    }
     const next_field = board[new_przecznica][new_tor];
 
     const is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
@@ -235,8 +238,8 @@ export function moveSingleZombiak(old_field, card, direction) {
         old_field.card.hp <= 2;
     checkConcreteShoes(old_field);
 
-    if (checkMur(new_tor, przecznica, next_field)) return;
 
+    if (checkMur(new_tor, przecznica, next_field)) return;
     if (!next_field) return;
     if (!card.pet) {
         const next_field_is_taken = !!(next_field.card && !next_field.card.walkable);
@@ -261,6 +264,7 @@ export function moveSingleZombiak(old_field, card, direction) {
         if (pet_element) pet_element.remove();
     }
     checkBlowField(next_field, { move: true });
+
 }
 
 function checkConcreteShoes(old_field) {

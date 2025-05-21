@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 export const TEST_MODE = {
-    race: 'zombiaki',
+    race: 'ludzie',
     board: true,
 };
 
@@ -14,8 +14,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['TERROR', 'PAZURY', 'KILOF', 'ZENEK'];
-const start_cards_ludzie = ['ROPA', '220V', 'ZAPORA', 'CHUCK'];
+const start_cards_zombiaki = ['TERROR', 'PAZURY', 'KILOF', 'GŁÓD'];
+const start_cards_ludzie = ['ROPA', '220V', 'ZAPORA', 'SIEĆ'];
 
 const test_board = [
     // {
@@ -40,13 +40,13 @@ const test_board = [
     //     'card': 'MINA'
     // },
     {
-        'field': board[3][0],
+        'field': board[2][0],
         'card': "KULOODPORNY"
     },
-    {
-        "field": board[0][2],
-        'card': 'KOT',
-    },
+    // {
+    //     "field": board[0][2],
+    //     'card': 'KOT',
+    // },
     {
         "field": board[1][1],
         'card': 'IWAN',
