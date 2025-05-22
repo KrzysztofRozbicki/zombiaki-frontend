@@ -179,7 +179,7 @@ export const cards_zombiaki_json = [
         "description": "Na początku twojej tury przesuń Zombiaka o 1 pole do przodu. Siła Młodego jest tym większa, im bliżej Barykady się znajduje. Siła 2 (podstawowo), Siła 3 (na IV przecznicy), Siła 4 (na III przecznicy), Siła 5 (na II przecznicy), Siła 6 (na I przecznicy).",
         "flavor": "Jaki Zombiak, taki syn.",
         "hp": 2,
-        "max_hp": 4,
+        "max_hp": 2,
         "special": true,
         "race": "zombiaki",
         "board": true

@@ -48,9 +48,9 @@ const test_board = [
     //     'card': 'KOT',
     // },
     {
-        "field": board[1][2],
-        'card': 'IWAN',
-        'overlay': 'CZŁOWIEK',
+        "field": board[0][2],
+        'card': 'MŁODY',
+        "hp": 1
     },
     // {
     //     "field": board[1][1],

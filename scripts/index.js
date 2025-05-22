@@ -355,7 +355,6 @@ function endTurn() {
 }
 
 function switchTurn() {
-    debugger;
     let deck = document.getElementById(`deck_${turn}`);
     disable(deck);
     [prev_turn, turn] = [turn, prev_turn];

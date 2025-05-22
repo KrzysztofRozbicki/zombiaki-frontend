@@ -263,7 +263,16 @@ export function moveSingleZombiak(old_field, card, direction) {
         if (pet_element) pet_element.remove();
     }
     checkBlowField(next_field, { move: true });
+    if (card.name === 'MŁODY') setMlody(next_field, card);
+}
 
+function setMlody(field) {
+    const { element, card } = field;
+    card.hp += 1;
+    card.max_hp += 1;
+    const hp_element = element.querySelector('.field_image > div');
+    hp_element.dataset.max_hp = card.max_hp;
+    hp_element.dataset.current_hp = card.hp;
 }
 
 function checkConcreteShoes(old_field) {
@@ -453,7 +462,11 @@ function putPicture(field, card) {
         hpElement.dataset.max_hp = max_hp;
         hpElement.dataset.current_hp = hp;
         hpElement.dataset.card_id = id;
+        hpElement.classList.add('hp_element');
         divElement.appendChild(hpElement);
+        if (card.name === "MŁODY") {
+            hpElement.classList.add('mlody');
+        }
     }
 
     element.append(divElement);

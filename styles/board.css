@@ -564,11 +564,7 @@ div[data-przecznica="5"]:has(img):hover > div {
   z-index:4;
 }
 
-div[data-max_hp="2"],
-div[data-max_hp="3"],
-div[data-max_hp="4"],
-div[data-max_hp="5"],
-div[data-max_hp="4"][data-overlay="true"] {
+.hp_element {
   position: absolute !important;
   bottom: 5%;
   height: 10%;
@@ -576,12 +572,71 @@ div[data-max_hp="4"][data-overlay="true"] {
   left: 50%;
   transform: translateX(-50%);
 }
+.hp_element.mlody {
+  left: 5%;
+  bottom: 3%;
+  transform: none;
+  width: 30% !important;
+}
+.hp_element.mlody:after {
+  font-size: 75%;
+  width: 100% !important;
+  right: 0;
+  text-align: right;
+}
+div.hp_element.mlody[data-max_hp="3"] {
+  width: 45% !important;
+} 
+div.hp_element.mlody[data-max_hp="4"] {
+  width: 60% !important;
+} 
+div.hp_element.mlody[data-max_hp="5"] {
+  width: 75% !important;
+} 
+div.hp_element.mlody[data-max_hp="5"]:after {
+  font-size: 85%;
+}
+div.hp_element.mlody[data-max_hp="6"] {
+  width: 90% !important;
+} 
+div.hp_element.mlody[data-max_hp="6"]:after {
+  width: 90% !important;
+  font-size: 70%;
+} 
+
+
 
 div[data-max_hp="5"] {
   bottom: 6%;
   width: 80% !important;
   transform: translateX(-50%) rotate(-1deg);
   font-size: 80%;
+}
+
+
+div[data-max_hp="6"][data-current_hp="5"]:after {
+  content: "x";
+  width: 25%;
+}
+div[data-max_hp="6"][data-current_hp="4"]:after {
+  content: "xx";
+  width: 40%;
+}
+div[data-max_hp="6"][data-current_hp="3"]:after {
+  content: "xxx";
+  width: 55%;
+}
+div[data-max_hp="6"][data-current_hp="2"]:after {
+  content: "xxxx";
+  width: 70%;
+}
+div[data-max_hp="6"][data-current_hp="1"]:after {
+  content: "xxxxx";
+  width: 85%;
+}
+div[data-max_hp="6"][data-current_hp="0"]:after {
+  content: "xxxxxx";
+  width: 100%;
 }
 
 div[data-max_hp="5"][data-current_hp="4"]:after {

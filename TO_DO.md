@@ -1,13 +1,13 @@
 PAZURY VISUAL EFFECT - ZDJĘCIE PAZURÓW PRZY DAMAGE`U
 USUNIĘCIE OVERLAY CZŁOWIEKA TYLKO JAK JEST CZŁOWIEK
 ZROBIENIE OPCJI CO JAK KARTA MA KILKA OVERLAY`ÓW (BOSS CZŁOWIEK MIŚ ITP)
---> CZŁOWIEK        7/10
---> WIADRO          6/10
---> MŁODY           8/10
---> BOSS            9/10
+--> MŁODY           5/10
+
+--> WIADRO          7/10
+--> BOSS            8/10
 --> SYJAMCZYK       9/10
 --> GALARETA        8/10
 --> MASA            8/10
 --> KOŃ TROJAŃSKI   9/10
 --> SPADAJ          7/10
---> UGRYZIENIE      6/10
+--> UGRYZIENIE      8/10
