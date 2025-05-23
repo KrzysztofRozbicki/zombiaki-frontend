@@ -229,6 +229,8 @@ export const cards_zombiaki_json = [
         "description": "Połóż Bossa na dowolnym Zombiaku. Boss może wydać 3 rozkazy (1 na turę) pozwalające na dodatkowy ruch innego Zombiaka. Rozkazów słuchają Zombiaki o sile 3 i mniejszej. Gdy Zombiak-Boss zginie, wszystkie Zombiaki cofają się o 1 pole.",
         "flavor": "Teraz ja tu rządzę.",
         "special": true,
+        'hp': 3,
+        'max_hp': 3,
         "race": "zombiaki",
         "board": true
     },

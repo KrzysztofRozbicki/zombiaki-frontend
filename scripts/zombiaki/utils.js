@@ -5,7 +5,7 @@ import { board } from "../board.js";
 import { clearBoard } from './../board.js';
 const play_overlay = document.getElementById('play_overlay');
 
-export function useOverlay(field_board) {
+export function useBear(field_board) {
     const { element, card_overlay } = field_board;
     card_overlay.hp -= 1;
     const hp_element = element.querySelector('div[data-overlay="true"]');
@@ -46,13 +46,14 @@ export function addOverlay(card, field_board, callback) {
     }
     const { element } = field_board;
     field_board.card_overlay = card;
-    const { id, race, hp, max_hp } = card;
+    const { id, race, hp, max_hp, name } = card;
     element.classList.remove('overlay_available');
 
     const overlayElement = document.createElement('div');
     randomRotate(15, overlayElement);
     overlayElement.setAttribute('id', 'overlay');
     overlayElement.classList.add('overlay')
+    overlayElement.dataset.name = name;
 
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;
@@ -65,6 +66,8 @@ export function addOverlay(card, field_board, callback) {
         hpElement.dataset.card_id = id;
         hpElement.dataset.overlay = true;
         overlayElement.appendChild(hpElement);
+        hpElement.classList.add('hp_element');
+        if (card.name === 'BOSS') hpElement.classList.add('boss');
     };
 
     element.appendChild(overlayElement);
@@ -73,10 +76,12 @@ export function addOverlay(card, field_board, callback) {
     const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
     if (callback) {
+        console.log('add overlay handler');
         const overlay = element.querySelector('#overlay');
         const handler = showOverlay(field_board, field_board.card_overlay, callback);
         overlay.handler = handler;
         overlay.addEventListener('click', handler);
+        console.log(overlay);
     }
     removeCard();
     clearBoard();

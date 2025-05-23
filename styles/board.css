@@ -584,6 +584,16 @@ div[data-przecznica="5"]:has(img):hover > div {
   right: 0;
   text-align: right;
 }
+.hp_element.boss {
+  bottom: 3%;
+  width: 50% !important;
+  left:47%;
+}
+.hp_element.boss:after {
+  width: 25%;
+  font-size: 60% !important;
+}
+
 div.hp_element.mlody[data-max_hp="3"] {
   width: 45% !important;
 } 

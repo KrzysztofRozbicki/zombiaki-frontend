@@ -513,7 +513,7 @@ function cancelCard(card, resolve = null) {
     cancel_button.classList.add(`${race}_active`);
     const handler = handleCancelCard(card, resolve);
     cancel_button.handler = handler;
-    cancel_button.addEventListener('click', handler, { once: true });
+    cancel_button.addEventListener('click', handler);
 }
 
 function handleCancelCard(card, resolve = null) {
@@ -550,7 +550,7 @@ export function clearBoard() {
             if (element.classList.contains('webbed')) element.className = 'webbed';
             else element.className = '';
             element.classList.add('field');
-            const cards_on_field = element.querySelectorAll('.field > div');
+            const cards_on_field = element.querySelectorAll('.field > .field_image, .field > .field_board');
             cards_on_field.forEach(el => {
                 el.removeEventListener('click', el.handler);
                 el.handler = null;

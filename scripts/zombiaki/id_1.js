@@ -1,5 +1,5 @@
 //MIŚ
-import { useOverlay, putOverlay } from "./utils.js";
+import { useBear, putOverlay } from "./utils.js";
 import { setBearPlayed } from "../index.js";
 
 
@@ -9,7 +9,7 @@ export default function zombiaki_id_1(card, field) {
 }
 
 export function zombiaki_id_1_callback(field_board) {
-    useOverlay(field_board);
+    useBear(field_board);
     const overlay_elements = document.querySelectorAll('#overlay');
     overlay_elements.forEach(element => {
         if (!element.classList.contains('disable')) {
