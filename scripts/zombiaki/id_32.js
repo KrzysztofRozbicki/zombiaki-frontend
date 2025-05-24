@@ -1,9 +1,8 @@
 //UGRYZIENIE
 import { board, clearBoard, setField } from "../board.js";
-import { deck_zombiaki_element, removeCard } from "../index.js";
+import { deck_zombiaki_element, removeCard, cancel_button } from "../index.js";
 import { disable, enable, hideCancelButton, showAlert } from "../utils.js";
 import { zombiak_1 } from '../zombiaki/cards.js';
-const cancel_button = document.getElementById('cancel');
 
 export default function zombiaki_id_32(card, field) {
     disable(deck_zombiaki_element);

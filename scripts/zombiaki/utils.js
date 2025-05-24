@@ -1,5 +1,14 @@
 
-import { chosen_card, chosen_card_picture, close_card, play_card, throw_card, getTurn, removeCard } from "../index.js";
+import {
+    chosen_card,
+    chosen_card_picture,
+    close_card,
+    play_card,
+    throw_card,
+    getTurn,
+    removeCard,
+    cancel_button
+} from "../index.js";
 import { show, hide, enable, disable, randomRotate } from '../utils.js';
 import { board } from "../board.js";
 import { clearBoard } from './../board.js';
@@ -73,7 +82,6 @@ export function addOverlay(card, field_board, callback) {
     element.appendChild(overlayElement);
     element.dataset.overlay = card.overlay_text;
 
-    const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
     if (callback) {
         const overlay = element.querySelector('#overlay');

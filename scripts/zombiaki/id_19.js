@@ -3,9 +3,7 @@
 import { putOverlay } from "./utils.js";
 import { board, clearBoard, moveSingleZombiak } from "../board.js";
 import { disable, enable, show } from "../utils.js";
-import { deck_zombiaki_element } from "../index.js";
-
-const cancel_button = document.getElementById('cancel');
+import { deck_zombiaki_element, cancel_button } from "../index.js";
 
 export default function zombiaki_id_19(card, field) {
     putOverlay(card, zombiaki_id_19_callback);

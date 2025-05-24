@@ -1,4 +1,4 @@
-import { deck_zombiaki_element } from "./index.js";
+import { deck_zombiaki_element, cancel_button } from "./index.js";
 
 export function showAlert(text) {
     const alert = document.getElementById('alert');
@@ -17,7 +17,6 @@ export function showAlert(text) {
 };
 
 export function hideCancelButton() {
-    const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
     cancel_button.removeEventListener('click', cancel_button.handler);
     cancel_button.handler = null;

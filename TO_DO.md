@@ -10,4 +10,3 @@ VISUAL EFFECT - ŻETON GALARETY JEŚLI HP JEST WIĘCEJ NIŻ MAX
 
 --> WIADRO          7/10
 --> MASA            8/10
---> UGRYZIENIE      8/10

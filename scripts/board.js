@@ -1,5 +1,5 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard, deck_zombiaki_element, } from "./index.js";
+import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
@@ -101,6 +101,7 @@ async function moveZombiaki() {
             }
         }
     }
+    checkBucket();
 }
 
 async function checkPet() {
@@ -133,7 +134,6 @@ function setAvailablePetFields(field, resolve) {
 
     if (pet_moves === 0) {
         enable(deck_zombiaki_element);
-        const cancel_button = document.getElementById('cancel');
         cancel_button.removeEventListener('click', cancel_button.handler);
         cancel_button.handler = null;
         hide(cancel_button);
@@ -429,7 +429,6 @@ export function setField(field, card, other = false) {
         })
     })
     if (!other) removeCard();
-    const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
     if (card.race === 'zombiaki') {
         const zombiaki_deck = document.getElementById('deck_zombiaki');
@@ -444,7 +443,6 @@ export function setField(field, card, other = false) {
 function setFieldHandler(field, card) {
     return function () {
         setField(field, card);
-        const cancel_button = document.getElementById('cancel');
         cancel_button.removeEventListener('click', cancel_button.handler);
         cancel_button.handler = null;
     }
@@ -516,7 +514,6 @@ export function setMoveZombiaki(value) {
 function cancelCard(card, resolve = null) {
     const { board, race } = card;
     if (!board) return;
-    const cancel_button = document.getElementById('cancel');
     show(cancel_button);
     cancel_button.classList.add(`${race}_active`);
     const handler = handleCancelCard(card, resolve);
@@ -528,7 +525,6 @@ function handleCancelCard(card, resolve = null) {
     return function () {
         const { race } = card;
         clearBoard();
-        const cancel_button = document.getElementById('cancel');
         hide(cancel_button);
         const deck = document.getElementById(`deck_${race}`);
         enable(deck);

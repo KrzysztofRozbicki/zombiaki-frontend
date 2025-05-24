@@ -31,7 +31,7 @@ export const play_card = document.getElementById('play_card');
 export const throw_card = document.getElementById('throw_card');
 export const deck_ludzie_element = document.getElementById('deck_ludzie');
 export const deck_zombiaki_element = document.getElementById('deck_zombiaki');
-const cancel_button = document.getElementById('cancel');
+export const cancel_button = document.getElementById('cancel');
 const reset_button = document.getElementById('reset');
 
 export const deck_json_ludzie = cards_ludzie_json;
@@ -66,7 +66,7 @@ function start(race_chosen) {
     prev_turn = 'ludzie';
     if (TEST_MODE) startTest(TEST_MODE.race);
     startDeck();
-    handleNewTurn();
+    handleFirstTurn();
 }
 
 function startDeck() {
@@ -197,7 +197,6 @@ function drawCards(first_draw = false) {
         const deck = document.getElementById(`deck_${prev_turn}`);
         disable(deck);
     }
-
     setCards();
 }
 
@@ -209,16 +208,15 @@ function showCardHandler(card) {
     }
 }
 
-function showCard(card) {
+function showCard(card, is_bucket = false) {
     chosen_card_picture.src = card.src;
     active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
-    if (!active_card) {
-        return;
-    }
-    if (turn === 'zombiaki' && active_card.name === 'KLIK') {
-        disable(play_card);
-    }
+
+    if (!active_card) return;
+    if (turn === 'zombiaki' && active_card.name === 'KLIK') disable(play_card);
+
     show(chosen_card);
+    if (is_bucket) return;
     const handler = closeCardHandler();
     close_card.handler = handler;
     close_card.addEventListener('click', handler, { once: true });
@@ -326,7 +324,7 @@ export function removeCardZombiaki(id) {
     active_cards_zombiaki.splice(index_remove, 1);
 }
 
-function handleNewTurn() {
+function handleFirstTurn() {
     const ludzie_end_turn = document.getElementById('rewers_stack_ludzie');
     const zombiaki_end_turn = document.getElementById('rewers_stack_zombiaki');
     const end_turn_cards = [ludzie_end_turn, zombiaki_end_turn];
@@ -337,6 +335,7 @@ function handleNewTurn() {
     })
     hide(play_card);
     show(throw_card);
+    checkBucket();
 }
 
 function endTurn() {
@@ -370,6 +369,15 @@ function switchTurn() {
 
 }
 
+export function checkBucket() {
+    if (turn === 'ludzie') return;
+    const bucket_card = player_cards.find(card => card.getAttribute('data-name') === 'WIADRO');
+    if (!bucket_card) return;
+    showCard(bucket_card, { is_bucket: true });
+    hide(throw_card);
+    show(play_card);
+    MIN_CARD_THROWN = 0;
+}
 export function setBearPlayed(value) {
     bear_played = value;
 }
@@ -407,6 +415,10 @@ export function setTerror(boolean) {
 }
 export function getTerror() {
     return is_terror;
+}
+
+export function setMinCardsThrown(number) {
+    MIN_CARD_THROWN = number;
 }
 
 document.addEventListener('dblclick', function (e) {

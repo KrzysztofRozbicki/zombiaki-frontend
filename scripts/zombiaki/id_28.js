@@ -4,11 +4,10 @@ import {
     deck_ludzie_element,
     deck_zombiaki_element,
     getActiveCardsLudzie,
-    setActiveCardsLudzie
+    setActiveCardsLudzie,
+    cancel_button
 } from "../index.js";
 import { disable, enable } from "../utils.js";
-
-const cancel_button = document.getElementById('cancel');
 
 export default function zombiaki_id_28(card, field) {
     const ludzie_cards = getActiveCardsLudzie();
