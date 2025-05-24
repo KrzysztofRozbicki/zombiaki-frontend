@@ -1,5 +1,4 @@
 //PAPU
-//Usuń do 2 znaczników ran z wybranego Zombiaka.
 import { board, clearBoard } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
 import { enable, disable } from "../utils.js";

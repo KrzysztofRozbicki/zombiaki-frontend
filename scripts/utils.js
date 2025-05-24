@@ -51,5 +51,3 @@ export function randomRotate(number, element) {
     const degrees = Math.floor(Math.random() * (number - -number) + -number);
     element.style = `transform:rotate(${degrees}deg);`
 }
-
-

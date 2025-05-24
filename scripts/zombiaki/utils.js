@@ -76,12 +76,10 @@ export function addOverlay(card, field_board, callback) {
     const cancel_button = document.getElementById('cancel');
     hide(cancel_button);
     if (callback) {
-        console.log('add overlay handler');
         const overlay = element.querySelector('#overlay');
         const handler = showOverlay(field_board, field_board.card_overlay, callback);
         overlay.handler = handler;
         overlay.addEventListener('click', handler);
-        console.log(overlay);
     }
     removeCard();
     clearBoard();

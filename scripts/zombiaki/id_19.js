@@ -8,10 +8,10 @@ import { deck_zombiaki_element } from "../index.js";
 const cancel_button = document.getElementById('cancel');
 
 export default function zombiaki_id_19(card, field) {
-    putOverlay(card, boss_callback);
+    putOverlay(card, zombiaki_id_19_callback);
 }
 
-export function boss_callback(field) {
+export function zombiaki_id_19_callback(field) {
     bossCommand(field);
     show(cancel_button);
 }

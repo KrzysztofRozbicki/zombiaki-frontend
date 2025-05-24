@@ -33,12 +33,9 @@ function fireTor(tor) {
 
     for (let i = 0; i < board.length; i++) {
         const field = board[i][tor_index];
-        const { card } = field;
+        const { card, card_pet } = field;
         checkBlowField(field);
-        if (!card) continue;
-        if (card.type !== 'zombiak') continue;
-
-        damageZombiak(1, field);
+        if (card?.type === 'zombiak' || card_pet) damageZombiak(1, field);
     }
     enable(deck_ludzie_element);
     removeCard();

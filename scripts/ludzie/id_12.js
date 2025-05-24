@@ -24,14 +24,13 @@ function prepareTrack(track) {
     let active_fields = [];
     for (let i = board.length - 1; i >= 0; i--) {
         const field = board[i][track_index];
-        const { element, card_board, card } = field;
+        const { element, card_board, card, card_pet } = field;
         if (mur) {
             disable(element);
             continue;
         }
         if (card_board?.mur) mur = true;
-        if (!card) continue;
-        if (card && card?.type === 'zombiak') active_fields.push(field);
+        if (card?.type === 'zombiak') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('jajnik_available'))
     const handler = jajnikTrackHandler(active_fields)
@@ -45,11 +44,11 @@ function jajnikTrackHandler(fields) {
 
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            const { card } = field;
-            if (card && card.type === 'zombiak' && !card.special) {
-                unsetField(field);
+            const { card, card_pet, card_overlay } = field;
+            if (card?.type === 'zombiak' || card_pet) {
+                let is_bear = card_overlay?.name === 'MIŚ';
+                unsetField(field, { bear: is_bear });
                 setField(field, zombiak_1, { other: true });
-
             }
         }
     }

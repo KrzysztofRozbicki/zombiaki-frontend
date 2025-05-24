@@ -41,6 +41,12 @@ body.background {
   object-fit: contain;
   aspect-ratio: 0.66;
 }
+.field.galareta {
+  background-image: url('../images/tokens/GALARETA.webp');
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
 #streets {
   display: flex;
@@ -205,6 +211,7 @@ div[data-przecznica="5"]:has(img):hover > div {
 }
 
 .ropa_available[data-type="zombiak"] > .field_image,
+.ropa_available > .field_pet,
 .ropa_available > .field_board img[data-name="MINA"],
 .ropa_available > .field_board img[data-name="AUTO"] {
     cursor: url('../images/cursors/barrel.ico'), auto;
@@ -560,9 +567,6 @@ div[data-przecznica="5"]:has(img):hover > div {
 
 /* HIT POINTS STYLING */
 
-.field div {
-  z-index:4;
-}
 
 .hp_element {
   position: absolute !important;
