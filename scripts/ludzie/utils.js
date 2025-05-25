@@ -43,8 +43,24 @@ export function shot(card, sniper = false, cegła = false) {
             }
             if (card?.race !== 'zombiaki' && card_board?.name !== 'AUTO' && !card_pet) continue;
             if (card?.name === 'KULOODPORNY' && name !== 'CEGŁA') continue;
-            element.classList.add('shot_available')
+            let shot_krystynka = true;
+            if (card?.name === 'KRYSTYNKA') {
+                const przecznica = +element.dataset.przecznica - 1;
+                const tor_krystynka = +element.dataset.tor - 1;
+                for (let tor = 0; tor < board[przecznica].length; tor++) {
+                    const field = board[przecznica][tor];
+                    const { card, card_pet } = field;
+                    if (tor === tor_krystynka) continue;
+                    if (card?.type === 'zombiak' || card_pet) {
+                        shot_krystynka = false;
+                        continue;
+                    }
+                }
+            }
+            if (!shot_krystynka) continue;
 
+
+            element.classList.add('shot_available')
             const cards_on_field = element.querySelectorAll('.field > div');
             cards_on_field.forEach(el => {
                 const handler = shotHandler(dmg, board[i][j], el, piercing, cegła);
@@ -201,15 +217,15 @@ export function killZombiak(field) {
     pet_images.forEach(image => image.classList.add('death_animation'));
     images.forEach(image => image.classList.add('death_animation'));
     clearBoard();
+    disable(document.getElementById('streets'));
     setTimeout(() => {
         unsetField(field)
+        enable(document.getElementById('streets'));
         if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
         if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
         if (card_overlay?.name === 'BOSS') moveAllZombiakiBack();
         if (card?.name === 'GALARETA') deadGalareta(field);
-    }, 2000);
-
-
+    }, 1500);
 }
 
 export function killPet(field) {
@@ -337,12 +353,12 @@ function neighbourFieldIsTaken(i, j) {
 }
 
 
-export function aoeHandler(field, card) {
+export function aoeHandler(field, card, is_krystynka = false) {
     return function () {
-        activeAoe(field, card);
+        activeAoe(field, card, is_krystynka);
     }
 }
-function activeAoe(field, card) {
+function activeAoe(field, card, is_krystynka = false) {
     const { element } = field;
     hideCancelButton();
     const targetCard = field.card || field.card_pet;
@@ -352,10 +368,10 @@ function activeAoe(field, card) {
     checkBlowField(field);
     if (targetCard && targetCard.type === 'zombiak') damageZombiak(1, field);
     if (card.dmg === 0) return;
-    setAoeBoard(field, card);
+    setAoeBoard(field, card, is_krystynka);
 }
 
-function setAoeBoard(field, card) {
+function setAoeBoard(field, card, is_krystynka = false) {
     const { element } = field;
     const { name } = card;
 
@@ -374,11 +390,32 @@ function setAoeBoard(field, card) {
         all_fields.push(board[p][t]);
     }
 
+    if (name === 'MIOTACZ' && is_krystynka) {
+        let burn_krystynka = true;
+
+        for (let t = 0; t < board[przecznica].length; t++) {
+            const field = board[przecznica][t];
+            const { card, card_pet } = field;
+            if (card?.name === 'KRYSTYNKA') continue;
+            if (card?.type === 'zombiak' || card_pet) {
+                burn_krystynka = false;
+                continue;
+            }
+        }
+        const krystynka_index = all_fields.findIndex(field => field?.card?.name === 'KRYSTYNKA');
+        console.log(krystynka_index);
+        if (!burn_krystynka && krystynka_index !== -1) {
+            all_fields.splice(krystynka_index, 1);
+        }
+
+    }
+
+
     all_fields.forEach((field) => {
         const { element } = field;
         element.classList.add(`${name.toLowerCase()}_available`);
 
-        const handler = aoeHandler(field, card);
+        const handler = aoeHandler(field, card, is_krystynka);
         element.addEventListener('click', handler);
         element.handler = handler;
     })

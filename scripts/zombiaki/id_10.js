@@ -76,7 +76,6 @@ function finishBucket() {
 }
 
 function checkAllZombiaki() {
-    console.log('check zombiaki');
     const all_zombiaki = [];
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {

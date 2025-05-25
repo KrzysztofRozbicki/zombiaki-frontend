@@ -73,7 +73,6 @@ function putZombiakHandler(old_field, new_field) {
         const old_element = old_field.element
         old_field.card_overlay = null;
         const human_element = old_element.querySelector('[data-name="CZŁOWIEK"]');
-        console.log(human_element);
         human_element.remove();
         setField(new_field, zombiak_1, { other: true });
         clearBoard();

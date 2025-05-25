@@ -414,10 +414,23 @@ export const cards_zombiaki_json = [
     }
 ];
 
+export const zombiak_masa = {
+    "id": "masa",
+    "name": "MASA",
+    "type": "zombiak",
+    "description": "Na w kupie siła w tury Zombiak przesuwa się o 1 pole do przodu.",
+    "flavor": "W kupię siła.",
+    "hp": 0,
+    "max_hp": 0,
+    "race": "zombiaki",
+    "board": true
+}
 export const zombiak_1 = {
     'id': 'rewers',
+    "description": "Na w kupie siła w tury Zombiak przesuwa się o 1 pole do przodu.",
     'race': 'zombiaki',
     'type': 'zombiak',
     'hp': 1,
-    'max_hp': 1
+    'max_hp': 1,
+    "board": true
 }

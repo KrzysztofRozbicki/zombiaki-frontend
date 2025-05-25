@@ -619,6 +619,9 @@ div.hp_element.mlody[data-max_hp="6"]:after {
 } 
 
 
+.hp_element:before{
+  width: 100%;
+}
 
 div[data-max_hp="5"] {
   bottom: 6%;
@@ -713,7 +716,8 @@ div[data-max_hp="4"][data-overlay="true"] {
 
 .field div:after,
 #chosen_card_health:after,
-.hp_card div:after {
+.hp_card div:after,
+.hp_element:before {
   content: "";
   font-size: 100%;
   height: 100%;

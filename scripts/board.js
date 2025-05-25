@@ -418,16 +418,7 @@ export function unsetField(board_field, options = {}) {
 
 export function setField(field, card, other = false) {
     putPicture(field, card);
-    board.forEach(przecznica => {
-        przecznica.forEach(pole => {
-            const { element } = pole;
-            element.classList.remove(`${card.race}`, 'field_available');
-            if (element.handler) {
-                element.removeEventListener('click', element.handler);
-                element.handler = null;
-            }
-        })
-    })
+    clearBoard();
     if (!other) removeCard();
     hide(cancel_button);
     if (card.race === 'zombiaki') {
@@ -459,9 +450,15 @@ function putPicture(field, card) {
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;
     imgElement.dataset.name = name;
+    if (card.name === 'MASA') {
+        imgElement.src = 'images/cards/zombiaki/masa.webp';
+        imgElement.dataset.name = ' MASA';
+    }
     divElement.appendChild(imgElement);
 
+    if (card.name === 'MASA') {
 
+    }
 
     if (hp) {
         const hpElement = document.createElement('div');
@@ -618,7 +615,6 @@ export function deadGalareta(field) {
 
 export function deadSpecialZombiakOneCard(field, number) {
     const available_fields = checkAvailableDeadFields(field, number);
-    console.log(available_fields);
     available_fields.forEach(board_field => {
         setField(board_field, zombiak_1, { other: true });
     })
