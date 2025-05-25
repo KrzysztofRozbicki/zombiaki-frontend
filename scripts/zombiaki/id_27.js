@@ -56,9 +56,6 @@ function setAvailableFields(field) {
     all_fields.forEach((new_field) => {
         const { element } = new_field;
         element.classList.add('move_on');
-        const handler_mouseover = hoverHandler(field, new_field);
-        element.handler_mouseover = handler_mouseover;
-        element.addEventListener('mouseover', handler_mouseover);
         const handler = putMasaHandler(field, new_field);
         element.addEventListener('click', handler, { once: true });
         element.handler = handler;
@@ -75,27 +72,5 @@ function putMasaHandler(field, new_field) {
         unsetField(field);
         setField(new_field, masa_card);
         enable(deck_zombiaki_element);
-    }
-}
-
-
-function hoverHandler(old_field, new_field) {
-    return function () {
-        const handler = outHandler(old_field, new_field);
-        new_field.element.addEventListener('mouseout', handler, { once: true })
-        new_field.element.handler_mouseout = handler;
-        new_field.element.classList.add('background_image');
-        const { card } = old_field;
-        const { id, race } = card;
-        new_field.element.style.setProperty('--bg-image', `url('../images/cards/${race}/${id}.webp')`)
-        old_field.element.classList.add('no_image');
-    }
-}
-
-function outHandler(old_field, new_field) {
-    return function () {
-        new_field.element.classList.remove('background_image');
-        new_field.element.style.removeProperty('--bg-image');
-        old_field.element.classList.remove('no_image');
     }
 }
