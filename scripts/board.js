@@ -444,51 +444,63 @@ function putPicture(field, card) {
     const { id, name, race, type, hp, max_hp } = card;
     const { element } = field;
 
-    const divElement = document.createElement('div');
-    randomRotate(10, divElement);
-    divElement.classList.add('field_image')
-    const imgElement = document.createElement('img');
-    imgElement.src = `images/cards/${race}/${id}.webp`;
-    imgElement.dataset.name = name;
-    if (card.name === 'MASA') {
-        imgElement.src = 'images/cards/zombiaki/masa.webp';
-        imgElement.dataset.name = ' MASA';
+    const div_element = document.createElement('div');
+    randomRotate(10, div_element);
+    div_element.classList.add('field_image')
+    const img_element = document.createElement('img');
+    img_element.src = `images/cards/${race}/${id}.webp`;
+    img_element.dataset.name = name;
+    if (name === 'MASA') {
+        img_element.src = 'images/cards/zombiaki/masa.webp';
+        img_element.dataset.name = 'MASA';
     }
-    divElement.appendChild(imgElement);
+    div_element.appendChild(img_element);
 
-    if (card.name === 'MASA') {
-
+    if (name === 'MASA') {
+        const hp_element = document.createElement('div');
+        hp_element.classList.add('hp_masa');
+        div_element.appendChild(hp_element);
+        const text_hp = document.createElement('p');
+        text_hp.innerText = `${hp} `;
+        text_hp.classList.add('hp_masa__text');
+        const max_text_hp = document.createElement('p');
+        max_text_hp.innerHTML = 'x';
+        max_text_hp.classList.add('hp_masa__text__x');
+        const hp_image = document.createElement('img');
+        hp_image.src = 'images/cards/zombiaki/hp_image.webp';
+        hp_element.append(text_hp, max_text_hp, hp_image);
+        div_element.appendChild(hp_element);
     }
 
-    if (hp) {
-        const hpElement = document.createElement('div');
-        hpElement.dataset.max_hp = max_hp;
-        hpElement.dataset.current_hp = hp;
-        hpElement.dataset.card_id = id;
-        hpElement.classList.add('hp_element');
-        divElement.appendChild(hpElement);
+    if (hp && name !== 'MASA') {
+        const hp_element = document.createElement('div');
+        hp_element.dataset.max_hp = max_hp;
+        hp_element.dataset.current_hp = hp;
+        hp_element.dataset.card_id = id;
+        hp_element.classList.add('hp_element');
+        div_element.appendChild(hp_element);
         if (card.name === "MŁODY") {
-            hpElement.classList.add('mlody');
+            hp_element.classList.add('mlody');
         }
     }
 
-    element.append(divElement);
+    element.append(div_element);
     element.dataset.id = id;
     element.dataset.name = name;
     element.dataset.type = type;
 
     if (card.pet) {
         field.card_pet = card;
-        divElement.classList.remove('field_image');
-        divElement.classList.add('field_pet');
+        div_element.classList.remove('field_image');
+        div_element.classList.add('field_pet');
         return;
     }
 
 
     if (card.board && card.race === 'ludzie') {
         field.card_board = card;
-        divElement.classList.remove('field_image');
-        divElement.classList.add('field_board');
+        div_element.classList.remove('field_image');
+        div_element.classList.add('field_board');
         return;
     }
     field.card = card;
@@ -500,8 +512,8 @@ function cardFunction(card) {
         putZombiak(card);
         return;
     }
-    const functionName = `${race}_id_${id}`;
-    raceFunctions[functionName](card, active_field);
+    const function_name = `${race}_id_${id}`;
+    raceFunctions[function_name](card, active_field);
 }
 
 export function setMoveZombiaki(value) {

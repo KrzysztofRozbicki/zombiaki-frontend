@@ -10,17 +10,18 @@
   --color-blue: #3b5159;
   --color-blue-opacity: rgba(100 , 100 , 255, 0.5);
   --color-yellow-opacity: #eddb5280;
+  --card-color: #e3cc85;
 }
 
 @font-face {
-  font-family: "Klathy";
-  src: url("../font/klathy.otf") format("opentype");
+  font-family: "Misty Graveyard";
+  src: url("../font/Misty Graveyard.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 body {
-  font-family: "Klathy", sans-serif;
+   font-family: "Misty Graveyard", sans-serif;
   overflow: hidden;
     user-select: none;
     cursor: url('../images/cursors/normal.ico'), auto;
@@ -41,7 +42,7 @@ cursor: url('../images/cursors/click.ico'), auto;
 *:focus,
 *:after,
 *:before {
-  font-family: "Klathy", sans-serif;
+  font-family: "Misty Graveyard", sans-serif;
   transition: all 0.5s ease-in-out, z-index 0s;
 }
 

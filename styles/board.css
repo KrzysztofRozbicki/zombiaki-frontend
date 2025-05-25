@@ -82,7 +82,7 @@ body.background {
   align-items: center;
   justify-content: center;
   color: var(--accent-color);
-  font-size: 2rem;
+  font-size: 3rem;
   font-family: "Arial", sans-serif;
 }
 
@@ -294,7 +294,7 @@ div[data-przecznica="5"]:has(img):hover > div {
   padding: 1rem;
   position: absolute;
    cursor: url('../images/cursors/hover.ico'), auto;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border: none;
   outline: none;
   color: var(--background-color);
@@ -618,9 +618,36 @@ div.hp_element.mlody[data-max_hp="6"]:after {
   font-size: 70%;
 } 
 
-
+.hp_element
 .hp_element:before{
   width: 100%;
+}
+
+.hp_masa {
+  position: absolute;
+  bottom: 0;
+  left:55%;
+  display: flex;
+  align-items: center;
+  font-size: 50%;
+  font-family: "Misty Graveyard", sans-serif;
+  color: var(--card-color);
+  transform: translateX(-50%);
+}
+.hp_masa p {
+  -webkit-text-stroke: 1px var(--accent-color);
+  margin-inline: 2%;
+}
+
+.hp_masa p.hp_masa__text__x {
+  position: relative;
+  font-size: 50%;
+  color: var(--card-color);
+  -webkit-text-stroke: 0.2px var(--accent-color);
+  top: 2px;
+}
+.hp_masa img {
+  width: 50%;
 }
 
 div[data-max_hp="5"] {
@@ -719,7 +746,7 @@ div[data-max_hp="4"][data-overlay="true"] {
 .hp_card div:after,
 .hp_element:before {
   content: "";
-  font-size: 100%;
+  font-size: 65%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -763,7 +790,7 @@ div[data-overlay="true"]:after {
   font-size: 80%;
 }
 .field .overlay:hover div[data-overlay="true"]:after {
-  font-size: 100%;
+  font-size: 65%;
 }
 
 

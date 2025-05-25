@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 export const TEST_MODE = {
-    race: 'ludzie',
+    race: 'zombiaki',
     board: true,
 };
 
@@ -35,12 +35,12 @@ const test_board = [
     //     'card': 'ZAPORA'
     // },
     {
-        "field": board[1][2],
-        'card': 'ZENEK',
+        "field": board[1][1],
+        'card': 'IWAN',
     },
     {
         'field': board[1][0],
-        'card': "KRYSTYNKA"
+        'card': "MARIUSZ"
     },
     // {
     //     "field": board[1][1],
