@@ -651,7 +651,7 @@ div.hp_element.mlody[data-max_hp="6"]:after {
 }
 
 div[data-max_hp="5"] {
-  bottom: 6%;
+  bottom: 5%;
   width: 80% !important;
   transform: translateX(-50%) rotate(-1deg);
   font-size: 80%;
@@ -746,7 +746,7 @@ div[data-max_hp="4"][data-overlay="true"] {
 .hp_card div:after,
 .hp_element:before {
   content: "";
-  font-size: 65%;
+  font-size: 85%;
   height: 100%;
   position: absolute;
   top: 0;

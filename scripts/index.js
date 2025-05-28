@@ -46,6 +46,7 @@ let turn = 'zombiaki';
 let prev_turn = null;
 
 let MIN_CARD_THROWN = 1;
+let MAX_CARD_PLAYED = 3;
 let bear_played = false;
 let player_cards = [];
 let cards_thrown = 0;
@@ -256,8 +257,6 @@ function playCard() {
             hide(chosen_card);
             return
         }
-        cards_played++;
-
         placeCard(active_card);
 
         if (!active_card?.board) {
@@ -307,10 +306,10 @@ export function removeCard() {
     close_card.removeEventListener('click', close_card.handler);
     close_card.handler = null;
     active_card = null;
-    const terror_played = is_terror && cards_played > 0 && turn === 'ludzie';
-    if (terror_played) {
-        is_terror = false;
-        setTimeout(() => endTurn(), 50);
+    cards_played++;
+    if (cards_played > MAX_CARD_PLAYED) {
+        MAX_CARD_PLAYED = 3;
+        setTimeout(() => endTurn(), 100);
     }
 }
 
@@ -364,9 +363,16 @@ function switchTurn() {
     show(throw_card);
     deck = document.getElementById(`deck_${turn}`);
     enable(deck)
-    if (bear_played) MIN_CARD_THROWN = 2;
-    bear_played = false;
-
+    if (bear_played) {
+        MIN_CARD_THROWN = 2;
+        bear_played = false;
+        showAlert('WIELKI MIŚ ZUŻYWA TWOJE ZASOBY! MUSISZ ODRZUCIĆ DWIE KARTY!');
+    }
+    if (is_terror && turn === 'ludzie') {
+        MAX_CARD_PLAYED = 1;
+        is_terror = false;
+        showAlert('ZAPANOWAŁ TERROR! MOŻESZ ZAGRAĆ TYLKO JEDNĄ KARTĘ!');
+    }
 }
 
 export function checkBucket() {

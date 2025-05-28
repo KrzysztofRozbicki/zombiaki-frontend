@@ -22,7 +22,7 @@ import {
     deck_ludzie_element
 } from "../index.js";
 import { deleteOverlay } from "../zombiaki/utils.js";
-import { disable, enable, show, hide, hideCancelButton } from "../utils.js";
+import { disable, enable, show, hide, hideCancelButton, showAlert } from "../utils.js";
 
 export function shot(card, sniper = false, cegła = false) {
     disable(deck_ludzie_element);
@@ -223,7 +223,10 @@ export function killZombiak(field) {
         enable(document.getElementById('streets'));
         if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
         if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
-        if (card_overlay?.name === 'BOSS') moveAllZombiakiBack();
+        if (card_overlay?.name === 'BOSS') {
+            showAlert('BOSS ZGINĄŁ! ZOMBIAKI W PRZESTRACHU COFAJĄ SIĘ!');
+            moveAllZombiakiBack();
+        }
         if (card?.name === 'GALARETA') deadGalareta(field);
     }, 1500);
 }
