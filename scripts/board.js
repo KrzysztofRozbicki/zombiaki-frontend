@@ -257,7 +257,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (!card.pet && old_field.card_pet) pet_status = 'STAY';
     if (is_beczka || is_dziura) unsetField(next_field);
     putPicture(next_field, card);
-    if (old_field.card_overlay) moveOverlay(old_field, next_field);
+    if (old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field, { pet: pet_status });
     if (card.pet) {
@@ -278,9 +278,10 @@ function setMlody(field) {
 }
 
 function checkConcreteShoes(old_field) {
-    if (!old_field.card_overlay) return;
-    if (old_field.card_overlay.name !== 'BETONOWE BUCIKI') return;
-    damageZombiak(old_field.card_overlay.dmg, old_field);
+    if (!old_field.overlay_cards || old_field.overlay_cards.length === 0) return;
+    const concrete_shoes_card = old_field.overlay_cards.find(card => card.name === 'BUCIKI');
+    if (!concrete_shoes_card) return;
+    damageZombiak(concrete_shoes_card.dmg, old_field);
 }
 
 export function checkBlowField(field, move = false) {
@@ -329,15 +330,13 @@ export function moveOverlay(old_field, new_field) {
     const overlay = old_field.element.getAttribute('data-overlay');
     if (!overlay || overlay === "null") return;
 
-    const card_overlay = old_field.card_overlay;
-    old_field.card_overlay = null;
-    const { id, race } = card_overlay;
-    const callback = `${race}_id_${id}_callback`;
-
-    if (overlay !== false) {
-        addOverlay(card_overlay, new_field, raceFunctions[callback]);
-    }
-
+    const overlay_cards = old_field.overlay_cards;
+    old_field.overlay_cards = null;
+    overlay_cards.forEach(card => {
+        const { id, race } = card;
+        const callback = `${race}_id_${id}_callback`;
+        addOverlay(card, new_field, raceFunctions[callback]);
+    })
 }
 
 function moveLudzie() {

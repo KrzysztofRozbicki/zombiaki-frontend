@@ -11,11 +11,11 @@ export default function zombiaki_id_19(card, field) {
 
 export function zombiaki_id_19_callback(field) {
     bossCommand(field);
-    show(cancel_button);
 }
 
 function bossCommand(boss_field) {
     disable(deck_zombiaki_element);
+    show(cancel_button);
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const board_field = board[i][j];

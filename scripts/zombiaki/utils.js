@@ -49,18 +49,22 @@ function overlayHandler(card, field, callback) {
     }
 }
 export function addOverlay(card, field_board, callback) {
+    console.log(card);
     if (card.race === 'zombiaki') {
         const zombiaki_deck = document.getElementById('deck_zombiaki');
         enable(zombiaki_deck);
     }
     const { element } = field_board;
-    field_board.card_overlay = card;
+    if (!field_board.overlay_cards) {
+        field_board.overlay_cards = [];
+    }
+    field_board.overlay_cards.push(card)
     const { id, race, hp, max_hp, name } = card;
     element.classList.remove('overlay_available');
 
     const overlayElement = document.createElement('div');
     randomRotate(15, overlayElement);
-    overlayElement.setAttribute('id', 'overlay');
+    overlayElement.setAttribute('id', id);
     overlayElement.classList.add('overlay')
     overlayElement.dataset.name = name;
 
@@ -84,8 +88,8 @@ export function addOverlay(card, field_board, callback) {
 
     hide(cancel_button);
     if (callback) {
-        const overlay = element.querySelector('#overlay');
-        const handler = showOverlay(field_board, field_board.card_overlay, callback);
+        const overlay = document.getElementById(id);
+        const handler = showOverlay(field_board, card, callback);
         overlay.handler = handler;
         overlay.addEventListener('click', handler);
     }
@@ -94,13 +98,15 @@ export function addOverlay(card, field_board, callback) {
 }
 
 function showOverlay(field_board, card, callback) {
+    console.log(card);
     return function () {
         if (getTurn() === 'ludzie') return;
         const { element } = field_board;
+        const { race, id } = card;
         play_overlay.innerText = element.getAttribute('data-overlay');
         show(chosen_card);
         chosen_card.classList.remove('hidden');
-        chosen_card_picture.src = card.image_src;
+        chosen_card_picture.src = `images/cards/${race}/${id}.webp`;
         const chosen_card_health = document.getElementById('chosen_card_health');
         chosen_card_health.dataset.max_hp = card.max_hp;
         chosen_card_health.dataset.current_hp = card.hp;
