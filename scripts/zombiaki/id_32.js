@@ -14,9 +14,10 @@ function checkFields() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
-            const { card_overlay, element } = field;
-            if (!card_overlay) continue;
-            if (card_overlay?.name !== 'CZŁOWIEK') continue;
+            const { overlay_cards, element } = field;
+            if (!overlay_cards || overlay_cards.length === 0) continue;
+            const is_human = !!overlay_cards.find(card => card.name === 'CZŁOWIEK');
+            if (!is_human) continue;
             const available_fields = checkAvailableFields(field);
             if (available_fields.length === 0) continue;
             is_possible = true;
@@ -71,8 +72,10 @@ function outZombiakHandler(old_field, new_field) {
 function putZombiakHandler(old_field, new_field) {
     return function () {
         const old_element = old_field.element
-        old_field.card_overlay = null;
-        const human_element = old_element.querySelector('[data-name="CZŁOWIEK"]');
+        const human_index = old_field.overlay_cards.findIndex(card => card.name === 'CZŁOWIEK');
+        old_field.overlay_cards.splice(human_index, 1);
+        if (old_field.overlay_cards.length === 0) old_field.overlay_cards = null;
+        const human_element = old_element.querySelector('div[data-name="CZŁOWIEK"]');
         human_element.remove();
         setField(new_field, zombiak_1, { other: true });
         clearBoard();

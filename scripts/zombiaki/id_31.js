@@ -40,29 +40,33 @@ function spadajHandler(field) {
 
 function swapCards(old_field, new_field) {
     return function () {
-        const old_overlay = old_field.card_overlay;
+        const old_overlay_cards = old_field.overlay_cards;
         const old_card = old_field.card;
 
-
-        const new_overlay = new_field.card_overlay;
+        const new_overlay_cards = new_field.overlay_cards;
         const new_card = new_field.card;
+
         unsetField(old_field);
         unsetField(new_field);
 
         setField(old_field, new_card);
-        setField(new_field, old_card)
-        if (old_overlay) {
-            const { id, race } = old_overlay;
-            const callback = `${race}_id_${id}_callback`;
-            addOverlay(old_overlay, new_field, raceFunctions[callback]);
+        setField(new_field, old_card);
+
+        if (old_overlay_cards && old_overlay_cards.length > 0) {
+            old_overlay_cards.forEach(card => {
+                const { id, race } = card;
+                const callback = `${race}_id_${id}_callback`;
+                addOverlay(card, new_field, raceFunctions[callback]);
+            })
         }
 
-        if (new_overlay) {
-            const { id, race } = new_overlay;
-            const callback = `${race}_id_${id}_callback`;
-            addOverlay(new_overlay, old_field, raceFunctions[callback]);
+        if (new_overlay_cards && new_overlay_cards.length > 0) {
+            new_overlay_cards.forEach(card => {
+                const { id, race } = card;
+                const callback = `${race}_id_${id}_callback`;
+                addOverlay(card, old_field, raceFunctions[callback]);
+            })
         }
-
 
         clearBoard();
         enable(deck_zombiaki_element);

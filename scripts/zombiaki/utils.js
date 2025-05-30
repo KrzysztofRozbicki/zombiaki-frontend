@@ -15,11 +15,14 @@ import { clearBoard } from './../board.js';
 const play_overlay = document.getElementById('play_overlay');
 
 export function useBear(field_board) {
-    const { element, card_overlay } = field_board;
-    card_overlay.hp -= 1;
-    const hp_element = element.querySelector('div[data-overlay="true"]');
-    hp_element.dataset.current_hp = card_overlay.hp;
-    if (card_overlay.hp === 0) deleteOverlay(field_board);
+    const { element, overlay_cards } = field_board;
+    const bear_index = overlay_cards.findIndex(card => card.name === 'MIŚ');
+    overlay_cards[bear_index].hp -= 1;
+    console.log(overlay_cards[bear_index].hp);
+    const bear_element = element.querySelector('div[data-name="MIŚ"]');
+    const hp_element = bear_element.querySelector('.hp_element');
+    hp_element.dataset.current_hp = overlay_cards[bear_index].hp;
+    if (overlay_cards[bear_index].hp === 0) deleteOverlay(field_board, 1);
 }
 
 export function putOverlay(card, callback) {
@@ -49,28 +52,38 @@ function overlayHandler(card, field, callback) {
     }
 }
 export function addOverlay(card, field_board, callback) {
-    console.log(card);
+
     if (card.race === 'zombiaki') {
         const zombiaki_deck = document.getElementById('deck_zombiaki');
         enable(zombiaki_deck);
     }
+
     const { element } = field_board;
+
     if (!field_board.overlay_cards) {
         field_board.overlay_cards = [];
     }
+
     field_board.overlay_cards.push(card)
     const { id, race, hp, max_hp, name } = card;
     element.classList.remove('overlay_available');
+    let overlay_container = element.querySelector('.overlay_container');
+    const is_container = !!overlay_container;
 
-    const overlayElement = document.createElement('div');
-    randomRotate(15, overlayElement);
-    overlayElement.setAttribute('id', id);
-    overlayElement.classList.add('overlay')
-    overlayElement.dataset.name = name;
+    if (!overlay_container) {
+        overlay_container = document.createElement('div');
+        overlay_container.classList.add('overlay_container');
+    }
+
+    const overlay_element = document.createElement('div');
+    randomRotate(15, overlay_element);
+    overlay_element.setAttribute('id', id);
+    overlay_element.classList.add('overlay')
+    overlay_element.dataset.name = name;
 
     const imgElement = document.createElement('img');
     imgElement.src = `images/cards/${race}/${id}.webp`;
-    overlayElement.appendChild(imgElement);
+    overlay_element.appendChild(imgElement);
 
     if (hp) {
         const hpElement = document.createElement('div');
@@ -78,32 +91,35 @@ export function addOverlay(card, field_board, callback) {
         hpElement.dataset.current_hp = hp;
         hpElement.dataset.card_id = id;
         hpElement.dataset.overlay = true;
-        overlayElement.appendChild(hpElement);
+        overlay_element.appendChild(hpElement);
         hpElement.classList.add('hp_element');
         if (card.name === 'BOSS') hpElement.classList.add('boss');
     };
 
-    element.appendChild(overlayElement);
-    element.dataset.overlay = card.overlay_text;
+    overlay_container.appendChild(overlay_element)
+
+    if (!is_container) {
+        element.appendChild(overlay_container);
+    };
 
     hide(cancel_button);
+
     if (callback) {
         const overlay = document.getElementById(id);
         const handler = showOverlay(field_board, card, callback);
         overlay.handler = handler;
         overlay.addEventListener('click', handler);
     }
+
     removeCard();
     clearBoard();
 }
 
 function showOverlay(field_board, card, callback) {
-    console.log(card);
     return function () {
         if (getTurn() === 'ludzie') return;
-        const { element } = field_board;
         const { race, id } = card;
-        play_overlay.innerText = element.getAttribute('data-overlay');
+        play_overlay.innerText = card.overlay_text;
         show(chosen_card);
         chosen_card.classList.remove('hidden');
         chosen_card_picture.src = `images/cards/${race}/${id}.webp`;
@@ -150,10 +166,13 @@ function closeOverlay() {
     chosen_card_health.dataset.current_hp = null;
 }
 
-export function deleteOverlay(field_board) {
-    const { element } = field_board;
-    delete field_board.card_overlay;
-    const overlay_element = element.querySelector('#overlay');
+export function deleteOverlay(field_board, id) {
+    const { element, overlay_cards } = field_board;
+    const index_remove = overlay_cards.findIndex(card => card.id === id);
+    const card_to_remove = overlay_cards.find(card => card.id === id);
+    field_board.overlay_cards.splice(index_remove, 1);
+    if (field_board.overlay_cards.length === 0) field_board.overlay_cards = null;
+    const overlay_element = element.querySelector(`div[data-name="${card_to_remove.name}"]`);
     overlay_element.remove();
     hide(chosen_card);
     closeOverlay();

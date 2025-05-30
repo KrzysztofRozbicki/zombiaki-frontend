@@ -44,9 +44,10 @@ function jajnikTrackHandler(fields) {
 
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
-            const { card, card_pet, card_overlay } = field;
+            const { card, card_pet, overlay_cards } = field;
             if (card?.type === 'zombiak' || card_pet) {
-                let is_bear = card_overlay?.name === 'MIŚ';
+                let is_bear = null;
+                if (overlay_cards?.length > 0) is_bear = !!overlay_cards.find(card => card.name === 'MIŚ');
                 unsetField(field, { bear: is_bear });
                 setField(field, zombiak_1, { other: true });
             }

@@ -10,7 +10,7 @@ export default function zombiaki_id_1(card, field) {
 
 export function zombiaki_id_1_callback(field_board) {
     useBear(field_board);
-    const overlay_elements = document.querySelectorAll('#overlay');
+    const overlay_elements = document.querySelectorAll('.overlay_container');
     overlay_elements.forEach(element => {
         if (!element.classList.contains('disable')) {
             element.classList.add('disable');

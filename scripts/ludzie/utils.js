@@ -61,13 +61,17 @@ export function shot(card, sniper = false, cegła = false) {
 
 
             element.classList.add('shot_available')
-            const cards_on_field = element.querySelectorAll('.field > div');
-            cards_on_field.forEach(el => {
-                const handler = shotHandler(dmg, board[i][j], el, piercing, cegła);
+            const zombie_card_element = element.querySelector('.field_image');
+            let handler = shotHandler(dmg, board[i][j], zombie_card_element, piercing, cegła);
+            zombie_card_element.shot_handler = handler;
+            zombie_card_element.addEventListener('click', handler, { once: true });
+            const bear_card_element = element.querySelector('div[data-name="MIŚ"]');
+            if (bear_card_element) {
+                handler = shotHandler(dmg, board[i][j], bear_card_element, piercing, cegła);
+                bear_card_element.shot_handler = handler;
+                bear_card_element.addEventListener('click', handler, { once: true });
+            }
 
-                el.shot_handler = handler;
-                el.addEventListener('click', handler, { once: true });
-            })
             if (i !== 0 && !sniper) {
                 j++;
                 if (j >= board[0].length) return;
@@ -88,9 +92,10 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
     removeCard();
     enable(deck_ludzie_element);
     let damage = dmg;
+    const is_człowiek = field?.overlay_cards?.find(card => card.name === 'CZŁOWIEK');
 
-    if (field?.card_overlay?.name === "CZŁOWIEK") {
-        deleteOverlay(field);
+    if (is_człowiek) {
+        deleteOverlay(field, 9);
         return
     }
 
@@ -98,7 +103,7 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
         const clickPlayed = await checkClick();
         if (clickPlayed) return;
     }
-    const { element, card, card_overlay, card_pet } = field;
+    const { element, card, overlay_cards, card_pet } = field;
     const { className } = specific_element;
 
     if (card_pet) {
@@ -124,7 +129,6 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
                 }
             }
         }
-
     }
 
     if (className === 'overlay' || className === 'field_image') {
@@ -133,9 +137,13 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
         if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
     }
 
-    if (className === 'overlay') card_overlay.hp -= dmg;
-    if (className === 'field_image') {
+    if (className === 'overlay') {
+        const index_bear = field.overlay_cards.findIndex(card => card.name === 'MIŚ');
+        overlay_cards[index_bear].hp -= dmg;
 
+    }
+
+    if (className === 'field_image') {
         card.hp -= damage;
         if (card.hp <= 0) {
             killZombiak(field);
@@ -182,14 +190,14 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
         }
         return;
     }
-
-    if (card_overlay && card_overlay.hp <= 0) {
-        if (card_overlay.hp < 0) {
-            const piercing_dmg = card_overlay.hp * -1;
+    const bear_card = field.overlay_cards.find(card => card.name === 'MIŚ');
+    if (bear_card && bear_card.hp <= 0) {
+        if (bear_card.hp < 0) {
+            const piercing_dmg = bear_card.hp * -1;
             const zombie_card = element.querySelector('.field_image');
             shotZombiak(piercing_dmg, field, zombie_card, piercing)
         }
-        deleteOverlay(field);
+        deleteOverlay(field, 1);
     }
 }
 
@@ -211,19 +219,20 @@ function clearShotElements() {
 }
 
 export function killZombiak(field) {
-    const { card, card_overlay, element } = field;
+    const { card, overlay_cards, element } = field;
     const images = element.querySelectorAll('.field > .field_image');
     const pet_images = element.querySelectorAll('.field > .field_pet');
     pet_images.forEach(image => image.classList.add('death_animation'));
     images.forEach(image => image.classList.add('death_animation'));
     clearBoard();
     disable(document.getElementById('streets'));
+    const is_boss = !!overlay_cards.find(card => card.name === 'BOSS');
     setTimeout(() => {
         unsetField(field)
         enable(document.getElementById('streets'));
         if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
         if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
-        if (card_overlay?.name === 'BOSS') {
+        if (is_boss) {
             showAlert('BOSS ZGINĄŁ! ZOMBIAKI W PRZESTRACHU COFAJĄ SIĘ!');
             moveAllZombiakiBack();
         }
@@ -244,8 +253,9 @@ export function killPet(field) {
 export function damageZombiak(dmg, field) {
     const { element, card, card_pet } = field;
     let damage = dmg;
-    if (field?.card_overlay?.name === "CZŁOWIEK") {
-        deleteOverlay(field);
+    const is_człowiek = field?.overlay_cards?.find(card => card.name === 'CZŁOWIEK');
+    if (is_człowiek) {
+        deleteOverlay(field, 9);
         return;
     }
 
@@ -406,7 +416,6 @@ function setAoeBoard(field, card, is_krystynka = false) {
             }
         }
         const krystynka_index = all_fields.findIndex(field => field?.card?.name === 'KRYSTYNKA');
-        console.log(krystynka_index);
         if (!burn_krystynka && krystynka_index !== -1) {
             all_fields.splice(krystynka_index, 1);
         }

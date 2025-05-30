@@ -50,13 +50,13 @@ export function putZombiak(card) {
 
 
 export function updateBoard(prev_turn) {
-    const overlay_elements = document.querySelectorAll('#overlay');
+    const overlay_elements = document.querySelectorAll('.overlay_container');
     overlay_elements.forEach(element => {
         enable(element);
     });
     if (prev_turn === 'ludzie') {
         moveZombiaki();
-        const overlay_elements = document.querySelectorAll('#overlay');
+        const overlay_elements = document.querySelectorAll('.overlay_container');
         overlay_elements.forEach(element => {
             if (!element.classList.contains('disable')) {
                 disable(element);
@@ -74,7 +74,7 @@ export function updateBoard(prev_turn) {
 }
 
 export function resetUsableCards() {
-    const overlay_elements = document.querySelectorAll('#overlay');
+    const overlay_elements = document.querySelectorAll('.overlay_container');
     overlay_elements.forEach(element => {
         enable(element);
     })
@@ -257,7 +257,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (!card.pet && old_field.card_pet) pet_status = 'STAY';
     if (is_beczka || is_dziura) unsetField(next_field);
     putPicture(next_field, card);
-    if (old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
+    if (old_field.overlay_cards && old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
     if (is_beczka || is_dziura) killZombiak(next_field);
     unsetField(old_field, { pet: pet_status });
     if (card.pet) {
@@ -327,8 +327,8 @@ function blowField(field) {
 }
 
 export function moveOverlay(old_field, new_field) {
-    const overlay = old_field.element.getAttribute('data-overlay');
-    if (!overlay || overlay === "null") return;
+    const overlay = old_field.element.querySelector('.overlay_container');
+    if (!overlay) return;
 
     const overlay_cards = old_field.overlay_cards;
     old_field.overlay_cards = null;
@@ -383,7 +383,7 @@ export function unsetField(board_field, options = {}) {
     const board_element = element.querySelector('.field_board');
     const card_element = element.querySelector('.field_image');
     const pet_element = element.querySelector('.field_pet');
-    const overlay_element = element.querySelector('#overlay');
+    const overlay_element = element.querySelector('.overlay_container');
 
     if (board_card) {
         element.innerHTML = '';
@@ -405,7 +405,7 @@ export function unsetField(board_field, options = {}) {
     if (board_element) board_element.remove();
     if (overlay_element && !bear) {
         overlay_element.remove();
-        board_field.card_overlay = null;
+        board_field.overlay_cards = null;
     }
 
     element.dataset.id = null;
@@ -565,7 +565,7 @@ export function clearBoard() {
             else element.className = '';
             element.classList.add('field');
             if (is_galareta) element.classList.add('galareta');
-            const cards_on_field = element.querySelectorAll('.field > .field_image, .field > .field_board');
+            const cards_on_field = element.querySelectorAll('.field > .field_image, .field > .field_board, .field > .overlay');
             cards_on_field.forEach(el => {
                 el.removeEventListener('click', el.handler);
                 el.handler = null;

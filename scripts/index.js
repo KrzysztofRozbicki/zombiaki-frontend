@@ -46,7 +46,7 @@ let turn = 'zombiaki';
 let prev_turn = null;
 
 let MIN_CARD_THROWN = 1;
-let MAX_CARD_PLAYED = 3;
+let MAX_CARD_PLAYED = 4;
 let bear_played = false;
 let player_cards = [];
 let cards_thrown = 0;

@@ -1,8 +1,8 @@
 //BOSS
 
-import { putOverlay } from "./utils.js";
+import { deleteOverlay, putOverlay } from "./utils.js";
 import { board, clearBoard, moveSingleZombiak } from "../board.js";
-import { disable, enable, show } from "../utils.js";
+import { disable, enable, hide, show, showAlert } from "../utils.js";
 import { deck_zombiaki_element, cancel_button } from "../index.js";
 
 export default function zombiaki_id_19(card, field) {
@@ -14,20 +14,27 @@ export function zombiaki_id_19_callback(field) {
 }
 
 function bossCommand(boss_field) {
-    disable(deck_zombiaki_element);
-    show(cancel_button);
+    let available_zombies = [];
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const board_field = board[i][j];
             const { card, element } = board_field;
             if (!card) continue;
             if (card.type !== 'zombiak' || card.hp > 3) continue;
+            if (card.name === boss_field.card.name && card.id === boss_field.card.id) continue;
             element.classList.add('move_available');
             const handler = moveHandler(board_field, boss_field);
             element.handler = handler;
             element.addEventListener('click', handler, { once: true });
+            available_zombies.push(board[i][j]);
         }
     }
+    if (available_zombies.length === 0) {
+        showAlert('NIE MOŻNA WYDAĆ ROZKAZU ŻADNEMU ZOMBIAKOWI!');
+        return;
+    }
+    disable(deck_zombiaki_element);
+    show(cancel_button);
 }
 
 function moveHandler(field, boss_field) {
@@ -73,15 +80,22 @@ function setAvailableFields(field, boss_field) {
 
 function setNewField(old_field, new_field, boss_field) {
     return function () {
-        const { card_overlay, element } = boss_field;
+        const { overlay_cards, element } = boss_field;
         const overlay_element = element.querySelector('div[data-name="BOSS"]');
         const hp_element = overlay_element.querySelector('.hp_element');
-        card_overlay.hp -= 1;
-        hp_element.dataset.current_hp = card_overlay.hp;
+        const boss_index = overlay_cards.findIndex(card => card.name === 'BOSS');
+        overlay_cards[boss_index].hp -= 1;
+        hp_element.dataset.current_hp = overlay_cards[boss_index].hp;
+        if (overlay_cards[boss_index].hp === 0) {
+            deleteOverlay(boss_field, 19);
+        }
         disable(overlay_element);
         clearBoard();
         moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.style.backgroundImage = ``;
+        cancel_button.removeEventListener('click', cancel_button.handler);
+        cancel_button.handler = null;
+        hide(cancel_button);
     }
 }
 
