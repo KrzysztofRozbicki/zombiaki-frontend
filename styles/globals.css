@@ -20,7 +20,8 @@
   font-style: normal;
   font-display: swap;
 }
-body {
+body,
+button {
    font-family: "Misty Graveyard", sans-serif;
   overflow: hidden;
     user-select: none;

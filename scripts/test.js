@@ -14,7 +14,7 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['ZENEK', 'MIŚ', 'CZŁOWIEK', 'UGRYZIENIE'];
+const start_cards_zombiaki = ['BOSS', 'MASA', 'CZŁOWIEK', 'UGRYZIENIE'];
 const start_cards_ludzie = ['DŁUGA SERIA', 'STRZAŁ. TEN LEPSZY', 'MIOTACZ', 'JAJNIK'];
 
 const test_board = [
@@ -35,13 +35,14 @@ const test_board = [
     //     'card': 'ZAPORA'
     // },
     {
-        "field": board[1][1],
+        "field": board[0][1],
         'card': 'ZENEK',
-        'hp': 1
+        'overlay': 'MIŚ'
     },
     {
-        'field': board[1][0],
-        'card': "MARIUSZ"
+        'field': board[0][0],
+        'card': "MARIUSZ",
+        'overlay': 'CZŁOWIEK'
     },
     // {
     //     "field": board[1][1],

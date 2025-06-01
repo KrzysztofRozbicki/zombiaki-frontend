@@ -1,8 +1,10 @@
 //MASA
+import { raceFunctions } from "../allFunctions.js";
 import { board, clearBoard, setField, unsetField } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
 import { disable, enable } from "../utils.js";
 import { zombiak_masa } from "./cards.js";
+import { addOverlay } from "./utils.js";
 export default function zombiaki_id_27(card, field) {
     putMasa();
 }
@@ -64,6 +66,19 @@ function setAvailableFields(field) {
 
 function putMasaHandler(field, new_field) {
     return function () {
+        const old_field_overlay_cards = field.overlay_cards || null;
+        const new_field_overlay_cards = new_field.overlay_cards || null;
+        let total_overlay_cards = null;
+        if (old_field_overlay_cards && !new_field_overlay_cards) total_overlay_cards = old_field_overlay_cards;
+        if (!old_field_overlay_cards && new_field_overlay_cards) total_overlay_cards = new_field_overlay_cards;
+        if (old_field_overlay_cards && new_field_overlay_cards) {
+            total_overlay_cards = old_field_overlay_cards.concat(new_field_overlay_cards);
+            console.log(total_overlay_cards);
+            total_overlay_cards = total_overlay_cards.filter((card, i, array) =>
+                array.findIndex(check_card => (check_card.id === card.id)) === i
+            )
+            console.log(total_overlay_cards);
+        }
         const new_max_hp = field.card.max_hp + new_field.card.max_hp;
         const new_hp = field.card.hp + new_field.card.hp;
         masa_card.max_hp = new_max_hp;
@@ -71,6 +86,13 @@ function putMasaHandler(field, new_field) {
         unsetField(new_field);
         unsetField(field);
         setField(new_field, masa_card);
+        if (total_overlay_cards) {
+            total_overlay_cards.forEach(card => {
+                const { id, race } = card;
+                const callback = `${race}_id_${id}_callback`;
+                addOverlay(card, new_field, raceFunctions[callback]);
+            })
+        }
         enable(deck_zombiaki_element);
     }
 }

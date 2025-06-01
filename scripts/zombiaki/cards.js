@@ -104,7 +104,6 @@ export const cards_zombiaki_json = [
         "amount": 3,
         "name": "CZŁOWIEK",
         "type": "overlay",
-        "overlay_text": "POŚWIĘĆ CZŁOWIEKA",
         "description": "Połóż Człowieka na dowolnym Zombiaku. Człowiek absorbuje wszystkie obrażenia wynikające z jednej karty zadane temu Zombiakowi, po czym ginie.",
         "flavor": "Do kumpla będziesz strzelał?",
         "special": true,

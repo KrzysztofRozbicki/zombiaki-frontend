@@ -30,12 +30,16 @@ export function putOverlay(card, callback) {
     disable(zombiaki_deck);
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
-            const { element } = board[i][j];
+            const { element, overlay_cards } = board[i][j];
             const temp_card = board[i][j].card;
             if (!temp_card) continue;
             const { type, name } = temp_card;
 
             if (type !== 'zombiak' && (name === 'KOT' || name === 'PIES')) continue;
+            if (overlay_cards && overlay_cards?.length > 0) {
+                const is_overlay = !!overlay_cards.find(overlay_card => overlay_card.name === card.name);
+                if (is_overlay) continue;
+            }
             element.classList.add('overlay_available');
             const handler = overlayHandler(card, board[i][j], callback);
             element.handler = handler;
@@ -50,6 +54,22 @@ function overlayHandler(card, field, callback) {
     return function () {
         addOverlay(card, field, callback);
     }
+}
+
+function addOverlayContainer(overlay_container) {
+    // const overlay_close_button = document.createElement('button');
+    // overlay_close_button.innerText = 'X';
+    overlay_container = document.createElement('div');
+    overlay_container.classList.add('overlay_container');
+    // overlay_container.addEventListener('click', (event) => {
+    //     overlay_container.classList.add('--show');
+    // })
+    // overlay_close_button.addEventListener('click', (e) => {
+    //     e.stopPropagation();
+    //     overlay_container.classList.remove('--show');
+    // })
+    // overlay_container.appendChild(overlay_close_button);
+    return overlay_container;
 }
 export function addOverlay(card, field_board, callback) {
 
@@ -70,10 +90,7 @@ export function addOverlay(card, field_board, callback) {
     let overlay_container = element.querySelector('.overlay_container');
     const is_container = !!overlay_container;
 
-    if (!overlay_container) {
-        overlay_container = document.createElement('div');
-        overlay_container.classList.add('overlay_container');
-    }
+    if (!overlay_container) overlay_container = addOverlayContainer(overlay_container);
 
     const overlay_element = document.createElement('div');
     randomRotate(15, overlay_element);
@@ -103,14 +120,10 @@ export function addOverlay(card, field_board, callback) {
     };
 
     hide(cancel_button);
-
-    if (callback) {
-        const overlay = document.getElementById(id);
-        const handler = showOverlay(field_board, card, callback);
-        overlay.handler = handler;
-        overlay.addEventListener('click', handler);
-    }
-
+    const overlay = overlay_container.querySelector(`div[data-name="${card.name}"]`);
+    const handler = showOverlay(field_board, card, callback);
+    overlay.handler = handler;
+    overlay.addEventListener('click', handler);
     removeCard();
     clearBoard();
 }
@@ -119,7 +132,7 @@ function showOverlay(field_board, card, callback) {
     return function () {
         if (getTurn() === 'ludzie') return;
         const { race, id } = card;
-        play_overlay.innerText = card.overlay_text;
+        play_overlay.innerText = card.overlay_text || '';
         show(chosen_card);
         chosen_card.classList.remove('hidden');
         chosen_card_picture.src = `images/cards/${race}/${id}.webp`;
@@ -127,7 +140,7 @@ function showOverlay(field_board, card, callback) {
         chosen_card_health.dataset.max_hp = card.max_hp;
         chosen_card_health.dataset.current_hp = card.hp;
         hide(play_card);
-        show(play_overlay);
+        if (card.overlay_text) show(play_overlay);
         hide(throw_card);
 
         let handler = handleCloseOverlay();
