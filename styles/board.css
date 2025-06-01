@@ -7,6 +7,13 @@
   transition: none;
 }
 
+.overlay_container.disable {
+  filter:none;
+}
+.overlay_container.disable div {
+  filter: grayscale(1);
+}
+
 .overlay_container:hover,
 .overlay_container:focus {
   transition: all 0.4s ease-in-out;
@@ -344,6 +351,20 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 0.75rem;
   transform: rotate(-10deg);
   z-index: 4;
+}
+.overlay[data-name="GALARETA"] {
+  width: 50% !important;
+  object-fit: contain;
+}
+.overlay_container:hover .overlay[data-name="GALARETA"] img {
+  width: 50%;
+}
+.overlay[data-name="GALARETA"] img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  top: 25%;
+  left: 25%;
 }
 
 .background_image {

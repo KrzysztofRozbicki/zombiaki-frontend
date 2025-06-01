@@ -18,7 +18,6 @@ export function useBear(field_board) {
     const { element, overlay_cards } = field_board;
     const bear_index = overlay_cards.findIndex(card => card.name === 'MIŚ');
     overlay_cards[bear_index].hp -= 1;
-    console.log(overlay_cards[bear_index].hp);
     const bear_element = element.querySelector('div[data-name="MIŚ"]');
     const hp_element = bear_element.querySelector('.hp_element');
     hp_element.dataset.current_hp = overlay_cards[bear_index].hp;
@@ -56,21 +55,7 @@ function overlayHandler(card, field, callback) {
     }
 }
 
-function addOverlayContainer(overlay_container) {
-    // const overlay_close_button = document.createElement('button');
-    // overlay_close_button.innerText = 'X';
-    overlay_container = document.createElement('div');
-    overlay_container.classList.add('overlay_container');
-    // overlay_container.addEventListener('click', (event) => {
-    //     overlay_container.classList.add('--show');
-    // })
-    // overlay_close_button.addEventListener('click', (e) => {
-    //     e.stopPropagation();
-    //     overlay_container.classList.remove('--show');
-    // })
-    // overlay_container.appendChild(overlay_close_button);
-    return overlay_container;
-}
+
 export function addOverlay(card, field_board, callback) {
 
     if (card.race === 'zombiaki') {
@@ -90,7 +75,10 @@ export function addOverlay(card, field_board, callback) {
     let overlay_container = element.querySelector('.overlay_container');
     const is_container = !!overlay_container;
 
-    if (!overlay_container) overlay_container = addOverlayContainer(overlay_container);
+    if (!overlay_container) {
+        overlay_container = document.createElement('div');
+        overlay_container.classList.add('overlay_container');
+    }
 
     const overlay_element = document.createElement('div');
     randomRotate(15, overlay_element);

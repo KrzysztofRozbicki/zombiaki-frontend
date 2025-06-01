@@ -37,9 +37,6 @@ function miotacz(card) {
     }
 }
 
-function checkKrystynka() {
-
-}
 function checkPrzecznica() {
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {

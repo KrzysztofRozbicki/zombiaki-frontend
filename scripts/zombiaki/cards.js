@@ -188,7 +188,6 @@ export const cards_zombiaki_json = [
         "amount": 1,
         "name": "PAZURY",
         "type": "overlay",
-        "overlay_text": "DODAJ PAZURY",
         "description": "ZAgraj Pazury na wybranego Zombiaka. Pazury zwiększają siłę Zombiaka o 1.",
         "flavor": "Może małe manicure?",
         "special": true,
@@ -426,10 +425,20 @@ export const zombiak_masa = {
 }
 export const zombiak_1 = {
     'id': 'rewers',
+    'name': "REWERS",
     "description": "Na w kupie siła w tury Zombiak przesuwa się o 1 pole do przodu.",
     'race': 'zombiaki',
     'type': 'zombiak',
     'hp': 1,
     'max_hp': 1,
     "board": true
+}
+
+export const galareta_overlay = {
+    'id': 'galareta',
+    'name': 'GALARETA',
+    'type': 'overlay',
+    'description': 'Dodatkowe 2 punkty życia',
+    'flavor': 'Żelatyna to samo żdrowie',
+    'race': 'zombiaki'
 }

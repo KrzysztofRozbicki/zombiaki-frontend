@@ -3,7 +3,7 @@ import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button
 import { addOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
-import { zombiak_1 } from "./zombiaki/cards.js";
+import { galareta_overlay, zombiak_1 } from "./zombiaki/cards.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
 const T2_P5 = document.querySelector('div[data-tor="2"][data-przecznica="5"]');
@@ -84,6 +84,7 @@ async function moveZombiaki() {
     disable(deck_zombiaki_element);
     if (!move_zombiaki) {
         move_zombiaki = true;
+        checkBucket();
         return;
     }
     await checkPet();
@@ -241,6 +242,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (next_field.element.classList.contains('galareta')) {
         next_field.element.classList.remove('galareta');
         old_field.card.hp += 2;
+        addOverlay(galareta_overlay, next_field, null);
     }
 
     if (checkMur(new_tor, przecznica, next_field)) return;
@@ -279,7 +281,7 @@ function setMlody(field) {
 
 function checkConcreteShoes(old_field) {
     if (!old_field.overlay_cards || old_field.overlay_cards.length === 0) return;
-    const concrete_shoes_card = old_field.overlay_cards.find(card => card.name === 'BUCIKI');
+    const concrete_shoes_card = old_field.overlay_cards.find(card => card.name === 'BETONOWE BUCIKI');
     if (!concrete_shoes_card) return;
     damageZombiak(concrete_shoes_card.dmg, old_field);
 }
@@ -346,11 +348,11 @@ function moveLudzie() {
             if (!card_board) continue;
             if (card_board.name === 'ZAPORA') unsetField(board[i][j]);
             if (card_board.name !== 'BECZKA') continue;
-            unsetField(board[i][j]);
+            unsetField(board[i][j], { board_card: true });
             if (i === 0) continue;
             const new_field = board[i - 1][j];
             if (!new_field.card && !new_field.card_board) {
-                setField(new_field, card);
+                setField(new_field, card_board);
                 continue;
             }
             if (new_field?.card_board?.name === 'DZIURA') {
@@ -454,6 +456,13 @@ function putPicture(field, card) {
         img_element.dataset.name = 'MASA';
     }
     div_element.appendChild(img_element);
+
+    const is_galareta = !!element.classList.contains('galareta');
+    if (is_galareta) {
+        element.classList.remove('galareta');
+        card.hp += 2;
+        addOverlay(galareta_overlay, field, null);
+    }
 
     if (name === 'MASA') {
         const hp_element = document.createElement('div');
@@ -559,12 +568,13 @@ export function clearBoard() {
         for (let j = 0; j < board[0].length; j++) {
             const field = board[i][j];
             const { element } = field;
-            let is_galareta = false;
-            if (element.classList.contains('webbed')) element.className = 'webbed';
-            if (element.classList.contains('galareta')) is_galareta = true;
-            else element.className = '';
+            let was_galareta = !!element.classList.contains('galareta');
+            let was_webbed = !!element.classList.contains('webbed')
+
+            element.className = '';
             element.classList.add('field');
-            if (is_galareta) element.classList.add('galareta');
+            if (was_webbed) element.classList.add('webbed');
+            if (was_galareta) element.classList.add('galareta');
             const cards_on_field = element.querySelectorAll('.field > .field_image, .field > .field_board, .field > .overlay');
             cards_on_field.forEach(el => {
                 el.removeEventListener('click', el.handler);

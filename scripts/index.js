@@ -2,9 +2,9 @@ import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace } from './menu.js';
 import { randomRotate, showAlert } from './utils.js';
-import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
+import { placeCard, updateBoard, resetUsableCards } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
-import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE } from './test.js';
+import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE, TEST_STATE } from './test.js';
 
 // const choose_ludzie = document.getElementById('choose-ludzie');
 // const choose_zombiaki = document.getElementById('choose-zombiaki');
@@ -65,7 +65,7 @@ let game_over = false;
 function start(race_chosen) {
     turn = race_chosen;
     prev_turn = 'ludzie';
-    if (TEST_MODE) startTest(TEST_MODE.race);
+    if (TEST_STATE) startTest(TEST_MODE.race);
     startDeck();
     handleFirstTurn();
 }
@@ -73,12 +73,11 @@ function start(race_chosen) {
 function startDeck() {
     showBackground()
     createDeck()
-    //shuffle();
+    if (!TEST_STATE) shuffle();
     initMenu(turn);
     drawCards(true);
     playCard();
     throwCard();
-
 }
 
 
@@ -308,7 +307,7 @@ export function removeCard() {
     active_card = null;
     cards_played++;
     if (cards_played > MAX_CARD_PLAYED) {
-        MAX_CARD_PLAYED = 3;
+        MAX_CARD_PLAYED = 4;
         setTimeout(() => endTurn(), 100);
     }
 }
@@ -363,15 +362,31 @@ function switchTurn() {
     show(throw_card);
     deck = document.getElementById(`deck_${turn}`);
     enable(deck)
+
+    if (turn === 'ludzie') {
+        checkForBearAndTerror();
+    }
+
+}
+
+function checkForBearAndTerror() {
+    const had_bear = bear_played
+    const had_terror = is_terror;
+    if (is_terror) {
+        MAX_CARD_PLAYED = 1;
+        if (bear_played) MAX_CARD_PLAYED = 2;
+        is_terror = false;
+        showAlert('ZAPANOWAŁ TERROR! MOŻESZ ZAGRAĆ TYLKO JEDNĄ KARTĘ!');
+    }
+
     if (bear_played) {
         MIN_CARD_THROWN = 2;
         bear_played = false;
         showAlert('WIELKI MIŚ ZUŻYWA TWOJE ZASOBY! MUSISZ ODRZUCIĆ DWIE KARTY!');
     }
-    if (is_terror && turn === 'ludzie') {
-        MAX_CARD_PLAYED = 1;
-        is_terror = false;
-        showAlert('ZAPANOWAŁ TERROR! MOŻESZ ZAGRAĆ TYLKO JEDNĄ KARTĘ!');
+
+    if (had_bear && had_terror) {
+        showAlert('WIELKI MIŚ ZUŻYWA TWOJE ZASOBY! MUSISZ ODRZUCIĆ DWIE KARTY! PONADTO ZAPANOWAŁ TERROR! MOŻESZ ZAGRAĆ TYLKO JEDNĄ KARTĘ!')
     }
 }
 

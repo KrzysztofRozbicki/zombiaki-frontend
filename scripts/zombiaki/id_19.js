@@ -87,7 +87,7 @@ function setNewField(old_field, new_field, boss_field) {
         overlay_cards[boss_index].hp -= 1;
         hp_element.dataset.current_hp = overlay_cards[boss_index].hp;
         if (overlay_cards[boss_index].hp === 0) {
-            deleteOverlay(boss_field, 19);
+            deleteOverlay(boss_field, overlay_cards[boss_index].id);
         }
         disable(overlay_element);
         clearBoard();

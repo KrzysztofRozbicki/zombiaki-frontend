@@ -220,12 +220,9 @@
   
   
   div[data-overlay="true"]:after {
-    font-size: 80%;
+    font-size: 60%;
   }
-  .field .overlay:hover div[data-overlay="true"]:after {
-    font-size: 65%;
-  }
-  
+
   
   div[data-max_hp="4"][data-current_hp="3"][data-overlay="true"]:after {
     content: "x";

@@ -3,6 +3,7 @@ import { deck_ludzie_element, removeCard } from "../index.js";
 import { disable, enable, show, hide } from "../utils.js";
 import { board, setField, unsetField } from "../board.js";
 import { zombiak_1 } from "../zombiaki/cards.js";
+import { deleteOverlay } from "../zombiaki/utils.js";
 export default function ludzie_id_12(card, field) {
     jajnik();
 }
@@ -47,7 +48,15 @@ function jajnikTrackHandler(fields) {
             const { card, card_pet, overlay_cards } = field;
             if (card?.type === 'zombiak' || card_pet) {
                 let is_bear = null;
-                if (overlay_cards?.length > 0) is_bear = !!overlay_cards.find(card => card.name === 'MIŚ');
+                let human_card = null;
+                if (overlay_cards && overlay_cards?.length > 0) {
+                    is_bear = !!overlay_cards.find(card => card.name === 'MIŚ');
+                    human_card = overlay_cards.find(card => card.name === 'CZŁOWIEK');
+                }
+                if (human_card) {
+                    deleteOverlay(field, human_card.id);
+                    return;
+                }
                 unsetField(field, { bear: is_bear });
                 setField(field, zombiak_1, { other: true });
             }
