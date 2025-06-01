@@ -136,16 +136,21 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
         }
     }
 
-    if (className === 'overlay' || className === 'field_image') {
-        const hp_element = specific_element.querySelector('div');
+    if ((className === 'overlay' || className === 'field_image') && field.card.name !== 'MASA') {
+        const hp_element = specific_element.querySelector('.hp_element');
         hp_element.dataset.current_hp = +hp_element.dataset.current_hp - damage;
         if (hp_element.dataset.current_hp < 0) hp_element.dataset.current_hp = 0;
+    }
+
+    if (field?.card?.name === 'MASA') {
+        const hp_element = specific_element.querySelector('.hp_masa__text');
+        hp_element.innerText = +hp_element.innerText - damage;
+        if (+hp_element.innerText < 0) hp_element.innerText = '0';
     }
 
     if (className === 'overlay') {
         const index_bear = field.overlay_cards.findIndex(card => card.name === 'MIŚ');
         overlay_cards[index_bear].hp -= dmg;
-
     }
 
     if (className === 'field_image') {
@@ -268,7 +273,8 @@ export function damageZombiak(dmg, field) {
     const human_card = field?.overlay_cards?.find(card => card.name === 'CZŁOWIEK') || null;
     const pazury_card = field?.overlay_cards?.find(card => card.name === 'PAZURY') || null;
     const galareta_card = field?.overlay_cards?.find(card => card.name === 'GALARETA') || null;
-    if (human_card) {
+    const concrete_shoes_card = field?.overlay_cards?.find(card => card.name === 'BETONOWE BUCIKI') || null;
+    if (human_card && !concrete_shoes_card) {
         deleteOverlay(field, human_card.id);
         return;
     }
@@ -284,8 +290,15 @@ export function damageZombiak(dmg, field) {
         card.hp -= damage;
         if (pazury_card) deleteOverlay(field, pazury_card.id);
         if (galareta_card && card.max_hp >= card.hp) deleteOverlay(field, galareta_card.id);
-        const zombiak_element = element.querySelector('.field_image > .hp_element');
-        zombiak_element.dataset.current_hp = card.hp;
+
+        if (card.name === 'MASA') {
+            const hp_element = element.querySelector('.hp_masa__text');
+            hp_element.innerText = +hp_element.innerText - damage;
+            if (+hp_element.innerText < 0) hp_element.innerText = '0';
+        } else {
+            const hp_element = element.querySelector('.field_image > .hp_element');
+            hp_element.dataset.current_hp = card.hp;
+        }
         if (card.hp <= 0) killZombiak(field);
     }
 }
@@ -397,7 +410,7 @@ function activeAoe(field, card, is_krystynka = false) {
     checkBlowField(field);
     if (targetCard && targetCard.type === 'zombiak') damageZombiak(1, field);
     if (card.dmg === 0) return;
-    if (targetCard?.hp === 0 && is_krystynka) {
+    if (targetCard?.hp === 0) {
         setTimeout(() => {
             setAoeBoard(field, card, is_krystynka);
         }, 1600)
@@ -424,11 +437,9 @@ function setAoeBoard(field, card, is_krystynka = false) {
         if (p < 0 || p > 4) continue;
         all_fields.push(board[p][t]);
     }
-    console.log(all_fields);
 
     if (name === 'MIOTACZ' && is_krystynka) {
         let burn_krystynka = true;
-
         for (let t = 0; t < board[przecznica].length; t++) {
             const field = board[przecznica][t];
             const { card, card_pet } = field;
@@ -442,7 +453,6 @@ function setAoeBoard(field, card, is_krystynka = false) {
         if (!burn_krystynka && krystynka_index !== -1) {
             all_fields.splice(krystynka_index, 1);
         }
-
     }
 
 

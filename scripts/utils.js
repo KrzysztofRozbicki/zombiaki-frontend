@@ -1,6 +1,6 @@
 import { deck_zombiaki_element, cancel_button } from "./index.js";
 
-export function showAlert(text) {
+export function showAlert(text, game_over = false) {
     const alert = document.getElementById('alert');
     const close_alert = document.getElementById('close_alert');
     const alert_text = document.getElementById('alert_text');
@@ -14,6 +14,9 @@ export function showAlert(text) {
             disable(deck_zombiaki_element);
         }
     }, { once: true })
+    if (game_over) {
+        close_alert.addEventListener('click', () => window.location.reload());
+    }
 };
 
 export function hideCancelButton() {
@@ -49,4 +52,16 @@ export function hideAll(array) {
 export function randomRotate(number, element) {
     const degrees = Math.floor(Math.random() * (number - -number) + -number);
     element.style = `transform:rotate(${degrees}deg);`
+}
+
+export function addListener(element, callback, once = false) {
+    const handler = callback;
+    if (!once) element.addEventListener('click', handler);
+    else element.addEventListener('click', handler, { once: true });
+    element.handler = handler;
+}
+
+export function removeListener(element) {
+    element.removeEventListener('click', element.handler);
+    element.handler = null;
 }

@@ -1,7 +1,7 @@
 import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
-import { initMenu, chooseRace } from './menu.js';
-import { randomRotate, showAlert } from './utils.js';
+import { initMenu, chooseRace, } from './menu.js';
+import { addListener, randomRotate, removeListener, showAlert } from './utils.js';
 import { placeCard, updateBoard, resetUsableCards } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
 import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE, TEST_STATE } from './test.js';
@@ -71,19 +71,16 @@ function start(race_chosen) {
 }
 
 function startDeck() {
-    showBackground()
     createDeck()
     if (!TEST_STATE) shuffle();
     initMenu(turn);
     drawCards(true);
-    playCard();
-    throwCard();
+    addListener(play_card, playCardHandler())
+    addListener(throw_card, throwCardHandler());
 }
 
 
-function showBackground() {
-    document.body.classList.add('background');
-}
+
 function startTest(race) {
     testMode();
     turn = race;
@@ -181,13 +178,28 @@ function getCardsFromDeck(first_draw, deck) {
             if (turn === 'zombiaki') active_cards_zombiaki.push(card);
         }
     }
+    if (turn === 'zombiaki') setDawnStyle(deck_zombiaki.length);
 }
 export function gameOver(winner) {
-    if (winner === 'ludzie') showAlert(`LUDZIE WYGRALI WSZYSTKIE ZOMBIAKI SĄ JESZCZE BARDZIEJ MARTWE`);
-    if (winner === 'zombiaki') showAlert('ZOMBIAKI WYGRAŁY WSZYSCY LUDZIE DOŁĄCZYLI DO HORDY NIEUMARŁYCH');
-    game_over = true;
+    if (winner === 'ludzie') showAlert(`LUDZIE WYGRALI WSZYSTKIE ZOMBIAKI SĄ JESZCZE BARDZIEJ MARTWE`, { game_over: true });
+    if (winner === 'zombiaki') showAlert('ZOMBIAKI WYGRAŁY WSZYSCY LUDZIE DOŁĄCZYLI DO HORDY NIEUMARŁYCH', { game_over: true });
 }
 
+function setDawnStyle(length) {
+    const main = document.querySelector('main');
+    const all_cards = 31;
+    const start_brightness = 0.5;
+    const end_brightness = 1.2;
+    const start_sepia = 0.7;
+    const end_sepia = 0;
+    const brigthness_range = end_brightness - start_brightness;
+    const sepia_range = end_sepia - start_sepia;
+    const progress_percentage = 1 - (length / all_cards).toFixed(2);
+    const brightness_value = start_brightness + (progress_percentage * brigthness_range);
+    const sepia_value = start_sepia + (progress_percentage * sepia_range)
+
+    main.style.backdropFilter = `brightness(${brightness_value}) sepia(${sepia_value})`;
+}
 
 function drawCards(first_draw = false) {
 
@@ -217,17 +229,14 @@ function showCard(card, is_bucket = false) {
 
     show(chosen_card);
     if (is_bucket) return;
-    const handler = closeCardHandler();
-    close_card.handler = handler;
-    close_card.addEventListener('click', handler, { once: true });
+    addListener(close_card, closeCardHandler(), { once: true })
 }
 
 export function closeCardHandler() {
     return function () {
         enable(play_card);
         hide(chosen_card);
-        close_card.removeEventListener('click', close_card.handler);
-        close_card.handler = null;
+        removeListener(close_card);
     }
 }
 
@@ -235,22 +244,15 @@ function setCards() {
     if (turn === "zombiaki") player_cards = cards_zombiaki;
     if (turn === "ludzie") player_cards = cards_ludzie;
 
-    player_cards.forEach(card => {
-        const handler = showCardHandler(card);
-        card.handler = handler;
-        card.addEventListener('click', handler);
-    });
+    player_cards.forEach(card => addListener(card, showCardHandler(card)));
 }
 
 function unsetCards() {
-    player_cards.forEach(card => {
-        card.removeEventListener('click', card.handler);
-        card.handler = null;
-    });
+    player_cards.forEach(card => removeListener(card));
 }
 
-function playCard() {
-    play_card.addEventListener('click', () => {
+function playCardHandler() {
+    return function () {
         if (cards_thrown < MIN_CARD_THROWN) {
             showAlert('NAJPIERW ODRZUĆ JEDNĄ KARTĘ');
             hide(chosen_card);
@@ -263,12 +265,11 @@ function playCard() {
             return;
         }
         hide(chosen_card);
-    })
+    }
 }
 
-
-function throwCard() {
-    throw_card.addEventListener('click', () => {
+function throwCardHandler() {
+    return function () {
         if (turn === 'zombiaki') {
             resetUsableCards();
         }
@@ -279,8 +280,7 @@ function throwCard() {
             hide(throw_card);
         }
         removeCard();
-
-    })
+    }
 }
 
 export function removeCard() {
@@ -337,7 +337,7 @@ function handleFirstTurn() {
 }
 
 function endTurn() {
-    if (cards_thrown < MIN_CARD_THROWN) {
+    if (cards_thrown < MIN_CARD_THROWN && playable_cards.length > 0) {
         showAlert("MUSISZ ODRZUCIĆ KARTĘ");
         return;
     }

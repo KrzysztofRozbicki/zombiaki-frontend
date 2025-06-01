@@ -94,10 +94,6 @@ async function moveZombiaki() {
             const { card } = old_field;
             if (!card) continue;
             if (card.type === "zombiak" && !card.pet) {
-                if (i === 4) {
-                    gameOver('zombiaki');
-                    return;
-                }
                 moveSingleZombiak(old_field, card, 'front');
             }
         }
@@ -155,6 +151,7 @@ function setAvailablePetFields(field, resolve) {
         let p = przecznica + cross[i][1];
         if (t < 0 || t > 2) continue;
         if (p < 0 || p > 4) continue;
+        if (checkMur(t, p, board[p][t])) continue;
         board[p][t].direction = direction_offset[i];
         all_fields.push(board[p][t]);
     }
@@ -214,7 +211,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
-    if (checkZapora(tor)) return;
+    if (checkZapora(tor) && !card.pet) return;
 
     const direction_offset = {
         'front': [1, 0],
@@ -227,22 +224,25 @@ export function moveSingleZombiak(old_field, card, direction) {
     const new_przecznica = przecznica + przecznica_offset;
     const new_tor = tor + tor_offset;
     if (new_przecznica < 0 || new_tor < 0 || new_tor > 2) return;
-    if (new_przecznica === 5) {
+
+    const game_over = checkConcreteShoes(old_field);
+
+    if (new_przecznica === 5 && game_over) {
         gameOver('zombiaki');
         return;
     }
+
     const next_field = board[new_przecznica][new_tor];
 
-    const is_beczka = next_field?.card && next_field?.card.name === 'BECZKA';
+    const is_beczka = next_field?.card_board && next_field?.card_board.name === 'BECZKA';
     const is_dziura = next_field?.card_board &&
         next_field?.card_board.name === 'DZIURA' &&
         old_field.card.hp <= 2;
-    checkConcreteShoes(old_field);
 
     if (next_field.element.classList.contains('galareta')) {
         next_field.element.classList.remove('galareta');
         old_field.card.hp += 2;
-        addOverlay(galareta_overlay, next_field, null);
+        if (old_field.card.hp > old_field.card.max_hp) addOverlay(galareta_overlay, next_field, null);
     }
 
     if (checkMur(new_tor, przecznica, next_field)) return;
@@ -280,10 +280,14 @@ function setMlody(field) {
 }
 
 function checkConcreteShoes(old_field) {
-    if (!old_field.overlay_cards || old_field.overlay_cards.length === 0) return;
+    if (!old_field.overlay_cards || old_field.overlay_cards.length === 0) return true;
     const concrete_shoes_card = old_field.overlay_cards.find(card => card.name === 'BETONOWE BUCIKI');
-    if (!concrete_shoes_card) return;
+    if (!concrete_shoes_card) return true;
     damageZombiak(concrete_shoes_card.dmg, old_field);
+    const is_syjamczyk = old_field.card.name === 'SYJAMCZYK';
+    const is_troyan = old_field.card.name === 'KOŃ TROJAŃSKI';
+    if (old_field.card.hp === 0 && (is_syjamczyk || is_troyan)) return true;
+    if (old_field.card.hp > 0) return false;
 }
 
 export function checkBlowField(field, move = false) {
@@ -380,7 +384,7 @@ export function putCard(field, card) {
 }
 
 export function unsetField(board_field, options = {}) {
-    const { board_card = false, pet = null, bear = false } = options;
+    const { board_card = false, pet = null, bear = false, all = false } = options;
     const { element } = board_field;
     const board_element = element.querySelector('.field_board');
     const card_element = element.querySelector('.field_image');
@@ -388,8 +392,9 @@ export function unsetField(board_field, options = {}) {
     const overlay_element = element.querySelector('.overlay_container');
 
     if (board_card) {
-        element.innerHTML = '';
+        board_element.remove();
         board_field.card_board = null;
+        return;
     }
 
     if (pet === 'OUT') {
@@ -398,13 +403,19 @@ export function unsetField(board_field, options = {}) {
         return;
     }
 
-    if (pet === 'STAY') {
-        if (card_element) card_element.remove();
+    if (pet === 'STAY') if (card_element) card_element.remove();
+
+    if (all) {
+        element.innerHTML = '';
+        if (board_field.card) board_field.card = null;
+        if (board_field.overlay_cards) board_field.overlay_cards = null;
+        if (board_field.card_board) board_field.card_board = null;
+        if (board_field.card_pet) board_field.card_pet = null;
     }
 
     if (card_element) card_element.remove();
     if (pet_element && pet !== 'STAY') pet_element.remove();
-    if (board_element) board_element.remove();
+    if (board_element && !board_field?.card_board?.walkable) board_element.remove();
     if (overlay_element && !bear) {
         overlay_element.remove();
         board_field.overlay_cards = null;
@@ -599,12 +610,12 @@ export function clearBoard() {
 function checkZapora(tor) {
     const field = board[4][tor];
 
-    const card_przecznica = field.card;
+    const card_przecznica = field.card_board;
     if (!card_przecznica) return false;
     if (card_przecznica.name === 'ZAPORA') return true;
 }
 
-function checkMur(tor, przecznica, next_field) {
+export function checkMur(tor, przecznica, next_field) {
     let is_mur = next_field?.card_board && next_field?.card_board.mur;
     if (!is_mur) return false;
     const mur_hp = next_field.card_board.hp;

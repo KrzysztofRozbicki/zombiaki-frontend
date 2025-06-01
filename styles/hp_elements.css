@@ -16,7 +16,7 @@
     width: 30% !important;
   }
   .hp_element.mlody:after {
-    font-size: 75%;
+    font-size: 55%;
     width: 100% !important;
     right: 0;
     text-align: right;
@@ -41,7 +41,7 @@
     width: 75% !important;
   } 
   div.hp_element.mlody[data-max_hp="5"]:after {
-    font-size: 85%;
+    font-size: 65%;
   }
   div.hp_element.mlody[data-max_hp="6"] {
     width: 90% !important;
@@ -179,7 +179,7 @@
   .hp_card div:after,
   .hp_element:before {
     content: "";
-    font-size: 85%;
+    font-size: 65%;
     height: 100%;
     position: absolute;
     top: 0;

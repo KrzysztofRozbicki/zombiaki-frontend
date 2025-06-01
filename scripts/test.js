@@ -8,7 +8,7 @@ import { raceFunctions } from "./allFunctions.js";
 export const TEST_STATE = true;
 
 export const TEST_MODE = {
-    race: 'zombiaki',
+    race: 'ludzie',
     board: true,
 };
 
@@ -17,18 +17,19 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['PAZURY', 'ZENEK', 'GALARETA', 'BOSS'];
-const start_cards_ludzie = ['MIOTACZ', 'DZIURA', 'DŁUGA SERIA', 'ROPA'];
+const start_cards_zombiaki = ['MASA', 'GŁÓD', 'KILOF', 'IWAN'];
+const start_cards_ludzie = ['MIOTACZ', 'ZAPORA', 'STRZAŁ', 'BETONOWE BUCIKI'];
 
 const test_board = [
-    {
-        "field": board[0][0],
-        "card": 'GALARETA'
-    },
-    {
-        "field": board[1][2],
-        "card": "KOT",
-    },
+    // {
+    //     "field": board[0][1],
+    //     "card": 'ZENEK',
+    //     "overlay": "BOSS"
+    // },
+    // {
+    //     "field": board[1][1],
+    //     "card": "PIES",
+    // },
     // {
     //     "field": board[2][2],
     //     'card': 'DZIURA'
@@ -38,25 +39,24 @@ const test_board = [
     //     'card': 'ZAPORA'
     // },
     // {
-    //     "field": board[0][1],
-    //     'card': 'KRYSTYNKA'
+    //     "field": board[4][0],
+    //     'card': 'SYJAMCZYK',
+    //     'hp': 1,
     // },
-    // {
-    //     "field": board[0][2],
-    //     'card': 'ZENEK',
-    //     'overlay': 'BOSS',
-    //     'hp': 2,
-    // },
+    {
+        "field": board[1][0],
+        'card': 'PIES',
+    },
     // {
     //     "field": board[1][1],
-    //     'card': 'AUTO'
+    //     'card': 'MUR'
     // },
     // {
     //     "field": board[3][1],
     //     'card': 'BECZKA'
     // },
     // {
-    //     "field": board[2][1],
+    //     "field": board[2][0],
     //     "card": "MUR",
     // }
 ]

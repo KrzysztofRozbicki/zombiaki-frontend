@@ -10,6 +10,7 @@ const end_turn_zombiaki = document.getElementById('rewers_stack_zombiaki');
 
 
 export function initMenu(race) {
+    document.body.classList.add('background')
     hideAll([intro, choose_race]);
     showAll([board_element, menu_element]);
     randomRotateDeck()

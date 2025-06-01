@@ -21,7 +21,7 @@ function grenade() {
 
 function grenadeHandler(field) {
     return function () {
-        unsetField(field, { board_card: true });
+        unsetField(field, { all: true });
         removeCard();
         enable(deck_ludzie_element);
         clearBoard();
