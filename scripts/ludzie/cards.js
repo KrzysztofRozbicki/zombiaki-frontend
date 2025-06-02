@@ -223,7 +223,7 @@ export const cards_ludzie_json = [
         "name": "ZMIATAJ",
         "type": "other",
         "instruction": "Wybierz jedną z kart przeciwnika, leżących na Cmentarzu i odrzuć ją na Śmietnik.",
-        "description": "Wybierz jedną z kart przeciwnika leżących na Cmentarzu i odrzuć ją na Śmietnik.",
+        "description": "Wybierz jedną z kart przeciwnika, leżących na Cmentarzu i odrzuć ją na Śmietnik.",
         "flavor": "Nie, tak się bawić nie będziemy.",
         "board": 'deck',
         "race": "ludzie"
