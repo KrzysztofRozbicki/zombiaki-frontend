@@ -29,6 +29,7 @@ function miotacz(card) {
                 }
             }
         }
+
         if (!burn_krystynka) continue;
         element.classList.add('miotacz_available');
         const handler = aoeHandler(field, card, { is_krystynka: true });

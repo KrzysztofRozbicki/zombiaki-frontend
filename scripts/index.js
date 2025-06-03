@@ -2,7 +2,7 @@ import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace, } from './menu.js';
 import { addListener, randomRotate, removeListener, showAlert } from './utils.js';
-import { placeCard, updateBoard, resetUsableCards } from './board.js';
+import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
 import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE, TEST_STATE } from './test.js';
 
@@ -230,6 +230,7 @@ function showCard(card, is_bucket = false) {
     show(chosen_card);
     if (is_bucket) return;
     addListener(close_card, closeCardHandler(), { once: true })
+    if (play_card.innerText !== 'ZAGRAJ') play_card.innerText = 'ZAGRAJ';
 }
 
 export function closeCardHandler() {
@@ -239,6 +240,7 @@ export function closeCardHandler() {
         removeListener(close_card);
     }
 }
+
 
 function setCards() {
     if (turn === "zombiaki") player_cards = cards_zombiaki;
@@ -361,12 +363,9 @@ function switchTurn() {
     hide(play_card);
     show(throw_card);
     deck = document.getElementById(`deck_${turn}`);
-    enable(deck)
+    enable(deck);
 
-    if (turn === 'ludzie') {
-        checkForBearAndTerror();
-    }
-
+    if (turn === 'ludzie') checkForBearAndTerror();
 }
 
 function checkForBearAndTerror() {

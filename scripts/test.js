@@ -17,23 +17,23 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['MASA', 'GŁÓD', 'KILOF', 'IWAN'];
-const start_cards_ludzie = ['MIOTACZ', 'ZAPORA', 'STRZAŁ', 'BETONOWE BUCIKI'];
+const start_cards_zombiaki = ['MIŚ', 'SPADAJ', 'MASA', 'IWAN'];
+const start_cards_ludzie = ['MUR', 'AUTO', 'SIEĆ', 'GRANAT'];
 
 const test_board = [
     // {
-    //     "field": board[0][1],
-    //     "card": 'ZENEK',
-    //     "overlay": "BOSS"
+    //     "field": board[1][0],
+    //     "card": 'KOŃ TROJAŃSKI',
+    //     "overlay": 'MIŚ'
     // },
-    // {
-    //     "field": board[1][1],
-    //     "card": "PIES",
-    // },
-    // {
-    //     "field": board[2][2],
-    //     'card': 'DZIURA'
-    // },
+    {
+        "field": board[1][1],
+        "card": "GALARETA",
+    },
+    {
+        "field": board[1][0],
+        'card': 'ZENEK'
+    },
     // {
     //     "field": board[4][2],
     //     'card': 'ZAPORA'
@@ -43,20 +43,17 @@ const test_board = [
     //     'card': 'SYJAMCZYK',
     //     'hp': 1,
     // },
-    {
-        "field": board[1][0],
-        'card': 'PIES',
-    },
     // {
-    //     "field": board[1][1],
-    //     'card': 'MUR'
+    //     "field": board[1][0],
+    //     'card': 'WACEK',
+    //     "overlay": 'MIŚ'
+    // },
+    // {
+    //     "field": board[1][0],
+    //     'card': 'AUTO'
     // },
     // {
     //     "field": board[3][1],
-    //     'card': 'BECZKA'
-    // },
-    // {
-    //     "field": board[2][0],
     //     "card": "MUR",
     // }
 ]

@@ -2,6 +2,7 @@
 import { board, unsetField, clearBoard } from "../board.js";
 import { disable, enable } from "../utils.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
+import { killZombiak } from "./utils.js";
 export default function ludzie_id_28(card, field) {
     grenade();
 }

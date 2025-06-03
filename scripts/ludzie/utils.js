@@ -170,7 +170,6 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
                     if (card.mur) return;
                     if (card.type === 'zombiak') {
                         const zombie_card = element.querySelector('.field_image');
-
                         // setTimeout(() => shotZombiak(piercing_dmg, field, zombie_card, piercing), 2000);
                         shotZombiak(piercing_dmg, field, zombie_card, piercing)
                         return;
@@ -243,16 +242,29 @@ export function killZombiak(field) {
     clearBoard();
     disable(document.getElementById('streets'));
     let is_boss = false;
-    if (overlay_cards && overlay_cards.length > 0) is_boss = !!overlay_cards.find(card => card.name === 'BOSS');
+    let is_bear = false;
+
+    if (overlay_cards && overlay_cards.length > 0) {
+        is_boss = !!overlay_cards.find(card => card.name === 'BOSS');
+        is_bear = !!overlay_cards.find(card => card.name === 'MIŚ');
+    }
+
     setTimeout(() => {
-        unsetField(field)
         enable(document.getElementById('streets'));
+
         if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
         if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
+        if ((card?.name === 'SYJAMCZYK' || card?.name === 'KOŃ TROJAŃSKI') && is_bear) {
+            unsetField(field, { bear: true })
+        } else {
+            unsetField(field)
+        }
+
         if (is_boss) {
             showAlert('BOSS ZGINĄŁ! ZOMBIAKI W PRZESTRACHU COFAJĄ SIĘ!');
             moveAllZombiakiBack();
         }
+
         if (card?.name === 'GALARETA') deadGalareta(field);
     }, 1500);
 }
@@ -371,12 +383,22 @@ function closeCardClickHandler(resolve) {
 
 export function placeMur(card) {
     disable(deck_ludzie_element);
-    for (let i = 1; i < board.length; i++) {
+    let zombiak_tor = null;
+    for (let i = board.length - 1; i >= 1; i--) {
         for (let j = 0; j < board[i].length; j++) {
+            const field = board[i][j];
+
+            if (field.card || field.card_pet) {
+                zombiak_tor = j;
+                continue;
+            }
+
             const neighbour_field_is_taken = neighbourFieldIsTaken(i, j);
             if (neighbour_field_is_taken) continue;
-            if (board[i][j].card_board) continue;
-            putCard(board[i][j], card);
+            if (field.card_board) continue;
+            if (j === zombiak_tor) continue;
+
+            putCard(field, card);
         }
     }
 }
@@ -396,19 +418,21 @@ function neighbourFieldIsTaken(i, j) {
 
 
 export function aoeHandler(field, card, is_krystynka = false) {
-    return function () {
-        activeAoe(field, card, is_krystynka);
+    return function (event) {
+        activeAoe(field, card, is_krystynka, event);
     }
 }
-function activeAoe(field, card, is_krystynka = false) {
+function activeAoe(field, card, is_krystynka = false, event) {
+    const is_auto = event.target.dataset.name === 'AUTO';
+    const is_mina = event.target.dataset.name === 'MINA';
     const { element } = field;
     hideCancelButton();
     const targetCard = field.card || field.card_pet;
     card.dmg -= 1;
     setAoeCardHealth(card)
     clearBoard();
-    checkBlowField(field);
-    if (targetCard && targetCard.type === 'zombiak') damageZombiak(1, field);
+    if (is_auto || is_mina) checkBlowField(field);
+    if (targetCard && targetCard.type === 'zombiak' && !is_auto) damageZombiak(1, field);
     if (card.dmg === 0) return;
     if (targetCard?.hp === 0) {
         setTimeout(() => {

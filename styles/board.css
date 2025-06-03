@@ -305,7 +305,7 @@ div[data-przecznica="5"]:has(img):hover > div {
     animation: 0.7s infinite alternate ease-in-out shotAvailable;
 }
 
-.ropa_available[data-type="zombiak"] > .field_image,
+.ropa_available > .field_image,
 .ropa_available > .field_pet,
 .ropa_available > .field_board img[data-name="MINA"],
 .ropa_available > .field_board img[data-name="AUTO"] {
@@ -319,7 +319,7 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 0.7s infinite alternate ease-in-out miotaczAvailable;
 }
 
-.miotacz_available[data-type="zombiak"] > .field_image,
+.miotacz_available > .field_image,
 .miotacz_available > .field_board img[data-name="MINA"],
 .miotacz_available > .field_board img[data-name="AUTO"] {
     cursor: url('../images/cursors/miotacz.ico'), auto;

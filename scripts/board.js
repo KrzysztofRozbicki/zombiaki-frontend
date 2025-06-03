@@ -54,14 +54,16 @@ export function updateBoard(prev_turn) {
     overlay_elements.forEach(element => {
         enable(element);
     });
+    cancel_button.className = '';
+    hide(cancel_button);
     if (prev_turn === 'ludzie') {
         moveZombiaki();
-        const overlay_elements = document.querySelectorAll('.overlay_container');
-        overlay_elements.forEach(element => {
-            if (!element.classList.contains('disable')) {
-                disable(element);
-            }
-        });
+        setTimeout(() => {
+            const overlay_elements = document.querySelectorAll('.overlay_container');
+            overlay_elements.forEach(element => {
+                if (!element.classList.contains('disable')) disable(element);
+            });
+        }, 100);
     }
 
     if (prev_turn === 'zombiaki') {
@@ -211,7 +213,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
-    if (checkZapora(tor) && !card.pet) return;
+    if (checkZapora(old_field) && !card.pet) return;
 
     const direction_offset = {
         'front': [1, 0],
@@ -257,10 +259,11 @@ export function moveSingleZombiak(old_field, card, direction) {
 
     if (card.pet) pet_status = 'OUT';
     if (!card.pet && old_field.card_pet) pet_status = 'STAY';
-    if (is_beczka || is_dziura) unsetField(next_field);
+    if (is_beczka || is_dziura) unsetField(next_field, { all: true });
     putPicture(next_field, card);
     if (old_field.overlay_cards && old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
-    if (is_beczka || is_dziura) killZombiak(next_field);
+    if (is_beczka || is_dziura) killZombiak(next_field, { all: true });
+
     unsetField(old_field, { pet: pet_status });
     if (card.pet) {
         const pet_element = element.querySelector('.field_pet');
@@ -295,7 +298,7 @@ export function checkBlowField(field, move = false) {
     if (!card_board) return;
     if (card_board.name !== 'MINA' && card_board.name !== 'AUTO') return;
     if (move && card_board.name === 'AUTO') return;
-    setTimeout(() => blowField(field), 10);
+    blowField(field);
 }
 
 function blowField(field) {
@@ -360,7 +363,7 @@ function moveLudzie() {
                 continue;
             }
             if (new_field?.card_board?.name === 'DZIURA') {
-                unsetField(new_field);
+                unsetField(new_field, { board_card: true });
                 continue;
             }
             if (new_field?.card_board?.name === 'MUR' ||
@@ -368,7 +371,7 @@ function moveLudzie() {
                 new_field?.card_board?.name === 'AUTO') continue;
             checkBlowField(new_field);
             if (new_field?.card?.type === 'zombiak') {
-                unsetField(new_field);
+                killZombiak(new_field);
                 continue;
             }
         }
@@ -386,6 +389,7 @@ export function putCard(field, card) {
 export function unsetField(board_field, options = {}) {
     const { board_card = false, pet = null, bear = false, all = false } = options;
     const { element } = board_field;
+
     const board_element = element.querySelector('.field_board');
     const card_element = element.querySelector('.field_image');
     const pet_element = element.querySelector('.field_pet');
@@ -406,11 +410,19 @@ export function unsetField(board_field, options = {}) {
     if (pet === 'STAY') if (card_element) card_element.remove();
 
     if (all) {
-        element.innerHTML = '';
+        checkBlowField(board_field)
+
+        if (card_element) killZombiak(board_field);
+        if (pet_element) pet_element.remove();
+        if (overlay_element) overlay_element.remove();
+        if (board_element) board_element.remove();
         if (board_field.card) board_field.card = null;
         if (board_field.overlay_cards) board_field.overlay_cards = null;
         if (board_field.card_board) board_field.card_board = null;
         if (board_field.card_pet) board_field.card_pet = null;
+        board_field.element.className = ''
+        board_field.element.classList.add('field');
+        return;
     }
 
     if (card_element) card_element.remove();
@@ -607,10 +619,12 @@ export function clearBoard() {
     }
 }
 
-function checkZapora(tor) {
-    const field = board[4][tor];
+export function checkZapora(field) {
+    const { element } = field;
+    const tor = +element.dataset.tor - 1;
+    const board_field = board[4][tor];
 
-    const card_przecznica = field.card_board;
+    const card_przecznica = board_field.card_board;
     if (!card_przecznica) return false;
     if (card_przecznica.name === 'ZAPORA') return true;
 }

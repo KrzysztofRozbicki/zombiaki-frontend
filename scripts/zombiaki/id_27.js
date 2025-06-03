@@ -18,6 +18,7 @@ function putMasa() {
             const field = board[i][j];
             const { card, element } = field;
             if (card?.type !== 'zombiak') continue;
+            if (element.classList.contains('webbed')) continue;
             element.classList.add('move_available');
             const handler = choseZombiakHandler(field);
             element.handler = handler;
@@ -77,8 +78,20 @@ function putMasaHandler(field, new_field) {
                 array.findIndex(check_card => (check_card.id === card.id)) === i
             )
         }
-        const new_max_hp = field.card.max_hp + new_field.card.max_hp;
-        const new_hp = field.card.hp + new_field.card.hp;
+        let new_max_hp = 0;
+        let new_hp = 0;
+
+        if (field.card.name === 'MŁODY') {
+            new_max_hp = 2 + new_field.card.max_hp
+            new_hp = 2 + new_field.card.hp;
+        } else if (new_field.card.name === 'MŁODY') {
+            new_max_hp = field.card.max_hp + 2;
+            new_hp = field.card.hp + 2;
+        } else {
+            new_max_hp = field.card.max_hp + new_field.card.max_hp;
+            new_hp = field.card.hp + new_field.card.hp;
+        }
+
         masa_card.max_hp = new_max_hp;
         masa_card.hp = new_hp;
         unsetField(new_field);

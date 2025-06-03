@@ -1,7 +1,7 @@
 //BOSS
 
 import { deleteOverlay, putOverlay } from "./utils.js";
-import { board, clearBoard, moveSingleZombiak } from "../board.js";
+import { board, checkZapora, clearBoard, moveSingleZombiak } from "../board.js";
 import { disable, enable, hide, show, showAlert } from "../utils.js";
 import { deck_zombiaki_element, cancel_button } from "../index.js";
 
@@ -22,6 +22,7 @@ function bossCommand(boss_field) {
             if (!card) continue;
             if (card.type !== 'zombiak' || card.hp > 3) continue;
             if (card.name === boss_field.card.name && card.id === boss_field.card.id) continue;
+            if (checkZapora(board_field)) continue;
             element.classList.add('move_available');
             const handler = moveHandler(board_field, boss_field);
             element.handler = handler;
@@ -44,7 +45,6 @@ function moveHandler(field, boss_field) {
         enable(deck_zombiaki_element);
     }
 }
-
 
 function setAvailableFields(field, boss_field) {
     const { element } = field;
