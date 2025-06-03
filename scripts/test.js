@@ -38,11 +38,11 @@ const test_board = [
     //     "field": board[4][2],
     //     'card': 'ZAPORA'
     // },
-    // {
-    //     "field": board[4][0],
-    //     'card': 'SYJAMCZYK',
-    //     'hp': 1,
-    // },
+    {
+        "field": board[0][0],
+        'card': 'SYJAMCZYK',
+        'hp': 1,
+    },
     // {
     //     "field": board[1][0],
     //     'card': 'WACEK',

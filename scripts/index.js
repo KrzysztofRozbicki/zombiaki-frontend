@@ -2,7 +2,7 @@ import { cards_ludzie_json } from './ludzie/cards.js';
 import { cards_zombiaki_json } from './zombiaki/cards.js';
 import { initMenu, chooseRace, } from './menu.js';
 import { addListener, randomRotate, removeListener, showAlert } from './utils.js';
-import { placeCard, updateBoard, resetUsableCards, board } from './board.js';
+import { placeCard, updateBoard, resetUsableCards, board, addInstruction } from './board.js';
 import { show, hide, enable, disable } from './utils.js';
 import { testMode, get_test_deck_ludzie, get_test_deck_zombiaki, TEST_MODE, TEST_STATE } from './test.js';
 
@@ -226,7 +226,8 @@ function showCard(card, is_bucket = false) {
 
     if (!active_card) return;
     if (turn === 'zombiaki' && active_card.name === 'KLIK') disable(play_card);
-
+    const card_element = document.querySelector('#chosen_card > div');
+    addInstruction(card_element, active_card);
     show(chosen_card);
     if (is_bucket) return;
     addListener(close_card, closeCardHandler(), { once: true })

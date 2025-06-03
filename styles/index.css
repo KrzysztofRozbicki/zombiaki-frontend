@@ -256,6 +256,10 @@ button {
   justify-content: center;
 }
 
+#alert {
+  z-index: 9;
+}
+
 #chosen_card div,
 #alert div,
 #raca div {
@@ -313,7 +317,8 @@ button {
   position: absolute;
   right: -4rem;
   top: -4rem;
-   cursor: url('../images/cursors/hover.ico'), auto;
+   cursor: url('../images/cursors/hover.ico'), auto;  
+   -webkit-text-stroke: 2px var(--background-color);
 }
 
 .close_backdrop:hover,

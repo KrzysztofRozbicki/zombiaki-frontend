@@ -18,7 +18,7 @@ function putMasa() {
             const field = board[i][j];
             const { card, element } = field;
             if (card?.type !== 'zombiak') continue;
-            if (element.classList.contains('webbed')) continue;
+
             element.classList.add('move_available');
             const handler = choseZombiakHandler(field);
             element.handler = handler;
@@ -52,6 +52,8 @@ function setAvailableFields(field) {
         if (p < 0 || p > 4) continue;
         const field_is_available = !!(board[p][t]?.card?.type === 'zombiak');
         if (!field_is_available) continue;
+        if (!element.classList.contains('webbed') && board[p][t].element.classList.contains('webbed')) continue;
+        if (element.classList.contains('webbed') && !board[p][t].element.classList.contains('webbed')) continue;
         board[p][t].direction = direction_offset[i];
         all_fields.push(board[p][t]);
     }

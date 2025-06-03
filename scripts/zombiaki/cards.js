@@ -296,7 +296,7 @@ export const cards_zombiaki_json = [
         "amount": 1,
         "name": "GALARETA",
         "type": "zombiak",
-        "instruction": "Zombiak. Na początku twojej tury przesuń Zombiaka o 1 pole do przodu. Kiedy Galareta zostanie zabity, połóż w jego miejscu żeton galarety. Pierwszy Zombiak (z wyjątkiem Psa i Kota), który wejdzie na pole z tym żetonem, zabiera go (połóż żeton na karcie tego Zombiaka) i zwiększa on jego siłę o 2. Jeśli żeton galarety zbierze Zombiak z Misiem, to galareta zwiększa siłę Zombiaka, a nie Misia. Żeton galarety nie zajmuje pola na planszy, więc w tym samym miejscu może być wystawione np. Auto czy Mur.",
+        "instruction": "Na początku twojej tury przesuń Zombiaka o 1 pole do przodu. <br> Kiedy Galareta zostanie zabity, połóż w jego miejscu żeton galarety. <br> Pierwszy Zombiak (z wyjątkiem Psa i Kota), który wejdzie na pole z tym żetonem, zabiera go (połóż żeton na karcie tego Zombiaka) i zwiększa on jego siłę o 2. <br> Jeśli żeton galarety zbierze Zombiak z Misiem, to galareta zwiększa siłę Zombiaka, a nie Misia. <br> Żeton galarety nie zajmuje pola na planszy, więc w tym samym miejscu może być wystawione np. Auto czy Mur.",
         "description": "Na początku twojej tury przesuń Zombiaka o 1 pole do przodu. Dodatkowo, kiedy Galareta zostanie zabity, pozostawia w swoim miejscu żeton galarety. Pierwszy Zombiak (z wyjątkiem Psa i Kota), który wejdzie na pole z tym żetonem, zabiera go – dodaje mu on +2 siły.",
         "flavor": "Żelatyna jest dobra na kości.",
         "hp": 3,

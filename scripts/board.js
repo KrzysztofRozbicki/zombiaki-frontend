@@ -1,7 +1,7 @@
 import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button } from "./index.js";
 import { addOverlay } from "./zombiaki/utils.js";
-import { show, hide, enable, disable, randomRotate, showAlert } from "./utils.js";
+import { show, hide, enable, disable, randomRotate, showAlert, addListener } from "./utils.js";
 import { killZombiak, damageZombiak } from "./ludzie/utils.js";
 import { galareta_overlay, zombiak_1 } from "./zombiaki/cards.js";
 
@@ -515,6 +515,8 @@ function putPicture(field, card) {
         }
     }
 
+    addInstruction(div_element, card);
+
     element.append(div_element);
     element.dataset.id = id;
     element.dataset.name = name;
@@ -527,7 +529,6 @@ function putPicture(field, card) {
         return;
     }
 
-
     if (card.board && card.race === 'ludzie') {
         field.card_board = card;
         div_element.classList.remove('field_image');
@@ -535,6 +536,20 @@ function putPicture(field, card) {
         return;
     }
     field.card = card;
+}
+
+export function addInstruction(element, card) {
+    console.log(card);
+    const instruction_element = document.createElement('div');
+    instruction_element.classList.add('instruction_element');
+    addListener(instruction_element, showInstruction(card));
+    element.append(instruction_element);
+}
+
+function showInstruction(card) {
+    return function () {
+        showAlert(card.instruction, false, true);
+    }
 }
 
 function cardFunction(card) {
