@@ -189,7 +189,7 @@ function setDawnStyle(length) {
     const main = document.querySelector('main');
     const all_cards = 31;
     const start_brightness = 0.5;
-    const end_brightness = 1.2;
+    const end_brightness = 2;
     const start_sepia = 0.7;
     const end_sepia = 0;
     const brigthness_range = end_brightness - start_brightness;

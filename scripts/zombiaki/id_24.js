@@ -1,5 +1,5 @@
 //GŁÓD
-import { board, checkMur, clearBoard, moveSingleZombiak } from "../board.js";
+import { board, checkMur, checkZapora, clearBoard, moveSingleZombiak } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
 import { enable, disable } from "../utils.js";
 
@@ -13,7 +13,9 @@ export default function zombiaki_id_24(card, field) {
             if (card.type !== 'zombiak') continue;
             if (i < 4) {
                 if (checkMur(j, i, board[i + 1][j])) continue;
+                if (checkZapora(board[i][j])) continue;
             }
+
 
             const handler = handleHunger(field);
             element.addEventListener('click', handler, { once: true });

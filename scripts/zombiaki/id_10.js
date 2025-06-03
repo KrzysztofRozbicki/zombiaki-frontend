@@ -81,11 +81,13 @@ function checkAllZombiaki() {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
             const { card } = field;
+            console.log(field);
             if (!card) continue;
             if (card.type !== 'zombiak') continue;
             all_zombiaki.push(field);
         }
     }
+    console.log(all_zombiaki);
     return all_zombiaki;
 }
 
@@ -101,5 +103,6 @@ function checkMoveZombiaki(all_zombiaki) {
         if (new_field?.card?.type === 'zombiak' || new_field?.card_board?.mur) continue;
         zombiaki_to_move.push(field);
     }
+    console.log(zombiaki_to_move);
     return zombiaki_to_move;
 }

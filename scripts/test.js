@@ -8,7 +8,7 @@ import { raceFunctions } from "./allFunctions.js";
 export const TEST_STATE = false;
 
 export const TEST_MODE = {
-    race: 'zombiaki',
+    race: 'ludzie',
     board: true,
 };
 
@@ -17,8 +17,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['UGRYZIENIE', 'SPADAJ', 'MASA', 'IWAN'];
-const start_cards_ludzie = ['MUR', 'RACA ŚWIETLNA', 'SIEĆ', 'GRANAT'];
+const start_cards_zombiaki = ['GŁÓD', 'SPADAJ', 'MASA', 'IWAN'];
+const start_cards_ludzie = ['SIEĆ', 'ROPA', 'DŁUGA SERIA', 'GRANAT'];
 
 const test_board = [
     // {
@@ -26,10 +26,10 @@ const test_board = [
     //     "card": 'KOŃ TROJAŃSKI',
     //     "overlay": 'MIŚ'
     // },
-    {
-        "field": board[3][1],
-        "card": "MUR",
-    },
+    // {
+    //     "field": board[3][1],
+    //     "card": "MUR",
+    // },
     // {
     //     "field": board[1][1],
     //     'card': 'SYJAMCZYK',
@@ -37,20 +37,23 @@ const test_board = [
     {
         "field": board[2][1],
         'card': 'ZENEK',
-        "overlay": "CZŁOWIEK"
+    },
+    {
+        "field": board[4][1],
+        'card': 'ZAPORA',
     },
     // {
     //     "field": board[1][1],
     //     'card': 'WACEK',
     // },
-    {
-        "field": board[2][0],
-        'card': 'ARKADIUSZ'
-    },
-    {
-        "field": board[2][2],
-        'card': 'CZESIEK'
-    },
+    // {
+    //     "field": board[2][0],
+    //     'card': 'ARKADIUSZ'
+    // },
+    // {
+    //     "field": board[2][2],
+    //     'card': 'CZESIEK'
+    // },
     // {
     //     "field": board[3][1],
     //     "card": "MUR",

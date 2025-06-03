@@ -179,14 +179,11 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
             return;
         }
         if (!cegła) moveSingleZombiak(field, card, 'back');
-
-        if (card.hp <= 2 && !cegła) {
+        const is_dziura = field?.card_board?.name === 'DZIURA';
+        if (card.hp <= 2 && !cegła && is_dziura) {
             const tor = +element.dataset.tor - 1;
             const przecznica = +element.dataset.przecznica - 1;
             const back_field_taken = board[przecznica - 1][tor]?.card?.type === 'zombiak';
-            const is_dziura = field?.card_board?.name === 'DZIURA';
-            console.log(is_dziura);
-            console.log(back_field_taken);
             if (is_dziura && back_field_taken) {
                 unsetField(field, { board_card: true });
                 killZombiak(field);
@@ -254,7 +251,7 @@ export function killZombiak(field) {
     pet_images.forEach(image => image.classList.add('death_animation'));
     images.forEach(image => image.classList.add('death_animation'));
     clearBoard();
-    disable(document.getElementById('streets'));
+    disable(document.body);
     let is_boss = false;
     let is_bear = false;
 
@@ -264,15 +261,16 @@ export function killZombiak(field) {
     }
 
     setTimeout(() => {
-        enable(document.getElementById('streets'));
+        enable(document.body);
 
-        if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
-        if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
         if ((card?.name === 'SYJAMCZYK' || card?.name === 'KOŃ TROJAŃSKI') && is_bear) {
             unsetField(field, { bear: true })
         } else {
             unsetField(field)
         }
+
+        if (card?.name === 'KOŃ TROJAŃSKI') deadSpecialZombiakOneCard(field, 3);
+        if (card?.name === 'SYJAMCZYK') deadSpecialZombiakOneCard(field, 2);
 
         if (is_boss) {
             showAlert('BOSS ZGINĄŁ! ZOMBIAKI W PRZESTRACHU COFAJĄ SIĘ!');
