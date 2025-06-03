@@ -261,13 +261,13 @@ function playCardHandler() {
             hide(chosen_card);
             return
         }
+        hide(chosen_card);
         placeCard(active_card);
 
         if (!active_card?.board) {
             removeCard();
             return;
         }
-        hide(chosen_card);
     }
 }
 

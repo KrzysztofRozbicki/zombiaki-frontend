@@ -1,6 +1,6 @@
 //AUTO
 
-import { board, checkMur, putCard } from "../board.js";
+import { board, putCard } from "../board.js";
 import { disable } from "../utils.js";
 import { deck_ludzie_element } from "../index.js";
 

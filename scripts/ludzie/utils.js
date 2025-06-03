@@ -155,6 +155,7 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
 
     if (className === 'field_image') {
         card.hp -= damage;
+
         if (pazury_card) deleteOverlay(field, pazury_card.id);
         if (galareta_card && card.max_hp >= card.hp) deleteOverlay(field, galareta_card.id);
         if (card.hp <= 0) {
@@ -170,7 +171,6 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
                     if (card.mur) return;
                     if (card.type === 'zombiak') {
                         const zombie_card = element.querySelector('.field_image');
-                        // setTimeout(() => shotZombiak(piercing_dmg, field, zombie_card, piercing), 2000);
                         shotZombiak(piercing_dmg, field, zombie_card, piercing)
                         return;
                     }
@@ -179,6 +179,20 @@ async function shotZombiak(dmg, field, specific_element, piercing, cegła = fals
             return;
         }
         if (!cegła) moveSingleZombiak(field, card, 'back');
+
+        if (card.hp <= 2 && !cegła) {
+            const tor = +element.dataset.tor - 1;
+            const przecznica = +element.dataset.przecznica - 1;
+            const back_field_taken = board[przecznica - 1][tor]?.card?.type === 'zombiak';
+            const is_dziura = field?.card_board?.name === 'DZIURA';
+            console.log(is_dziura);
+            console.log(back_field_taken);
+            if (is_dziura && back_field_taken) {
+                unsetField(field, { board_card: true });
+                killZombiak(field);
+                return;
+            }
+        }
     }
 
     if (className === 'field_board') {
@@ -302,7 +316,14 @@ export function damageZombiak(dmg, field) {
         card.hp -= damage;
         if (pazury_card) deleteOverlay(field, pazury_card.id);
         if (galareta_card && card.max_hp >= card.hp) deleteOverlay(field, galareta_card.id);
-
+        if (card.hp <= 2) {
+            const is_dziura = field?.card_board?.name === 'DZIURA';
+            if (is_dziura) {
+                unsetField(field, { board_card: true });
+                killZombiak(field);
+                return;
+            }
+        }
         if (card.name === 'MASA') {
             const hp_element = element.querySelector('.hp_masa__text');
             hp_element.innerText = +hp_element.innerText - damage;

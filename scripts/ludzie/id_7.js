@@ -27,7 +27,7 @@ function addDialog() {
     const child_element = document.createElement('div');
 
     for (let i = 0; i < 3; i++) {
-        const { id } = deck_zombiaki[i];
+        const { name, id } = deck_zombiaki[i];
         const image_box = document.createElement('div');
         const image = document.createElement('img');
         image.src = `../../images/cards/zombiaki/${id}.webp`;
@@ -36,15 +36,17 @@ function addDialog() {
         image_box.dataset.id = id;
         const button_box = document.createElement('div');
         button_box.classList.add('button_box');
-        const delete_button = document.createElement('button');
-        delete_button.classList.add('delete_button');
-        delete_button.innerText = 'USUŃ';
-        delete_button.dataset.id = id;
+        if (name !== 'ŚWIT') {
+            const delete_button = document.createElement('button');
+            delete_button.classList.add('delete_button');
+            delete_button.innerText = 'USUŃ';
+            delete_button.dataset.id = id;
+            button_box.appendChild(delete_button);
+        }
         const put_button = document.createElement('button');
         put_button.classList.add('put_button');
         put_button.innerText = 'POŁÓŻ';
         put_button.dataset.id = id;
-        button_box.appendChild(delete_button);
         button_box.appendChild(put_button);
         image_box.appendChild(button_box);
         child_element.appendChild(image_box);
@@ -58,11 +60,13 @@ function addDialog() {
 function buttonClicks() {
     const delete_buttons = document.querySelectorAll("#raca .delete_button");
     const put_buttons = document.querySelectorAll('#raca .put_button');
-    delete_buttons.forEach((button) => {
-        const handler = deleteButtonHandler(button);
-        button.handler = handler;
-        button.addEventListener('click', handler, { once: true });
-    })
+    if (delete_buttons && delete_buttons.length > 0) {
+        delete_buttons.forEach((button) => {
+            const handler = deleteButtonHandler(button);
+            button.handler = handler;
+            button.addEventListener('click', handler, { once: true });
+        })
+    }
     put_buttons.forEach((button) => {
         const handler = putButtonHandler(button);
         button.handler = handler;

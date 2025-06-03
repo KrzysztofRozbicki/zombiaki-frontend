@@ -5,10 +5,10 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 
-export const TEST_STATE = true;
+export const TEST_STATE = false;
 
 export const TEST_MODE = {
-    race: 'ludzie',
+    race: 'zombiaki',
     board: true,
 };
 
@@ -17,8 +17,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['MIŚ', 'SPADAJ', 'MASA', 'IWAN'];
-const start_cards_ludzie = ['MUR', 'AUTO', 'SIEĆ', 'GRANAT'];
+const start_cards_zombiaki = ['UGRYZIENIE', 'SPADAJ', 'MASA', 'IWAN'];
+const start_cards_ludzie = ['MUR', 'RACA ŚWIETLNA', 'SIEĆ', 'GRANAT'];
 
 const test_board = [
     // {
@@ -27,31 +27,30 @@ const test_board = [
     //     "overlay": 'MIŚ'
     // },
     {
-        "field": board[1][1],
-        "card": "GALARETA",
-    },
-    {
-        "field": board[1][0],
-        'card': 'ZENEK'
+        "field": board[3][1],
+        "card": "MUR",
     },
     // {
-    //     "field": board[4][2],
-    //     'card': 'ZAPORA'
+    //     "field": board[1][1],
+    //     'card': 'SYJAMCZYK',
     // },
     {
-        "field": board[0][0],
-        'card': 'SYJAMCZYK',
-        'hp': 1,
+        "field": board[2][1],
+        'card': 'ZENEK',
+        "overlay": "CZŁOWIEK"
     },
     // {
-    //     "field": board[1][0],
+    //     "field": board[1][1],
     //     'card': 'WACEK',
-    //     "overlay": 'MIŚ'
     // },
-    // {
-    //     "field": board[1][0],
-    //     'card': 'AUTO'
-    // },
+    {
+        "field": board[2][0],
+        'card': 'ARKADIUSZ'
+    },
+    {
+        "field": board[2][2],
+        'card': 'CZESIEK'
+    },
     // {
     //     "field": board[3][1],
     //     "card": "MUR",
@@ -62,7 +61,14 @@ export function testMode() {
     if (TEST_MODE.board) putCardsOnBoard();
     changeCards(test_deck_ludzie, start_cards_ludzie);
     changeCards(test_deck_zombiaki, start_cards_zombiaki);
+    const endCard = {
+        id: 'dawn',
+        amount: 1,
+        name: "ŚWIT",
+        image_src: `images/cards/zombiaki/dawn.webp`
+    }
 
+    test_deck_zombiaki.push(endCard);
 }
 
 function putCardsOnBoard() {

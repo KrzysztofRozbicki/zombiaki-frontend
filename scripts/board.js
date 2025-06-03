@@ -1,8 +1,8 @@
 import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button } from "./index.js";
-import { addOverlay } from "./zombiaki/utils.js";
+import { addOverlay, deleteOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert, addListener } from "./utils.js";
-import { killZombiak, damageZombiak } from "./ludzie/utils.js";
+import { killZombiak, damageZombiak, killPet } from "./ludzie/utils.js";
 import { galareta_overlay, zombiak_1 } from "./zombiaki/cards.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
@@ -140,6 +140,7 @@ function setAvailablePetFields(field, resolve) {
         return;
     }
 
+
     const { element } = field;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
@@ -174,13 +175,19 @@ function setNewPetField(old_field, new_field, resolve) {
     return function () {
         pet_moves--;
         clearBoard();
-        setAvailablePetFields(new_field, resolve);
         moveSingleZombiak(old_field, old_field.card_pet, new_field.direction);
+        if (!new_field?.card_pet) {
+            resolve(true);
+            clearBoard();
+            enable(deck_zombiaki_element);
+            return;
+        }
+        setAvailablePetFields(new_field, resolve);
         new_field.element.style.backgroundImage = ``;
         new_field.element.classList.remove('background_image');
         new_field.element.style.removeProperty('--bg-image');
         old_field.element.classList.remove('no_image');
-        if (pet_moves === new_field.card_pet.pet_move - 1) {
+        if (pet_moves === new_field?.card_pet?.pet_move - 1) {
             cancelCard(new_field.card_pet, resolve);
         }
     }
@@ -237,9 +244,6 @@ export function moveSingleZombiak(old_field, card, direction) {
     const next_field = board[new_przecznica][new_tor];
 
     const is_beczka = next_field?.card_board && next_field?.card_board.name === 'BECZKA';
-    const is_dziura = next_field?.card_board &&
-        next_field?.card_board.name === 'DZIURA' &&
-        old_field.card.hp <= 2;
 
     if (next_field.element.classList.contains('galareta')) {
         next_field.element.classList.remove('galareta');
@@ -259,18 +263,29 @@ export function moveSingleZombiak(old_field, card, direction) {
 
     if (card.pet) pet_status = 'OUT';
     if (!card.pet && old_field.card_pet) pet_status = 'STAY';
-    if (is_beczka || is_dziura) unsetField(next_field, { all: true });
+    if (is_beczka) unsetField(next_field, { all: true });
     putPicture(next_field, card);
     if (old_field.overlay_cards && old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
-    if (is_beczka || is_dziura) killZombiak(next_field, { all: true });
-
+    if (is_beczka) killZombiak(next_field);
     unsetField(old_field, { pet: pet_status });
+    const is_hole = next_field?.card_board && next_field?.card_board.name === 'DZIURA';
+    if (is_hole) checkHole(next_field);
     if (card.pet) {
         const pet_element = element.querySelector('.field_pet');
         if (pet_element) pet_element.remove();
     }
     checkBlowField(next_field, { move: true });
     if (card.name === 'MŁODY') setMlody(next_field, card);
+}
+
+function checkHole(field) {
+    const hole_death_zombie = field?.card?.hp <= 2;
+    const hole_death_pet = field?.card_pet?.hp <= 2;
+    const human_card = field?.overlay_cards?.find(card => card.name === 'CZŁOWIEK');
+    if (human_card) deleteOverlay(field, human_card.id);
+    if (hole_death_zombie) killZombiak(field);
+    if (hole_death_pet) killPet(field);
+    if (human_card || hole_death_pet || hole_death_zombie) unsetField(field, { board_card: true });
 }
 
 function setMlody(field) {
@@ -539,7 +554,7 @@ function putPicture(field, card) {
 }
 
 export function addInstruction(element, card) {
-    console.log(card);
+    if (!card.instruction) return;
     const instruction_element = document.createElement('div');
     instruction_element.classList.add('instruction_element');
     addListener(instruction_element, showInstruction(card));
@@ -652,7 +667,9 @@ export function checkMur(tor, przecznica, next_field) {
     for (let i = przecznica; i >= 0; i--) {
         if (board[i][tor]?.card && board[i][tor]?.card.type === 'zombiak') {
             summary_hp += +board[i][tor].card.hp;
+            continue;
         }
+        break;
     }
     if (mur_hp > summary_hp) return true;
     return false;
