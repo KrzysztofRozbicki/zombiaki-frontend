@@ -1,7 +1,7 @@
 //CHUCK
 
 import { getDeckZombiaki, setDeckZombiaki, chosen_card_picture, chosen_card, play_card, close_card, closeCardHandler, removeCard, cancel_button } from '../index.js';
-import { addListener, disable, show, showAlert } from '../utils.js';
+import { addListener, disable, hide, show, showAlert } from '../utils.js';
 
 export default function ludzie_id_22(card, field) {
     chuck();
@@ -23,12 +23,11 @@ function chuck() {
     setDeckZombiaki(deck_zombiaki);
     setTimeout(() => {
         show(chosen_card);
-        console.log(thrown_card_src);
         chosen_card_picture.src = thrown_card_src;
         disable(play_card);
         play_card.innerText = 'USUNIĘTA KARTA';
+        hide(cancel_button);
     }, 10);
     addListener(close_card, closeCardHandler(), { once: true });
     removeCard();
-    hide(cancel_button);
 }

@@ -28,6 +28,11 @@ function handlePazury(card, field) {
         field_card.hp += 1;
         const hp_element = element.querySelector('.field_image > div');
         hp_element.dataset.current_hp = field_card.hp;
+        const masa_element = element.querySelector('.field_image > img[data-name="MASA"]');
+        if (masa_element) {
+            const masa_text_element = element.querySelector('.hp_masa__text');
+            masa_text_element.innerText = field_card.hp;
+        }
         if (field_card.hp > field_card.max_hp) addOverlay(card, field, null);
         clearBoard();
         enable(deck_zombiaki_element);

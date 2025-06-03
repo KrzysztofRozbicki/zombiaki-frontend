@@ -28,6 +28,11 @@ function handlePapu(field) {
         if (card.hp > max_hp) card.hp = max_hp;
         const hp_element = element.querySelector('.field_image > div');
         hp_element.dataset.current_hp = card.hp;
+        const masa_element = element.querySelector('.field_image > img[data-name="MASA"]');
+        if (masa_element) {
+            const masa_text_element = element.querySelector('.hp_masa__text');
+            masa_text_element.innerText = card.hp;
+        }
         clearBoard();
         enable(deck_zombiaki_element);
         removeCard();

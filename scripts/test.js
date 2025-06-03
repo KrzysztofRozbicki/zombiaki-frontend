@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 
-export const TEST_STATE = false;
+export const TEST_STATE = true;
 
 export const TEST_MODE = {
     race: 'ludzie',
@@ -17,8 +17,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['GŁÓD', 'SPADAJ', 'MASA', 'IWAN'];
-const start_cards_ludzie = ['SIEĆ', 'ROPA', 'DŁUGA SERIA', 'GRANAT'];
+const start_cards_zombiaki = ['PAPU', 'PAZURY', 'MASA', 'IWAN'];
+const start_cards_ludzie = ['CHUCK', 'JAJNIK', 'DŁUGA SERIA', 'STRZAŁ'];
 
 const test_board = [
     // {
@@ -26,21 +26,22 @@ const test_board = [
     //     "card": 'KOŃ TROJAŃSKI',
     //     "overlay": 'MIŚ'
     // },
-    // {
-    //     "field": board[3][1],
-    //     "card": "MUR",
-    // },
+    {
+        "field": board[4][0],
+        "card": "BECZKA",
+    },
     // {
     //     "field": board[1][1],
     //     'card': 'SYJAMCZYK',
     // },
     {
-        "field": board[2][1],
-        'card': 'ZENEK',
+        "field": board[1][0],
+        'card': 'KULOODPORNY',
+        'overlay': 'BOSS'
     },
     {
-        "field": board[4][1],
-        'card': 'ZAPORA',
+        "field": board[2][0],
+        'card': 'ZENEK',
     },
     // {
     //     "field": board[1][1],

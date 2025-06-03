@@ -239,6 +239,8 @@ export function closeCardHandler() {
         enable(play_card);
         hide(chosen_card);
         removeListener(close_card);
+        const instruction_element = document.querySelector('#chosen_card .instruction_element');
+        if (instruction_element) instruction_element.remove();
     }
 }
 

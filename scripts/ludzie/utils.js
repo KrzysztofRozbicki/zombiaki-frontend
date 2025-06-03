@@ -42,7 +42,10 @@ export function shot(card, sniper = false, cegła = false) {
                 continue;
             }
             if (card?.race !== 'zombiaki' && card_board?.name !== 'AUTO' && !card_pet) continue;
-            if (card?.name === 'KULOODPORNY' && name !== 'CEGŁA') continue;
+            if (card?.name === 'KULOODPORNY' && name !== 'CEGŁA') {
+                j++;
+                continue;
+            };
             let shot_krystynka = true;
             if (card?.name === 'KRYSTYNKA') {
                 const przecznica = +element.dataset.przecznica - 1;
