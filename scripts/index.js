@@ -220,7 +220,7 @@ function showCardHandler(card) {
     }
 }
 
-function showCard(card, is_bucket = false) {
+export function showCard(card, is_bucket = false) {
     chosen_card_picture.src = card.src;
     active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
 
@@ -315,6 +315,8 @@ export function removeCard() {
         MAX_CARD_PLAYED = 4;
         setTimeout(() => endTurn(), 100);
     }
+    const instruction_element = document.querySelector('#chosen_card .instruction_element');
+    if (instruction_element) instruction_element.remove();
 }
 
 export function indexRemove(array) {

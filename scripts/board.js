@@ -1,5 +1,5 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button } from "./index.js";
+import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button, chosen_card, throw_card, play_card, chosen_card_picture, close_card } from "./index.js";
 import { addOverlay, deleteOverlay } from "./zombiaki/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert, addListener } from "./utils.js";
 import { killZombiak, damageZombiak, killPet } from "./ludzie/utils.js";
@@ -489,6 +489,7 @@ function putPicture(field, card) {
     const img_element = document.createElement('img');
     img_element.src = `images/cards/${race}/${id}.webp`;
     img_element.dataset.name = name;
+    addListener(img_element, showZombieCard(img_element, card))
     if (name === 'MASA') {
         img_element.src = 'images/cards/zombiaki/masa.webp';
         img_element.dataset.name = 'MASA';
@@ -530,8 +531,6 @@ function putPicture(field, card) {
         }
     }
 
-    addInstruction(div_element, card);
-
     element.append(div_element);
     element.dataset.id = id;
     element.dataset.name = name;
@@ -551,6 +550,24 @@ function putPicture(field, card) {
         return;
     }
     field.card = card;
+
+}
+
+function showZombieCard(image_element, card) {
+    return function () {
+        show(chosen_card);
+        const button_box = chosen_card.querySelector('.card_buttons_box');
+        hide(button_box);
+        chosen_card_picture.src = image_element.src;
+        const instruction_container = chosen_card.querySelector('div');
+        addInstruction(instruction_container, card);
+        close_card.addEventListener('click', () => {
+            hide(chosen_card);
+            show(button_box);
+            const instruction_element = chosen_card.querySelector('.instruction_element');
+            if (instruction_element) instruction_element.remove();
+        }, { once: true });
+    }
 }
 
 export function addInstruction(element, card) {

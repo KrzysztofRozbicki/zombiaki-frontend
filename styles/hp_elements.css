@@ -28,7 +28,7 @@
   }
   .hp_element.boss:after {
     width: 25%;
-    font-size: 60% !important;
+    font-size: 50% !important;
   }
   
   div.hp_element.mlody[data-max_hp="3"] {
@@ -173,6 +173,13 @@
   div[data-max_hp="4"][data-overlay="true"] {
     width: 80%;
   }
+
+  #chosen_card_health {
+    position: absolute !important;
+    bottom: 18%;
+    width: 35%;
+    height: 10%;
+  }
   
   .field div:after,
   #chosen_card_health:after,
@@ -203,17 +210,17 @@
   }
   
   div[data-max_hp="3"][data-current_hp="2"]:after {
-    content: "x";
+    content: "x" !important;
     width: 33%;
   }
   
   div[data-max_hp="3"][data-current_hp="1"]:after {
-    content: "xx";
+    content: "xx" !important;
     width: 66%;
   }
   
   div[data-max_hp="3"][data-current_hp="0"]:after {
-    content: "xxx";
+    content: "xxx" !important;
     width: 100%;
   }
   
@@ -248,8 +255,9 @@
     position: absolute;
     width: 80%;
     height: 10%;
-    bottom: 15%;
-    transform: rotate(-5deg); 
+    bottom: 18%;
+    transform: rotate(-3deg); 
+    font-size: 125%;
   }
   
   #chosen_card_health:after {

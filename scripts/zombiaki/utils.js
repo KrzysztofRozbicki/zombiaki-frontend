@@ -10,7 +10,7 @@ import {
     cancel_button
 } from "../index.js";
 import { show, hide, enable, disable, randomRotate } from '../utils.js';
-import { board } from "../board.js";
+import { addInstruction, board } from "../board.js";
 import { clearBoard } from './../board.js';
 const play_overlay = document.getElementById('play_overlay');
 
@@ -116,7 +116,7 @@ export function addOverlay(card, field_board, callback) {
     clearBoard();
 }
 
-function showOverlay(field_board, card, callback) {
+export function showOverlay(field_board, card, callback) {
     return function () {
         if (getTurn() === 'ludzie') return;
         const { race, id } = card;
@@ -138,6 +138,8 @@ function showOverlay(field_board, card, callback) {
         handler = handlePlayOverplay(field_board, callback);
         play_overlay.handler = handler;
         play_overlay.addEventListener('click', handler);
+        const place_instruction_element = document.querySelector("#chosen_card > div");
+        addInstruction(place_instruction_element, card);
     }
 }
 
@@ -165,6 +167,8 @@ function closeOverlay() {
     play_overlay.handler = null;
     chosen_card_health.dataset.max_hp = null;
     chosen_card_health.dataset.current_hp = null;
+    const instruction_element = document.querySelector('#chosen_card .instruction_element');
+    if (instruction_element) instruction_element.remove();
 }
 
 export function deleteOverlay(field_board, id) {

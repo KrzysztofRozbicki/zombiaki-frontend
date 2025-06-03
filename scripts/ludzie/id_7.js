@@ -22,7 +22,6 @@ function raca() {
 
 
 function addDialog() {
-    const main = document.body.querySelector('main');
     const div_element = document.createElement('div');
     const child_element = document.createElement('div');
 
@@ -54,7 +53,7 @@ function addDialog() {
     temp_deck_zombiaki.splice(0, 3);
     div_element.appendChild(child_element);
     div_element.setAttribute('id', 'raca');
-    main.appendChild(div_element);
+    document.body.appendChild(div_element);
 }
 
 function buttonClicks() {

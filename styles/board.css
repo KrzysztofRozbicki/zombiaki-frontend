@@ -237,16 +237,21 @@ body.background {
   z-index: 5;
 }
 
+.field > div {
+  border-radius: 0.75rem;
+}
 .field_image:hover,
 .field_board:hover,
 .field_pet:hover {
   position: absolute;
-  transform: scale(4) !important;
+  transform: scale(1.2) !important;
   width: 100% !important;
   height: 100% !important;
   z-index: 6;
+  /* border: 4px solid var(--accent-color-opacity); */
 }
 
+/*
 .field_pet:hover {
   width: 100%;
   height: 100%;
@@ -263,7 +268,7 @@ div[data-przecznica="3"]:has(img):hover > div {
 div[data-przecznica="4"]:has(img):hover > div,
 div[data-przecznica="5"]:has(img):hover > div {
   transform-origin: top center;
-}
+} */
 
 #streets .field_available {
   background-color: var(--color-green);
