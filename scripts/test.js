@@ -5,7 +5,7 @@ import { addOverlay } from "./zombiaki/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 
-export const TEST_STATE = true;
+export const TEST_STATE = false;
 
 export const TEST_MODE = {
     race: 'ludzie',
