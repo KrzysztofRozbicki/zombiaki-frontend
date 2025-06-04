@@ -563,6 +563,8 @@ function showZombieCard(image_element, card) {
         close_card.addEventListener('click', () => {
             hide(chosen_card);
             show(button_box);
+            chosen_card_health.dataset.max_hp = null;
+            chosen_card_health.dataset.current_hp = null;
             const instruction_element = chosen_card.querySelector('.instruction_element');
             if (instruction_element) instruction_element.remove();
         }, { once: true });

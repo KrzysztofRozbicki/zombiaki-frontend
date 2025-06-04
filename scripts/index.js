@@ -223,6 +223,8 @@ function showCardHandler(card) {
 export function showCard(card, is_bucket = false) {
     chosen_card_picture.src = card.src;
     active_card = playable_cards.find(el => el.id === +card.getAttribute('data-id'));
+    const button_box = chosen_card.querySelector('.card_buttons_box');
+    show(button_box);
 
     if (!active_card) return;
     if (turn === 'zombiaki' && active_card.name === 'KLIK') disable(play_card);
