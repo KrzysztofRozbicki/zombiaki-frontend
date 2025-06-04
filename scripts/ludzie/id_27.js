@@ -2,7 +2,7 @@
 
 import { board, clearBoard } from "../board.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable } from "../utils.js";
+import { addListener, disable, enable } from "../utils.js";
 import { addOverlay } from "../zombiaki/utils.js";
 
 export default function ludzie_id_27(card, field) {
@@ -18,9 +18,7 @@ function concreteShoes(card) {
             if (!field.card) continue;
             if (field.card.type !== 'zombiak') continue;
             element.classList.add('overlay_available');
-            const handler = concreteShoesHandler(card, field);
-            element.addEventListener('click', handler);
-            element.handler = handler;
+            addListener(element, concreteShoesHandler(card, field));
         }
     }
 }

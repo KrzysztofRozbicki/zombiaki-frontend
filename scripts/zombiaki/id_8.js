@@ -1,7 +1,7 @@
 //KILOF
 import { board, clearBoard, unsetField } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
-import { enable, disable } from "../utils.js";
+import { enable, disable, addListener } from "../utils.js";
 
 export default function zombiaki_id_8(card, field) {
     disable(deck_zombiaki_element);
@@ -13,9 +13,7 @@ export default function zombiaki_id_8(card, field) {
             if (card_board.name === 'DZIURA') continue;
             const kilof_element = element.querySelector('.field_board');
             kilof_element.classList.add('kilof_available');
-            const handler = handleKilof(field);
-            kilof_element.handler = handler;
-            kilof_element.addEventListener('click', handler, { once: true });
+            addListener(element, handleKilof(field), { once: true });
         }
     }
 }

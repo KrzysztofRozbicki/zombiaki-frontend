@@ -1,7 +1,7 @@
 //PAPU
 import { board, clearBoard } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
-import { enable, disable } from "../utils.js";
+import { enable, disable, addListener } from "../utils.js";
 
 export default function zombiaki_id_29(card, field) {
     disable(deck_zombiaki_element);
@@ -11,9 +11,7 @@ export default function zombiaki_id_29(card, field) {
             if (!card) continue;
             if (card.type !== 'zombiak') continue;
             if (card.hp < card.max_hp) {
-                const handler = handlePapu(board[i][j]);
-                element.addEventListener('click', handler, { once: true });
-                element.handler = handler;
+                addListener(element, handlePapu(board[i][j]), { once: true });
                 element.classList.add('papu_available');
             }
         }

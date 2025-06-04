@@ -55,7 +55,7 @@
   .hp_element:before{
     width: 100%;
   }
-  
+
   .hp_masa {
     position: absolute;
     bottom: 0;
@@ -71,7 +71,6 @@
     -webkit-text-stroke: 1px var(--accent-color);
     margin-inline: 2%;
   }
-  
   .hp_masa p.hp_masa__text__x {
     position: relative;
     font-size: 50%;
@@ -82,15 +81,13 @@
   .hp_masa img {
     width: 50%;
   }
-  
+
   div[data-max_hp="5"] {
     bottom: 5%;
     width: 80% !important;
     transform: translateX(-50%) rotate(-1deg);
-    font-size: 80%;
+    font-size: 95%;
   }
-  
-  
   div[data-max_hp="6"][data-current_hp="5"]:after {
     content: "x";
     width: 25%;
@@ -115,7 +112,6 @@
     content: "xxxxxx";
     width: 100%;
   }
-  
   div[data-max_hp="5"][data-current_hp="4"]:after {
     content: "x";
     width: 20%;
@@ -136,7 +132,6 @@
     content: "xxxxx";
     width: 100%;
   }
-  
   div[data-max_hp="4"]{
     width: 95%;
   }
@@ -156,7 +151,6 @@
     content: "xxxx";
     width: 100%;
   }
-  
   div[data-max_hp="2"]{
     width: 50%;
   }
@@ -168,22 +162,33 @@
     content: "xx";
     width: 100%;
   }
-  
-  
   div[data-max_hp="4"][data-overlay="true"] {
     width: 80%;
   }
 
-  #chosen_card_health {
-    position: absolute !important;
-    bottom: 18%;
-    width: 35%;
-    height: 10%;
+  #chosen_card_health:after {
+    font-size: 950%;
+  }
+
+  #chosen_card:has(.card_buttons_box.hidden) #chosen_card_health {
+    bottom: 6% !important;
+  }
+
+  #chosen_card_health:after {
+    transform: rotate(-4deg);
   }
   
+  #chosen_card_health[data-max_hp="4"] {
+    width: 80%;
+  }
+
+  #chosen_card_health[data-max_hp="2"] {
+    width: 40%;
+  }
+
   .field div:after,
-  #chosen_card_health:after,
   .hp_card div:after,
+  .hp_element:after,
   .hp_element:before {
     content: "";
     font-size: 65%;
@@ -223,8 +228,7 @@
     content: "xxx" !important;
     width: 100%;
   }
-  
-  
+
   
   div[data-overlay="true"]:after {
     font-size: 60%;
@@ -251,35 +255,3 @@
     width: 100%;
   }
   
-  #chosen_card_health[data-max_hp="4"] {
-    position: absolute;
-    width: 80%;
-    height: 10%;
-    bottom: 18%;
-    transform: rotate(-3deg); 
-    font-size: 125%;
-  }
-  
-  #chosen_card_health:after {
-    font-size: 700%;
-  }
-  
-  #chosen_card_health[data-max_hp="4"][data-current_hp="3"]:after {
-    content: "x";
-    width: 25%;
-  }
-  
-  #chosen_card_health[data-max_hp="4"][data-current_hp="2"]:after {
-    content: "xx";
-    width: 50%;
-  }
-  
-  #chosen_card_health[data-max_hp="4"][data-current_hp="1"]:after {
-    content: "xxx";
-    width: 75%;
-  }
-  
-  #chosen_card_health[data-max_hp="4"][data-current_hp="0"]:after {
-    content: "xxxx";
-    width: 100%;
-  }

@@ -1,8 +1,8 @@
 //MASA
 import { raceFunctions } from "../allFunctions.js";
 import { board, clearBoard, setField, unsetField } from "../board.js";
-import { deck_zombiaki_element, removeCard } from "../index.js";
-import { disable, enable } from "../utils.js";
+import { deck_zombiaki_element } from "../index.js";
+import { addListener, disable, enable } from "../utils.js";
 import { zombiak_masa } from "./cards.js";
 import { addOverlay } from "./utils.js";
 export default function zombiaki_id_27(card, field) {
@@ -20,9 +20,7 @@ function putMasa() {
             if (card?.type !== 'zombiak') continue;
 
             element.classList.add('move_available');
-            const handler = choseZombiakHandler(field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, choseZombiakHandler(field), { once: true });
         }
     }
 }
@@ -61,9 +59,7 @@ function setAvailableFields(field) {
     all_fields.forEach((new_field) => {
         const { element } = new_field;
         element.classList.add('move_on');
-        const handler = putMasaHandler(field, new_field);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, putMasaHandler(field, new_field), { once: true });
     })
 }
 

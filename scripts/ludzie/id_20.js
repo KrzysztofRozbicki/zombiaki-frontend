@@ -1,6 +1,6 @@
 //REFLEKTOR
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable, show, hide } from "../utils.js";
+import { disable, enable, show, hide, addListener, removeListener } from "../utils.js";
 import { board, moveSingleZombiak } from "../board.js";
 
 export default function ludzie_id_20(card, field) {
@@ -35,9 +35,7 @@ function prepareTrack(track) {
         if (card && card?.type === 'zombiak') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('reflektor_available'))
-    const handler = reflektorHandler(active_fields);
-    track.addEventListener('click', handler);
-    track.handler = handler;
+    addListener(track, reflektorHandler(active_fields));
 }
 
 function reflektorHandler(track) {
@@ -57,7 +55,6 @@ function clearBoard() {
     tracks.forEach(el => {
         hide(el);
         const track = el.parentNode;
-        track.removeEventListener('click', track.handler);
-        track.handler = null;
+        removeListener(track);
     })
 }

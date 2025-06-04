@@ -1,5 +1,5 @@
 //ZMIATAJ
-import { disable, enable } from "../utils.js";
+import { addListener, disable, enable, removeListener } from "../utils.js";
 import {
     deck_ludzie_element,
     deck_zombiaki_element,
@@ -28,9 +28,7 @@ function zmiataj() {
     for (let i = 0; i < new_zombiaki_cards.length; i++) {
         const card = new_zombiaki_cards[i];
         card.classList.add('remove_card');
-        const handler = removeCardHandler(card);
-        card.addEventListener('click', handler);
-        card.handler = handler;
+        addListener(card, removeCardHandler(card));
     }
 }
 
@@ -43,8 +41,7 @@ function removeCardHandler(card) {
         for (let i = 0; i < new_zombiaki_cards.length; i++) {
             const card = new_zombiaki_cards[i];
             card.classList.remove('remove_card');
-            card.removeEventListener('click', card.handler);
-            card.handler = null;
+            removeListener(card);
         }
         const id = +card.dataset.id;
         card.src = `images/cards/zombiaki/rewers.webp`;

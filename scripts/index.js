@@ -265,7 +265,7 @@ function playCardHandler() {
         }
         hide(chosen_card);
         placeCard(active_card);
-
+        removeListener(close_card);
         if (!active_card?.board) {
             removeCard();
             return;
@@ -275,11 +275,9 @@ function playCardHandler() {
 
 function throwCardHandler() {
     return function () {
-        if (turn === 'zombiaki') {
-            resetUsableCards();
-        }
         cards_thrown++;
         if (cards_thrown >= MIN_CARD_THROWN) {
+            resetUsableCards();
             show(play_card);
             enable(play_card);
             hide(throw_card);
@@ -289,6 +287,7 @@ function throwCardHandler() {
 }
 
 export function removeCard() {
+    removeListener(close_card);
     if (!active_card) return;
     const id = active_card.id;
     indexRemove(playable_cards);
@@ -300,15 +299,12 @@ export function removeCard() {
         card_to_remove.classList.add('card_blank');
         card_to_remove.dataset.id = 'blank';
         card_to_remove.dataset.name = 'blank';
-        card_to_remove.removeEventListener('click', card_to_remove.handler);
-        card_to_remove.handler = null;
+        removeListener(card_to_remove);
     }
     const all_fields = document.querySelectorAll('.field');
     all_fields.forEach(field => enable(field));
     hide(chosen_card);
     hide(cancel_button);
-    close_card.removeEventListener('click', close_card.handler);
-    close_card.handler = null;
     active_card = null;
     cards_played++;
     if (cards_played > MAX_CARD_PLAYED) {

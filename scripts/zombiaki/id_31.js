@@ -2,7 +2,7 @@
 
 import { board, clearBoard, setField, unsetField } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
-import { disable, enable } from "../utils.js";
+import { addListener, disable, enable } from "../utils.js";
 import { addOverlay } from "./utils.js";
 import { raceFunctions } from "../allFunctions.js";
 
@@ -17,9 +17,7 @@ export default function zombiaki_id_31(card, field) {
             if (is_webbed) continue;
             if (card?.type !== 'zombiak') continue;
             element.classList.add('move_available');
-            const handler = spadajHandler(field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, spadajHandler(field), { once: true });
         }
     }
 }
@@ -31,9 +29,7 @@ function spadajHandler(field) {
         fields.forEach(board_field => {
             const { element } = board_field;
             element.classList.add('move_available');
-            const handler = swapCards(field, board_field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, swapCards(field, board_field));
         })
     }
 }

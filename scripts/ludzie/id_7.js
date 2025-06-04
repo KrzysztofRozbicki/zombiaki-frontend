@@ -1,7 +1,7 @@
 //RACA ŚWIETLNA
 
 import { getDeckZombiaki, setDeckZombiaki, removeCard } from '../index.js';
-import { hideCancelButton } from '../utils.js';
+import { addListener, hideCancelButton } from '../utils.js';
 import { board, setField } from '../board.js';
 import { zombiak_1 } from '../zombiaki/cards.js';
 export default function ludzie_id_7(card, field) {
@@ -61,15 +61,11 @@ function buttonClicks() {
     const put_buttons = document.querySelectorAll('#raca .put_button');
     if (delete_buttons && delete_buttons.length > 0) {
         delete_buttons.forEach((button) => {
-            const handler = deleteButtonHandler(button);
-            button.handler = handler;
-            button.addEventListener('click', handler, { once: true });
+            addListener(button, deleteButtonHandler(button), { once: true });
         })
     }
     put_buttons.forEach((button) => {
-        const handler = putButtonHandler(button);
-        button.handler = handler;
-        button.addEventListener('click', handler, { once: true });
+        addListener(button, putButtonHandler(button), { once: true });
     })
 }
 

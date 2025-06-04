@@ -1,6 +1,6 @@
 //220V
 import { board } from '../board.js';
-import { show, hide, enable, disable } from '../utils.js';
+import { show, hide, enable, disable, addListener, removeListener } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from './utils.js';
 export default function ludzie_id_3(card, field) {
@@ -14,9 +14,7 @@ function shockFunction() {
     tor_elements.forEach(el => {
         show(el);
         const tor = el.parentNode;
-        const handler = shockTorHandler(tor);
-        el.handler = handler;
-        el.addEventListener('click', handler, { once: true });
+        addListener(el, shockTorHandler(tor), { once: true });
     });
 }
 
@@ -40,7 +38,6 @@ function shockTor(tor) {
     const tor_elements = document.querySelectorAll('.tor_electricity');
     tor_elements.forEach(el => {
         hide(el);
-        el.removeEventListener('click', el.handler);
-        el.handler = null;
+        removeListener(el);
     });
 }

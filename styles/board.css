@@ -276,7 +276,8 @@ div[data-przecznica="5"]:has(img):hover > div {
   animation: 0.7s infinite alternate ease-in-out fieldAvailable;
 }
 
-.shot_available > div {
+.shot_available .field_image,
+.shot_available .overlay {
   cursor: url('../images/crosshair.ico'), crosshair;
   animation: 0.7s infinite alternate ease-in-out shotAvailable;
   background-color: var(--accent-color-opacity);
@@ -349,7 +350,8 @@ div[data-przecznica="5"]:has(img):hover > div {
 .ropa_available > .field_image,
 .ropa_available > .field_pet,
 .ropa_available > .field_board img[data-name="MINA"],
-.ropa_available > .field_board img[data-name="AUTO"] {
+.ropa_available > .field_board img[data-name="AUTO"],
+.ropa_available .overlay[data-name="MIŚ"] {
     cursor: url('../images/cursors/barrel.ico'), auto;
     border-radius: 1rem;
     animation: 0.7s infinite alternate ease-in-out shotAvailable;
@@ -362,7 +364,8 @@ div[data-przecznica="5"]:has(img):hover > div {
 
 .miotacz_available > .field_image,
 .miotacz_available > .field_board img[data-name="MINA"],
-.miotacz_available > .field_board img[data-name="AUTO"] {
+.miotacz_available > .field_board img[data-name="AUTO"],
+.miotacz_available .overlay[data-name="MIŚ"] {
     cursor: url('../images/cursors/miotacz.ico'), auto;
     border-radius: 1rem;
     animation: 0.7s infinite alternate ease-in-out shotAvailable;

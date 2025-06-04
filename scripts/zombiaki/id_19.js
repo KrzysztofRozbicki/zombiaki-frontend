@@ -2,7 +2,7 @@
 
 import { deleteOverlay, putOverlay } from "./utils.js";
 import { board, checkZapora, clearBoard, moveSingleZombiak } from "../board.js";
-import { disable, enable, hide, show, showAlert } from "../utils.js";
+import { addListener, disable, enable, hide, removeListener, show, showAlert } from "../utils.js";
 import { deck_zombiaki_element, cancel_button } from "../index.js";
 
 export default function zombiaki_id_19(card, field) {
@@ -24,9 +24,7 @@ function bossCommand(boss_field) {
             if (card.name === boss_field.card.name && card.id === boss_field.card.id) continue;
             if (checkZapora(board_field)) continue;
             element.classList.add('move_available');
-            const handler = moveHandler(board_field, boss_field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, moveHandler(board_field, boss_field), { once: true });
             available_zombies.push(board[i][j]);
         }
     }
@@ -72,9 +70,7 @@ function setAvailableFields(field, boss_field) {
         const handler_mouseover = hoverHandler(field, new_field);
         element.handler_mouseover = handler_mouseover;
         element.addEventListener('mouseover', handler_mouseover);
-        const handler = setNewField(field, new_field, boss_field);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, setNewField(field, new_field, boss_field), { once: true });
     })
 }
 
@@ -93,8 +89,7 @@ function setNewField(old_field, new_field, boss_field) {
         clearBoard();
         moveSingleZombiak(old_field, old_field.card, new_field.direction);
         new_field.element.style.backgroundImage = ``;
-        cancel_button.removeEventListener('click', cancel_button.handler);
-        cancel_button.handler = null;
+        removeListener(cancel_button);
         hide(cancel_button);
     }
 }

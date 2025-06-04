@@ -1,7 +1,7 @@
 //KREW
 import { board, clearBoard, moveSingleZombiak } from "../board.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable } from '../utils.js'
+import { addListener, disable, enable } from '../utils.js'
 export default function ludzie_id_16(card, field) {
     krew();
 }
@@ -15,9 +15,7 @@ function krew() {
             if (!card) continue;
             if (card.type !== 'zombiak' || element.classList.contains('webbed')) continue;
             element.classList.add('move_available');
-            const handler = moveHandler(field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, moveHandler(field), { once: true });
         }
     }
 }
@@ -55,9 +53,7 @@ function setAvailableFields(field) {
         const handler_mouseover = hoverHandler(field, new_field);
         element.handler_mouseover = handler_mouseover;
         element.addEventListener('mouseover', handler_mouseover);
-        const handler = setNewField(field, new_field);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, setNewField(field, new_field), { once: true });
     })
 }
 

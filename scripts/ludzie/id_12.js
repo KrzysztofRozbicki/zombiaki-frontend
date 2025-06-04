@@ -1,6 +1,6 @@
 //JAJNIK
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable, show, hide } from "../utils.js";
+import { disable, enable, show, hide, addListener, removeListener } from "../utils.js";
 import { board, setField, unsetField } from "../board.js";
 import { zombiak_1 } from "../zombiaki/cards.js";
 import { deleteOverlay } from "../zombiaki/utils.js";
@@ -34,9 +34,7 @@ function prepareTrack(track) {
         if (card?.type === 'zombiak') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('jajnik_available'))
-    const handler = jajnikTrackHandler(active_fields)
-    track.handler = handler;
-    track.addEventListener('click', handler, { once: true });
+    addListener(track, jajnikTrackHandler(active_fields), { once: true });
 }
 
 function jajnikTrackHandler(fields) {
@@ -71,7 +69,6 @@ function clearBoard() {
     tracks.forEach(el => {
         hide(el);
         const track = el.parentNode;
-        track.removeEventListener('click', track.handler);
-        track.handler = null;
+        removeListener(track);
     })
 }

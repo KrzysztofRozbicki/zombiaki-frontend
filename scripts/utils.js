@@ -27,8 +27,7 @@ export function showAlert(text, game_over = false, instruction = false) {
 
 export function hideCancelButton() {
     hide(cancel_button);
-    cancel_button.removeEventListener('click', cancel_button.handler);
-    cancel_button.handler = null;
+    removeListener(cancel_button);
 }
 
 export function show(element) {

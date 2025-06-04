@@ -9,7 +9,7 @@ import {
     removeCard,
     cancel_button
 } from "../index.js";
-import { show, hide, enable, disable, randomRotate } from '../utils.js';
+import { show, hide, enable, disable, randomRotate, addListener, removeListener } from '../utils.js';
 import { addInstruction, board } from "../board.js";
 import { clearBoard } from './../board.js';
 const play_overlay = document.getElementById('play_overlay');
@@ -40,9 +40,7 @@ export function putOverlay(card, callback) {
                 if (is_overlay) continue;
             }
             element.classList.add('overlay_available');
-            const handler = overlayHandler(card, board[i][j], callback);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, overlayHandler(card, board[i][j], callback), { once: true });
         }
     }
 }
@@ -109,16 +107,14 @@ export function addOverlay(card, field_board, callback) {
 
     hide(cancel_button);
     const overlay = overlay_container.querySelector(`div[data-name="${card.name}"]`);
-    const handler = showOverlay(field_board, card, callback);
-    overlay.handler = handler;
-    overlay.addEventListener('click', handler);
+    addListener(overlay, showOverlay(field_board, card, callback));
     removeCard();
     clearBoard();
 }
 
 export function showOverlay(field_board, card, callback) {
     return function () {
-        if (getTurn() === 'ludzie') return;
+        if (field_board.element.handler) return;
         const { race, id } = card;
         play_overlay.innerText = card.overlay_text || '';
         show(chosen_card);
@@ -128,16 +124,15 @@ export function showOverlay(field_board, card, callback) {
         chosen_card_health.dataset.max_hp = card.max_hp;
         chosen_card_health.dataset.current_hp = card.hp;
         hide(play_card);
-        if (card.overlay_text) show(play_overlay);
+        if (card.overlay_text && getTurn() !== 'ludzie') show(play_overlay);
+        if (getTurn() === 'ludzie') {
+            const button_box = chosen_card.querySelector('.card_buttons_box');
+            hide(button_box);
+        }
         hide(throw_card);
 
-        let handler = handleCloseOverlay();
-        close_card.handler = handler;
-        close_card.addEventListener('click', handler, { once: true });
-        handler = null;
-        handler = handlePlayOverplay(field_board, callback);
-        play_overlay.handler = handler;
-        play_overlay.addEventListener('click', handler);
+        addListener(close_card, handleCloseOverlay());
+        addListener(play_overlay, handlePlayOverplay(field_board, callback))
         const place_instruction_element = document.querySelector("#chosen_card > div");
         addInstruction(place_instruction_element, card);
     }
@@ -153,8 +148,7 @@ function handlePlayOverplay(field_board, callback) {
     return function () {
         callback(field_board);
         closeOverlay();
-        close_card.removeEventListener('click', close_card.handler);
-        close_card.handler = null;
+        removeListener(close_card);
     }
 }
 
@@ -162,13 +156,15 @@ function closeOverlay() {
     show(play_card);
     hide(play_overlay);
     hide(chosen_card);
-    play_overlay.removeEventListener('click', play_overlay.handler)
+    removeListener(play_overlay);
+    removeListener(close_card);
     const chosen_card_health = document.getElementById('chosen_card_health');
-    play_overlay.handler = null;
     chosen_card_health.dataset.max_hp = null;
     chosen_card_health.dataset.current_hp = null;
     const instruction_element = document.querySelector('#chosen_card .instruction_element');
     if (instruction_element) instruction_element.remove();
+    const button_box = chosen_card.querySelector('.card_buttons_box');
+    show(button_box);
 }
 
 export function deleteOverlay(field_board, id) {

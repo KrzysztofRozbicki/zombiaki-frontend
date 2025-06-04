@@ -1,7 +1,7 @@
 //PAZURY
 import { board, clearBoard } from "../board.js";
 import { deck_zombiaki_element, removeCard } from "../index.js";
-import { enable, disable } from "../utils.js";
+import { enable, disable, addListener } from "../utils.js";
 import { addOverlay } from "./utils.js";
 
 export default function zombiaki_id_16(card, field) {
@@ -13,9 +13,7 @@ export default function zombiaki_id_16(card, field) {
             const field_card = field.card;
             if (!field_card) continue;
             if (field_card.type !== 'zombiak' || field_card.pet) continue;
-            const handler = handlePazury(card, field);
-            element.addEventListener('click', handler, { once: true });
-            element.handler = handler;
+            addListener(element, handlePazury(card, field), { once: true });
             element.classList.add('papu_available');
         }
     }

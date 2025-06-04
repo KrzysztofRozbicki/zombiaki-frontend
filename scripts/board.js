@@ -1,7 +1,7 @@
 import { raceFunctions } from "./allFunctions.js";
 import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button, chosen_card, throw_card, play_card, chosen_card_picture, close_card } from "./index.js";
 import { addOverlay, deleteOverlay } from "./zombiaki/utils.js";
-import { show, hide, enable, disable, randomRotate, showAlert, addListener } from "./utils.js";
+import { show, hide, enable, disable, randomRotate, showAlert, addListener, removeListener } from "./utils.js";
 import { killZombiak, damageZombiak, killPet } from "./ludzie/utils.js";
 import { galareta_overlay, zombiak_1 } from "./zombiaki/cards.js";
 
@@ -58,13 +58,14 @@ export function updateBoard(prev_turn) {
     hide(cancel_button);
     if (prev_turn === 'ludzie') {
         moveZombiaki();
-        setTimeout(() => {
-            const overlay_elements = document.querySelectorAll('.overlay_container');
-            overlay_elements.forEach(element => {
-                if (!element.classList.contains('disable')) disable(element);
-            });
-        }, 100);
     }
+
+    setTimeout(() => {
+        const overlay_elements = document.querySelectorAll('.overlay_container');
+        overlay_elements.forEach(element => {
+            if (!element.classList.contains('disable')) disable(element);
+        });
+    }, 100);
 
     if (prev_turn === 'zombiaki') {
         const web_elements = document.querySelectorAll('.webbed');
@@ -133,8 +134,7 @@ function setAvailablePetFields(field, resolve) {
 
     if (pet_moves === 0) {
         enable(deck_zombiaki_element);
-        cancel_button.removeEventListener('click', cancel_button.handler);
-        cancel_button.handler = null;
+        removeListener(cancel_button);
         hide(cancel_button);
         resolve(true);
         return;
@@ -165,9 +165,7 @@ function setAvailablePetFields(field, resolve) {
         const handler_mouseover = hoverPetHandler(field, new_field);
         element.handler_mouseover = handler_mouseover;
         element.addEventListener('mouseover', handler_mouseover);
-        const handler = setNewPetField(field, new_field, resolve);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, setNewPetField(field, new_field, resolve))
     })
 }
 
@@ -396,9 +394,7 @@ function moveLudzie() {
 export function putCard(field, card) {
     const { element } = field;
     element.classList.add('field_available', `${card.race}`);
-    const handler = setFieldHandler(field, card);
-    element.handler = handler;
-    element.addEventListener('click', handler);
+    addListener(element, setFieldHandler(field, card));
 }
 
 export function unsetField(board_field, options = {}) {
@@ -473,8 +469,7 @@ export function setField(field, card, other = false) {
 function setFieldHandler(field, card) {
     return function () {
         setField(field, card);
-        cancel_button.removeEventListener('click', cancel_button.handler);
-        cancel_button.handler = null;
+        removeListener(cancel_button);
     }
 }
 
@@ -555,11 +550,15 @@ function putPicture(field, card) {
 
 function showZombieCard(image_element, card) {
     return function () {
+        if (image_element.parentNode.parentNode.handler || image_element.parentNode.handler) return;
         show(chosen_card);
         const button_box = chosen_card.querySelector('.card_buttons_box');
         hide(button_box);
         chosen_card_picture.src = image_element.src;
         const instruction_container = chosen_card.querySelector('div');
+        const chosen_card_health = document.getElementById('chosen_card_health');
+        chosen_card_health.dataset.max_hp = card.max_hp;
+        chosen_card_health.dataset.current_hp = card.hp;
         addInstruction(instruction_container, card);
         close_card.addEventListener('click', () => {
             hide(chosen_card);
@@ -603,9 +602,7 @@ function cancelCard(card, resolve = null) {
     if (!board) return;
     show(cancel_button);
     cancel_button.classList.add(`${race}_active`);
-    const handler = handleCancelCard(card, resolve);
-    cancel_button.handler = handler;
-    cancel_button.addEventListener('click', handler);
+    addListener(cancel_button, handleCancelCard(card, resolve));
 }
 
 function handleCancelCard(card, resolve = null) {
@@ -619,15 +616,13 @@ function handleCancelCard(card, resolve = null) {
         all_fields.forEach(field => enable(field));
         const tor_elements = document.querySelectorAll('.tor_electricity');
         tor_elements.forEach(el => {
-            hide(el);;
-            el.removeEventListener('click', el.handler);
-            el.handler = null;
+            hide(el);
+            removeListener(el);
         });
         const fire_elements = document.querySelectorAll('.tor_fire');
         fire_elements.forEach(el => {
-            hide(el);;
-            el.removeEventListener('click', el.handler);
-            el.handler = null;
+            hide(el);
+            removeListener(el);
         });
         if (resolve) resolve(true);
     }
@@ -647,13 +642,12 @@ export function clearBoard() {
             if (was_galareta) element.classList.add('galareta');
             const cards_on_field = element.querySelectorAll('.field > .field_image, .field > .field_board, .field > .overlay');
             cards_on_field.forEach(el => {
-                el.removeEventListener('click', el.handler);
-                el.handler = null;
+                removeListener(el);
                 el.classList.remove('kilof_available');
                 el.removeEventListener('click', el.shot_handler);
                 el.shot_handler = null;
             })
-            element.removeEventListener('click', element.handler);
+            removeListener(element);
             if (element.handler_mouseover) {
                 element.removeEventListener('mouseover', element.handler_mouseover);
                 element.handler_mouseover = null;

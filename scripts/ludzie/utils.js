@@ -21,8 +21,8 @@ import {
     removeCardZombiaki,
     deck_ludzie_element
 } from "../index.js";
-import { deleteOverlay } from "../zombiaki/utils.js";
-import { disable, enable, show, hide, hideCancelButton, showAlert } from "../utils.js";
+import { deleteOverlay, useBear } from "../zombiaki/utils.js";
+import { disable, enable, show, hide, hideCancelButton, showAlert, addListener, removeListener } from "../utils.js";
 
 export function shot(card, sniper = false, cegła = false) {
     disable(deck_ludzie_element);
@@ -345,20 +345,14 @@ function checkClick() {
         setActiveCard(click_card);
         chosen_card_picture.src = `images/cards/zombiaki/${click_card.id}.webp`;
         show(chosen_card);
-        const handler = closeCardHandler();
-        close_card.handler = handler;
-        close_card.addEventListener('click', handler, { once: true });
-
+        addListener(close_card, closeCardHandler(), { once: true });
         const close_handler = closeCardClickHandler(resolve);
         close_card.click_handler = close_handler;
         close_card.addEventListener('click', close_handler, { once: true });
-
         hide(play_card);
         const play_other = document.getElementById('play_other');
         play_other.innerText = 'ZAGRAJ KLIK';
-        const click_handler = handlePlayClick(resolve);
-        play_other.handler = click_handler;
-        play_other.addEventListener('click', click_handler, { once: true });
+        addListener(play_other, handlePlayClick(resolve), { once: true });
         show(play_other);
     })
 }
@@ -381,11 +375,9 @@ function handlePlayClick(resolve) {
             card_to_remove.classList.add('card_blank');
             card_to_remove.dataset.id = 'blank';
             card_to_remove.dataset.name = 'blank';
-            card_to_remove.removeEventListener('click', card_to_remove.handler);
-            card_to_remove.handler = null;
+            removeListener(card_to_remove);
         }
-        close_card.removeEventListener('click', close_card.handler);
-        close_card.handler = null;
+        removeListener(close_card);
         hide(chosen_card);
         resolve(true);
     }
@@ -394,8 +386,7 @@ function handlePlayClick(resolve) {
 function closeCardClickHandler(resolve) {
     return function () {
         const play_other = document.getElementById('play_other');
-        play_other.removeEventListener('click', play_other.handler);
-        play_other.handler = null;
+        removeListener(play_other);
         resolve(false);
         hide(play_other);
         show(play_card);
@@ -447,14 +438,16 @@ export function aoeHandler(field, card, is_krystynka = false) {
 function activeAoe(field, card, is_krystynka = false, event) {
     const is_auto = event.target.dataset.name === 'AUTO';
     const is_mina = event.target.dataset.name === 'MINA';
-    const { element } = field;
+    const is_bear = event.target.parentNode.dataset.name === 'MIŚ';
+
     hideCancelButton();
     const targetCard = field.card || field.card_pet;
     card.dmg -= 1;
     setAoeCardHealth(card)
     clearBoard();
     if (is_auto || is_mina) checkBlowField(field);
-    if (targetCard && targetCard.type === 'zombiak' && !is_auto) damageZombiak(1, field);
+    if (targetCard && targetCard.type === 'zombiak' && !is_auto && !is_bear) damageZombiak(1, field);
+    if (is_bear) useBear(field);
     if (card.dmg === 0) return;
     if (targetCard?.hp === 0) {
         setTimeout(() => {
@@ -505,10 +498,7 @@ function setAoeBoard(field, card, is_krystynka = false) {
     all_fields.forEach((field) => {
         const { element } = field;
         element.classList.add(`${name.toLowerCase()}_available`);
-
-        const handler = aoeHandler(field, card, is_krystynka);
-        element.addEventListener('click', handler);
-        element.handler = handler;
+        addListener(element, aoeHandler(field, card, is_krystynka));
     })
 }
 

@@ -1,6 +1,6 @@
 //SIEĆ
 import { board } from './../board.js';
-import { hideCancelButton, enable, disable } from '../utils.js';
+import { hideCancelButton, enable, disable, addListener, removeListener } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 let MAX_STRENGTH = 6;
 export default function ludzie_id_8(card, field) {
@@ -19,10 +19,7 @@ function web() {
             if (!card || card.race !== 'zombiaki') continue;
             if (card.hp > MAX_STRENGTH) continue;
             element.classList.add('web_available');
-
-            const handler = webHandler(field)
-            element.addEventListener('click', handler, { once: true });
-            element.handler = handler;
+            addListener(element, webHandler(field));
         }
     }
 }
@@ -42,8 +39,7 @@ function webHandler(field) {
         const all_web_elements = document.querySelectorAll('.web_available');
         all_web_elements.forEach((element) => {
             element.classList.remove('web_available');
-            element.removeEventListener('click', element.handler);
-            element.handler = null;
+            removeListener(element);
         })
         setWebBoard(field)
     }
@@ -80,8 +76,6 @@ function setWebBoard(field) {
     all_fields.forEach((field) => {
         const { element, card } = field;
         element.classList.add('web_available');
-        const handler = webHandler(field, card)
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, webHandler(field, card), { once: true });
     })
 }

@@ -1,7 +1,7 @@
 //GAZ ROZWESELAJĄCY
 import { board, clearBoard, moveSingleZombiak } from "../board.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
-import { disable, enable, hideCancelButton } from "../utils.js";
+import { addListener, disable, enable, hideCancelButton } from "../utils.js";
 
 
 let gas_amount = 2;
@@ -27,9 +27,7 @@ function happyGas() {
             if (!card) continue;
             if (card.type !== 'zombiak' || element.classList.contains('gased') || element.classList.contains('webbed')) continue;
             element.classList.add('gas_available');
-            const handler = gasHandler(field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, gasHandler(field), { once: true });
         }
     }
 }
@@ -68,9 +66,7 @@ function setAvailableFields(field) {
         const handler_mouseover = hoverHandler(field, new_field);
         element.handler_mouseover = handler_mouseover;
         element.addEventListener('mouseover', handler_mouseover);
-        const handler = setNewField(field, new_field);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, setNewField(field, new_field, { once: true }));
     })
 }
 

@@ -1,6 +1,6 @@
 //GRANAT
 import { board, unsetField, clearBoard } from "../board.js";
-import { disable, enable } from "../utils.js";
+import { addListener, disable, enable } from "../utils.js";
 import { deck_ludzie_element, removeCard } from "../index.js";
 import { killZombiak } from "./utils.js";
 export default function ludzie_id_28(card, field) {
@@ -13,9 +13,7 @@ function grenade() {
         for (let j = 0; j < board[0].length; j++) {
             const { element } = board[i][j];
             element.classList.add('grenade_available');
-            const handler = grenadeHandler(board[i][j]);
-            element.addEventListener('click', handler);
-            element.handler = handler;
+            addListener(element, grenadeHandler(board[i][j]));
         }
     }
 }

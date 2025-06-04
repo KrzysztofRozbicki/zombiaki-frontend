@@ -10,7 +10,7 @@ import {
     throw_card
 } from "../index.js";
 import { damageZombiak } from "../ludzie/utils.js";
-import { hide, show, disable, enable } from "../utils.js";
+import { hide, show, disable, enable, addListener } from "../utils.js";
 
 export default function zombiaki_id_10(card, field) {
     disable(deck_zombiaki_element);
@@ -35,9 +35,7 @@ export default function zombiaki_id_10(card, field) {
 function setFieldsToDamage(all_zombiaki) {
     all_zombiaki.forEach(field => {
         const { element } = field;
-        const handler = damageCardHandler(field);
-        element.handler = handler;
-        element.addEventListener('click', handler, { once: true });
+        addListener(element, damageCardHandler(field), { once: true });
         element.classList.add('shot_available');
     })
 }
@@ -52,9 +50,7 @@ function damageCardHandler(field) {
 function setFieldsToMove(zombiaki_to_move) {
     zombiaki_to_move.forEach(field => {
         const { element } = field;
-        const handler = moveCardHandler(field);
-        element.handler = handler;
-        element.addEventListener('click', handler, { once: true });
+        addListener(element, moveCardHandler(field), { once: true });
         element.classList.add('move_available');
     })
 }

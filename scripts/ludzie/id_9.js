@@ -1,7 +1,7 @@
 
 //ULICA W OGNIU
 import { board, checkBlowField } from '../board.js';
-import { show, hide, enable, disable } from '../utils.js';
+import { show, hide, enable, disable, addListener, removeListener } from '../utils.js';
 import { removeCard, deck_ludzie_element } from '../index.js';
 import { damageZombiak } from './utils.js';
 
@@ -15,9 +15,7 @@ function streetFire() {
     tor_elements.forEach(el => {
         show(el);
         const tor = el.parentNode;
-        const handler = fireTorHandler(tor);
-        el.handler = handler;
-        el.addEventListener('click', handler, { once: true });
+        addListener(el, fireTorHandler, { once: true });
     });
 }
 
@@ -42,7 +40,6 @@ function fireTor(tor) {
     const tor_elements = document.querySelectorAll('.tor_fire');
     tor_elements.forEach(el => {
         hide(el);
-        el.removeEventListener('click', el.handler);
-        el.handler = null;
+        removeListener(el);
     });
 }

@@ -1,6 +1,6 @@
 //MIOTACZ
 import { board } from '../board.js';
-import { disable } from '../utils.js';
+import { addListener, disable } from '../utils.js';
 import { deck_ludzie_element } from '../index.js';
 import { aoeHandler } from "./utils.js";
 
@@ -32,9 +32,7 @@ function miotacz(card) {
 
         if (!burn_krystynka) continue;
         element.classList.add('miotacz_available');
-        const handler = aoeHandler(field, card, { is_krystynka: true });
-        element.addEventListener('click', handler);
-        element.handler = handler;
+        addListener(element, aoeHandler(field, card, { is_krystynka: true }));
     }
 }
 

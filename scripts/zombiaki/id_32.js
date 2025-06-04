@@ -1,7 +1,7 @@
 //UGRYZIENIE
 import { board, clearBoard, setField } from "../board.js";
 import { deck_zombiaki_element, removeCard, cancel_button } from "../index.js";
-import { disable, enable, hideCancelButton, showAlert } from "../utils.js";
+import { addListener, disable, enable, hideCancelButton, showAlert } from "../utils.js";
 import { zombiak_1 } from '../zombiaki/cards.js';
 
 export default function zombiaki_id_32(card, field) {
@@ -21,10 +21,8 @@ function checkFields() {
             const available_fields = checkAvailableFields(field);
             if (available_fields.length === 0) continue;
             is_possible = true;
-            const handler = handleAvailableFields(field, available_fields);
             element.classList.add('move_available');
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, handleAvailableFields(field, available_fields), { once: true });
         }
     }
     if (!is_possible) {
@@ -45,9 +43,7 @@ function handleAvailableFields(field, available_fields) {
             const handler_mouseover = hoverZombiakHandler(field, board_field);
             element.handler_mouseover = handler_mouseover;
             element.addEventListener('mouseover', handler_mouseover);
-            const handler = putZombiakHandler(field, board_field);
-            element.handler = handler;
-            element.addEventListener('click', handler, { once: true });
+            addListener(element, putZombiakHandler(field, board_field), { once: true });
         })
     }
 }

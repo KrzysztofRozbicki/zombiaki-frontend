@@ -7,7 +7,7 @@ import {
     setActiveCardsLudzie,
     cancel_button
 } from "../index.js";
-import { disable, enable } from "../utils.js";
+import { addListener, disable, enable, removeListener } from "../utils.js";
 
 export default function zombiaki_id_28(card, field) {
     const ludzie_cards = getActiveCardsLudzie();
@@ -17,14 +17,9 @@ export default function zombiaki_id_28(card, field) {
     enable(deck_ludzie_element);
     ludzie_cards_elements.forEach(element => {
         element.classList.add('throw_available');
-        const handler = removeCardHandler(element, ludzie_cards_temp, ludzie_cards_elements);
-        element.addEventListener('click', handler, { once: true });
-        element.handler = handler;
+        addListener(element, removeCardHandler(element, ludzie_cards_temp, ludzie_cards_elements), { once: true });
     })
-
-    const handler = handleCancelCard(ludzie_cards_elements);
-    cancel_button.cancelHandler = handler;
-    cancel_button.addEventListener('click', handler, { once: true });
+    addListener(cancel_button, handleCancelCard(ludzie_cards_elements), { once: true });
 }
 
 
@@ -33,8 +28,7 @@ function handleCancelCard(elements) {
         elements.forEach(el => {
             disable(deck_ludzie_element)
             el.classList.remove('throw_available');
-            el.removeEventListener('click', el.handler);
-            el.handler = null;
+            removeListener(el);
         })
     }
 }
@@ -48,8 +42,7 @@ function removeCardHandler(element, cards_deck, elements) {
         element.dataset.name = 'blank';
         elements.forEach(el => {
             el.classList.remove('throw_available');
-            el.removeEventListener('click', el.handler);
-            el.handler = null;
+            removeListener(el);
         })
         cancel_button.cancelHandler = null;
         cancel_button.removeEventListener('click', cancel_button.cancelHandler);
