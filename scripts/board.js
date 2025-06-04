@@ -706,12 +706,9 @@ export function deadGalareta(field) {
 
 export function deadSpecialZombiakOneCard(field, number) {
     const available_fields = checkAvailableDeadFields(field, number);
-
     available_fields.forEach(board_field => {
         setField(board_field, zombiak_1, { other: true });
     })
-
-
 }
 
 function checkAvailableDeadFields(field, number) {

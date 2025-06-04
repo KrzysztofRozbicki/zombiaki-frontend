@@ -17,8 +17,8 @@ let test_deck_zombiaki = cards_zombiaki_json;
 
 const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
 
-const start_cards_zombiaki = ['PAPU', 'PAZURY', 'MASA', 'IWAN'];
-const start_cards_ludzie = ['MIOTACZ', 'SIEĆ', 'STRZAŁ', 'CEGŁA'];
+const start_cards_zombiaki = ['KLIK', 'PAPU', 'MASA', 'IWAN'];
+const start_cards_ludzie = ['MIOTACZ', 'SIEĆ', 'DŁUGA SERIA', 'CEGŁA'];
 
 const test_board = [
     // {
@@ -26,30 +26,21 @@ const test_board = [
     //     "card": 'KOŃ TROJAŃSKI',
     //     "overlay": 'MIŚ'
     // },
-    {
-        "field": board[4][0],
-        "card": "BECZKA",
-    },
-    {
-        "field": board[1][1],
-        'card': 'AUTO',
-    },
-    {
-        "field": board[0][0],
-        'card': 'IWAN'
-    },
-    {
-        "field": board[1][0],
-        'card': 'MARIUSZ',
-        "overlay": 'MIŚ'
-    },
+    // {
+    //     "field": board[4][0],
+    //     "card": "BECZKA",
+    // },
+    // {
+    //     "field": board[1][1],
+    //     'card': 'AUTO',
+    // },
+    // {
+    //     "field": board[0][0],
+    //     'card': 'IWAN'
+    // },
     {
         "field": board[0][1],
-        'card': 'ZENEK'
-    },
-    {
-        "field": board[1][2],
-        'card': 'CZESIEK'
+        'card': 'GALARETA'
     },
     // {
     //     "field": board[1][1],

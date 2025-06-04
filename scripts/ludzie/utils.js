@@ -352,6 +352,8 @@ function checkClick() {
         hide(play_card);
         const play_other = document.getElementById('play_other');
         play_other.innerText = 'ZAGRAJ KLIK';
+        const button_box = chosen_card.querySelector('.card_buttons_box');
+        show(button_box);
         addListener(play_other, handlePlayClick(resolve), { once: true });
         show(play_other);
     })

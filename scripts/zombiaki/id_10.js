@@ -7,12 +7,14 @@ import {
     removeCard,
     cancel_button,
     play_card,
-    throw_card
+    throw_card,
+    close_card
 } from "../index.js";
 import { damageZombiak } from "../ludzie/utils.js";
 import { hide, show, disable, enable, addListener } from "../utils.js";
 
 export default function zombiaki_id_10(card, field) {
+    show(close_card);
     disable(deck_zombiaki_element);
     setMinCardsThrown(1);
     disable(cancel_button);

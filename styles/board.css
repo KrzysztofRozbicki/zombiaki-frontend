@@ -3,7 +3,6 @@
   position: relative;
 }
 
-
 .field_image .instruction_element {
   opacity: 0;
 }
@@ -23,7 +22,6 @@
   z-index: 5;
   filter: brightness(3);
 }
-
 .instruction_element:hover {
   transform: scale(1.2);
   filter:  brightness(1);

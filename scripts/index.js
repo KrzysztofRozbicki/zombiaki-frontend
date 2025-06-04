@@ -250,7 +250,6 @@ export function closeCardHandler() {
 function setCards() {
     if (turn === "zombiaki") player_cards = cards_zombiaki;
     if (turn === "ludzie") player_cards = cards_ludzie;
-
     player_cards.forEach(card => addListener(card, showCardHandler(card)));
 }
 
@@ -399,6 +398,7 @@ export function checkBucket() {
     showCard(bucket_card, { is_bucket: true });
     hide(throw_card);
     show(play_card);
+    hide(close_card);
     MIN_CARD_THROWN = 0;
 }
 export function setBearPlayed(value) {
