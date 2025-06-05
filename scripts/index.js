@@ -234,6 +234,7 @@ export function showCard(card, is_bucket = false) {
     if (is_bucket) return;
     addListener(close_card, closeCardHandler(), { once: true })
     if (play_card.innerText !== 'ZAGRAJ') play_card.innerText = 'ZAGRAJ';
+
 }
 
 export function closeCardHandler() {

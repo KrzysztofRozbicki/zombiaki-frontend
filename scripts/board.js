@@ -549,6 +549,7 @@ function putPicture(field, card) {
 }
 
 function showZombieCard(image_element, card) {
+    const { name, hp, max_hp } = card;
     return function () {
         if (image_element.parentNode.parentNode.handler || image_element.parentNode.handler) return;
         show(chosen_card);
@@ -568,6 +569,20 @@ function showZombieCard(image_element, card) {
             const instruction_element = chosen_card.querySelector('.instruction_element');
             if (instruction_element) instruction_element.remove();
         }, { once: true });
+        if (name === 'MASA') {
+            const hp_element = document.createElement('div');
+            hp_element.classList.add('hp_masa');
+            const text_hp = document.createElement('p');
+            text_hp.innerText = `${hp} `;
+            text_hp.classList.add('hp_masa__text');
+            const max_text_hp = document.createElement('p');
+            max_text_hp.innerHTML = 'x';
+            max_text_hp.classList.add('hp_masa__text__x');
+            const hp_image = document.createElement('img');
+            hp_image.src = 'images/cards/zombiaki/hp_image.webp';
+            hp_element.append(text_hp, max_text_hp, hp_image);
+            instruction_container.appendChild(hp_element);
+        }
     }
 }
 

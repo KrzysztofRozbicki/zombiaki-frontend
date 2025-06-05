@@ -133,6 +133,7 @@ button {
 .deck img:focus {
   filter: sepia(1.3) saturate(2) brightness(0.8);
   z-index: 4;
+  cursor: zoom-in;
 }
 
 .deck .stack {

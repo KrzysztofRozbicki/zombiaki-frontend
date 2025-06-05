@@ -56,20 +56,31 @@
     width: 100%;
   }
 
-  .hp_masa {
+  .hp_masa,
+  #chosen_card .hp_masa {
     position: absolute;
     bottom: 0;
     left:55%;
     display: flex;
+    flex-direction: row;
     align-items: center;
     font-size: 50%;
     font-family: "Misty Graveyard", sans-serif;
     color: var(--card-color);
     transform: translateX(-50%);
   }
+
+  #chosen_card .hp_masa {
+    bottom: 0;
+    font-size: 750%;
+  }
   .hp_masa p {
     -webkit-text-stroke: 1px var(--accent-color);
     margin-inline: 2%;
+  }
+  
+  #chosen_card .hp_masa p {
+    -webkit-text-stroke: 3px var(--accent-color);
   }
   .hp_masa p.hp_masa__text__x {
     position: relative;
