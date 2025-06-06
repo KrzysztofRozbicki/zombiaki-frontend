@@ -36,7 +36,7 @@ export const board = [
 
 export function placeCard(card) {
     cardFunction(card);
-    cancelCard(card);
+    if (card.board && card.name !== 'WIADRO') cancelCard(card);
 }
 
 export function putZombiak(card) {

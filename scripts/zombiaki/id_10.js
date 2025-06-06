@@ -65,11 +65,13 @@ function moveCardHandler(field) {
 }
 
 function finishBucket() {
+    console.log('finishing');
     clearBoard();
     removeCard();
     show(throw_card);
     hide(play_card);
     enable(deck_zombiaki_element);
+    hide(cancel_button);
     enable(cancel_button);
 }
 
