@@ -1,9 +1,9 @@
 import { raceFunctions } from "./allFunctions.js";
-import { gameOver, removeCard, deck_zombiaki_element, checkBucket, cancel_button, chosen_card, throw_card, play_card, chosen_card_picture, close_card } from "./index.js";
-import { addOverlay, deleteOverlay } from "./zombiaki/utils.js";
+import { gameOver, removeCard, deck_zombies_element, checkBucket, cancel_button, chosen_card, throw_card, play_card, chosen_card_picture, close_card } from "./index.js";
+import { addOverlay, deleteOverlay } from "./zombies/utils.js";
 import { show, hide, enable, disable, randomRotate, showAlert, addListener, removeListener } from "./utils.js";
-import { killZombiak, damageZombiak, killPet } from "./ludzie/utils.js";
-import { galareta_overlay, zombiak_1 } from "./zombiaki/cards.js";
+import { killZombie, damageZombie, killPet } from "./humans/utils.js";
+import { galareta_overlay, zombie_1 } from "./zombies/cards.js";
 
 const T1_P5 = document.querySelector('div[data-tor="1"][data-przecznica="5"]');
 const T2_P5 = document.querySelector('div[data-tor="2"][data-przecznica="5"]');
@@ -22,7 +22,7 @@ const T2_P1 = document.querySelector('div[data-tor="2"][data-przecznica="1"]');
 const T3_P1 = document.querySelector('div[data-tor="3"][data-przecznica="1"]');
 
 let active_field = null;
-let move_zombiaki = true;
+let move_zombies = true;
 let pet_moves = 0;
 
 
@@ -39,9 +39,9 @@ export function placeCard(card) {
     if (card.board && card.name !== 'WIADRO') cancelCard(card);
 }
 
-export function putZombiak(card) {
-    const zombiaki_deck = document.getElementById('deck_zombiaki');
-    disable(zombiaki_deck);
+export function putZombie(card) {
+    const zombies_deck = document.getElementById('deck_zombies');
+    disable(zombies_deck);
     for (let i = 0; i < board[0].length; i++) {
         if (board[0][i].card) continue;
         putCard(board[0][i], card);
@@ -56,8 +56,8 @@ export function updateBoard(prev_turn) {
     });
     cancel_button.className = '';
     hide(cancel_button);
-    if (prev_turn === 'ludzie') {
-        moveZombiaki();
+    if (prev_turn === 'humans') {
+        movezombies();
     }
 
     setTimeout(() => {
@@ -67,7 +67,7 @@ export function updateBoard(prev_turn) {
         });
     }, 100);
 
-    if (prev_turn === 'zombiaki') {
+    if (prev_turn === 'zombies') {
         const web_elements = document.querySelectorAll('.webbed');
         web_elements.forEach(element =>
             element.classList.remove('webbed')
@@ -83,10 +83,10 @@ export function resetUsableCards() {
     })
 }
 
-async function moveZombiaki() {
-    disable(deck_zombiaki_element);
-    if (!move_zombiaki) {
-        move_zombiaki = true;
+async function movezombies() {
+    disable(deck_zombies_element);
+    if (!move_zombies) {
+        move_zombies = true;
         checkBucket();
         return;
     }
@@ -96,8 +96,8 @@ async function moveZombiaki() {
             const old_field = board[i][j];
             const { card } = old_field;
             if (!card) continue;
-            if (card.type === "zombiak" && !card.pet) {
-                moveSingleZombiak(old_field, card, 'front');
+            if (card.type === "zombie" && !card.pet) {
+                moveSingleZombie(old_field, card, 'front');
             }
         }
     }
@@ -133,7 +133,7 @@ function movePet(field) {
 function setAvailablePetFields(field, resolve) {
 
     if (pet_moves === 0) {
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
         removeListener(cancel_button);
         hide(cancel_button);
         resolve(true);
@@ -173,11 +173,11 @@ function setNewPetField(old_field, new_field, resolve) {
     return function () {
         pet_moves--;
         clearBoard();
-        moveSingleZombiak(old_field, old_field.card_pet, new_field.direction);
+        moveSingleZombie(old_field, old_field.card_pet, new_field.direction);
         if (!new_field?.card_pet) {
             resolve(true);
             clearBoard();
-            enable(deck_zombiaki_element);
+            enable(deck_zombies_element);
             return;
         }
         setAvailablePetFields(new_field, resolve);
@@ -213,7 +213,7 @@ function outPetHandler(old_field, new_field) {
 }
 
 
-export function moveSingleZombiak(old_field, card, direction) {
+export function moveSingleZombie(old_field, card, direction) {
     const { element } = old_field;
     if (element.classList.contains('webbed')) return;
     const tor = +element.dataset.tor - 1;
@@ -235,7 +235,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     const game_over = checkConcreteShoes(old_field);
 
     if (new_przecznica === 5 && game_over) {
-        gameOver('zombiaki');
+        gameOver('zombies');
         return;
     }
 
@@ -264,7 +264,7 @@ export function moveSingleZombiak(old_field, card, direction) {
     if (is_beczka) unsetField(next_field, { all: true });
     putPicture(next_field, card);
     if (old_field.overlay_cards && old_field.overlay_cards.length > 0) moveOverlay(old_field, next_field);
-    if (is_beczka) killZombiak(next_field);
+    if (is_beczka) killZombie(next_field);
     unsetField(old_field, { pet: pet_status });
     const is_hole = next_field?.card_board && next_field?.card_board.name === 'DZIURA';
     if (is_hole) checkHole(next_field);
@@ -281,7 +281,7 @@ function checkHole(field) {
     const hole_death_pet = field?.card_pet?.hp <= 2;
     const human_card = field?.overlay_cards?.find(card => card.name === 'CZŁOWIEK');
     if (human_card) deleteOverlay(field, human_card.id);
-    if (hole_death_zombie) killZombiak(field);
+    if (hole_death_zombie) killZombie(field);
     if (hole_death_pet) killPet(field);
     if (human_card || hole_death_pet || hole_death_zombie) unsetField(field, { board_card: true });
 }
@@ -299,7 +299,7 @@ function checkConcreteShoes(old_field) {
     if (!old_field.overlay_cards || old_field.overlay_cards.length === 0) return true;
     const concrete_shoes_card = old_field.overlay_cards.find(card => card.name === 'BETONOWE BUCIKI');
     if (!concrete_shoes_card) return true;
-    damageZombiak(concrete_shoes_card.dmg, old_field);
+    damageZombie(concrete_shoes_card.dmg, old_field);
     const is_syjamczyk = old_field.card.name === 'SYJAMCZYK';
     const is_troyan = old_field.card.name === 'KOŃ TROJAŃSKI';
     if (old_field.card.hp === 0 && (is_syjamczyk || is_troyan)) return true;
@@ -316,7 +316,7 @@ export function checkBlowField(field, move = false) {
 
 function blowField(field) {
     const { card_board, card, element } = field;
-    if (card && card.type === 'zombiak') damageZombiak(card_board.dmg, field);
+    if (card && card.type === 'zombie') damageZombie(card_board.dmg, field);
     field.card_board = null;
     const tor = +element.dataset.tor - 1;
     const przecznica = +element.dataset.przecznica - 1;
@@ -340,8 +340,8 @@ function blowField(field) {
     for (let i = 0; i < all_fields.length; i++) {
         const { card, board_card } = all_fields[i];
         checkBlowField(all_fields[i]);
-        if (card && card?.type === 'zombiak') {
-            damageZombiak(card_board.blow_dmg, all_fields[i])
+        if (card && card?.type === 'zombie') {
+            damageZombie(card_board.blow_dmg, all_fields[i])
         }
     }
     const blow_element = element.querySelector('.field_board');
@@ -383,8 +383,8 @@ function moveLudzie() {
                 new_field?.card_board?.name === 'MUR Z RUPIECI' ||
                 new_field?.card_board?.name === 'AUTO') continue;
             checkBlowField(new_field);
-            if (new_field?.card?.type === 'zombiak') {
-                killZombiak(new_field);
+            if (new_field?.card?.type === 'zombie') {
+                killZombie(new_field);
                 continue;
             }
         }
@@ -423,7 +423,7 @@ export function unsetField(board_field, options = {}) {
     if (all) {
         checkBlowField(board_field)
 
-        if (card_element) killZombiak(board_field);
+        if (card_element) killZombie(board_field);
         if (pet_element) pet_element.remove();
         if (overlay_element) overlay_element.remove();
         if (board_element) board_element.remove();
@@ -456,13 +456,13 @@ export function setField(field, card, other = false) {
     clearBoard();
     if (!other) removeCard();
     hide(cancel_button);
-    if (card.race === 'zombiaki') {
-        const zombiaki_deck = document.getElementById('deck_zombiaki');
-        if (!other) enable(zombiaki_deck);
+    if (card.race === 'zombies') {
+        const zombies_deck = document.getElementById('deck_zombies');
+        if (!other) enable(zombies_deck);
     }
-    if (card.race === 'ludzie') {
-        const ludzie_deck = document.getElementById('deck_ludzie');
-        if (!other) enable(ludzie_deck);
+    if (card.race === 'humans') {
+        const humans_deck = document.getElementById('deck_humans');
+        if (!other) enable(humans_deck);
     }
 }
 
@@ -486,7 +486,7 @@ function putPicture(field, card) {
     img_element.dataset.name = name;
     addListener(img_element, showZombieCard(img_element, card))
     if (name === 'MASA') {
-        img_element.src = 'images/cards/zombiaki/masa.webp';
+        img_element.src = 'images/cards/zombies/masa.webp';
         img_element.dataset.name = 'MASA';
     }
     div_element.appendChild(img_element);
@@ -509,7 +509,7 @@ function putPicture(field, card) {
         max_text_hp.innerHTML = 'x';
         max_text_hp.classList.add('hp_masa__text__x');
         const hp_image = document.createElement('img');
-        hp_image.src = 'images/cards/zombiaki/hp_image.webp';
+        hp_image.src = 'images/cards/zombies/hp_image.webp';
         hp_element.append(text_hp, max_text_hp, hp_image);
         div_element.appendChild(hp_element);
     }
@@ -538,7 +538,7 @@ function putPicture(field, card) {
         return;
     }
 
-    if (card.board && card.race === 'ludzie') {
+    if (card.board && card.race === 'humans') {
         field.card_board = card;
         div_element.classList.remove('field_image');
         div_element.classList.add('field_board');
@@ -579,7 +579,7 @@ function showZombieCard(image_element, card) {
             max_text_hp.innerHTML = 'x';
             max_text_hp.classList.add('hp_masa__text__x');
             const hp_image = document.createElement('img');
-            hp_image.src = 'images/cards/zombiaki/hp_image.webp';
+            hp_image.src = 'images/cards/zombies/hp_image.webp';
             hp_element.append(text_hp, max_text_hp, hp_image);
             instruction_container.appendChild(hp_element);
         }
@@ -602,16 +602,16 @@ function showInstruction(card) {
 
 function cardFunction(card) {
     const { id, race, type, special } = card;
-    if (type === "zombiak") {
-        putZombiak(card);
+    if (type === "zombie") {
+        putZombie(card);
         return;
     }
     const function_name = `${race}_id_${id}`;
     raceFunctions[function_name](card, active_field);
 }
 
-export function setMoveZombiaki(value) {
-    move_zombiaki = value;
+export function setMovezombies(value) {
+    move_zombies = value;
 }
 
 function cancelCard(card, resolve = null) {
@@ -693,7 +693,7 @@ export function checkMur(tor, przecznica, next_field) {
     const mur_hp = next_field.card_board.hp;
     let summary_hp = 0;
     for (let i = przecznica; i >= 0; i--) {
-        if (board[i][tor]?.card && board[i][tor]?.card.type === 'zombiak') {
+        if (board[i][tor]?.card && board[i][tor]?.card.type === 'zombie') {
             summary_hp += +board[i][tor].card.hp;
             continue;
         }
@@ -703,13 +703,13 @@ export function checkMur(tor, przecznica, next_field) {
     return false;
 }
 
-export function moveAllZombiakiBack() {
+export function moveAllzombiesBack() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
             const { card, card_pet } = field;
-            if (card?.type === 'zombiak') moveSingleZombiak(field, card, 'back');
-            if (card_pet) moveSingleZombiak(field, card_pet, 'back');
+            if (card?.type === 'zombie') moveSingleZombie(field, card, 'back');
+            if (card_pet) moveSingleZombie(field, card_pet, 'back');
         }
     }
 }
@@ -719,10 +719,10 @@ export function deadGalareta(field) {
     element.classList.add('galareta');
 }
 
-export function deadSpecialZombiakOneCard(field, number) {
+export function deadSpecialZombieOneCard(field, number) {
     const available_fields = checkAvailableDeadFields(field, number);
     available_fields.forEach(board_field => {
-        setField(board_field, zombiak_1, { other: true });
+        setField(board_field, zombie_1, { other: true });
     })
 }
 
@@ -733,17 +733,17 @@ function checkAvailableDeadFields(field, number) {
     const cross = [[-1, 0], [1, 0], [0, 1], [0, -1]];
     const all_fields = [];
     all_fields.push(field);
-    let number_of_zombiak_1 = 1;
+    let number_of_zombie_1 = 1;
     for (let i = 0; i < cross.length; i++) {
-        if (number_of_zombiak_1 >= number) return all_fields;
+        if (number_of_zombie_1 >= number) return all_fields;
         let t = tor + cross[i][0];
         let p = przecznica + cross[i][1];
         if (t < 0 || t > 2) continue;
         if (p < 0 || p > przecznica) continue;
         const { card, card_board } = board[p][t];
-        if (card?.type === 'zombiak' || card_board?.mur) continue;
+        if (card?.type === 'zombie' || card_board?.mur) continue;
         all_fields.push(board[p][t]);
-        number_of_zombiak_1 += 1;
+        number_of_zombie_1 += 1;
     }
     return all_fields;
 }

@@ -1,31 +1,31 @@
 //MASA
 import { raceFunctions } from "../allFunctions.js";
 import { board, clearBoard, setField, unsetField } from "../board.js";
-import { deck_zombiaki_element } from "../index.js";
+import { deck_zombies_element } from "../index.js";
 import { addListener, disable, enable } from "../utils.js";
-import { zombiak_masa } from "./cards.js";
+import { zombie_masa } from "./cards.js";
 import { addOverlay } from "./utils.js";
-export default function zombiaki_id_27(card, field) {
+export default function zombies_id_27(card, field) {
     putMasa();
 }
 
-let masa_card = zombiak_masa;
+let masa_card = zombie_masa;
 
 function putMasa() {
-    disable(deck_zombiaki_element);
+    disable(deck_zombies_element);
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
             const { card, element } = field;
-            if (card?.type !== 'zombiak') continue;
+            if (card?.type !== 'zombie') continue;
 
             element.classList.add('move_available');
-            addListener(element, choseZombiakHandler(field), { once: true });
+            addListener(element, choseZombieHandler(field), { once: true });
         }
     }
 }
 
-function choseZombiakHandler(field) {
+function choseZombieHandler(field) {
     return function () {
         clearBoard();
         setAvailableFields(field);
@@ -48,7 +48,7 @@ function setAvailableFields(field) {
         let p = przecznica + cross[i][1];
         if (t < 0 || t > 2) continue;
         if (p < 0 || p > 4) continue;
-        const field_is_available = !!(board[p][t]?.card?.type === 'zombiak');
+        const field_is_available = !!(board[p][t]?.card?.type === 'zombie');
         if (!field_is_available) continue;
         if (!element.classList.contains('webbed') && board[p][t].element.classList.contains('webbed')) continue;
         if (element.classList.contains('webbed') && !board[p][t].element.classList.contains('webbed')) continue;
@@ -102,6 +102,6 @@ function putMasaHandler(field, new_field) {
                 addOverlay(card, new_field, raceFunctions[callback]);
             })
         }
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
     }
 }

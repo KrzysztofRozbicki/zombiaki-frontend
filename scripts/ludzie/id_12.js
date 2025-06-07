@@ -1,15 +1,15 @@
 //JAJNIK
-import { deck_ludzie_element, removeCard } from "../index.js";
+import { deck_humans_element, removeCard } from "../index.js";
 import { disable, enable, show, hide, addListener, removeListener } from "../utils.js";
 import { board, setField, unsetField } from "../board.js";
-import { zombiak_1 } from "../zombiaki/cards.js";
-import { deleteOverlay } from "../zombiaki/utils.js";
-export default function ludzie_id_12(card, field) {
+import { zombie_1 } from "../zombies/cards.js";
+import { deleteOverlay } from "../zombies/utils.js";
+export default function humans_id_12(card, field) {
     jajnik();
 }
 
 function jajnik() {
-    disable(deck_ludzie_element);
+    disable(deck_humans_element);
     const tracks = document.querySelectorAll('.tor_jajnik');
     tracks.forEach(el => {
         show(el);
@@ -31,7 +31,7 @@ function prepareTrack(track) {
             continue;
         }
         if (card_board?.mur) mur = true;
-        if (card?.type === 'zombiak') active_fields.push(field);
+        if (card?.type === 'zombie') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('jajnik_available'))
     addListener(track, jajnikTrackHandler(active_fields), { once: true });
@@ -44,7 +44,7 @@ function jajnikTrackHandler(fields) {
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
             const { card, card_pet, overlay_cards } = field;
-            if (card?.type === 'zombiak' || card_pet) {
+            if (card?.type === 'zombie' || card_pet) {
                 let is_bear = null;
                 let human_card = null;
                 if (overlay_cards && overlay_cards?.length > 0) {
@@ -56,7 +56,7 @@ function jajnikTrackHandler(fields) {
                     return;
                 }
                 unsetField(field, { bear: is_bear });
-                setField(field, zombiak_1, { other: true });
+                setField(field, zombie_1, { other: true });
             }
         }
     }
@@ -64,7 +64,7 @@ function jajnikTrackHandler(fields) {
 
 function clearBoard() {
     removeCard();
-    enable(deck_ludzie_element);
+    enable(deck_humans_element);
     const tracks = document.querySelectorAll('.tor_jajnik');
     tracks.forEach(el => {
         hide(el);

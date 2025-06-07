@@ -1,15 +1,15 @@
 //BOSS
 
 import { deleteOverlay, putOverlay } from "./utils.js";
-import { board, checkZapora, clearBoard, moveSingleZombiak } from "../board.js";
+import { board, checkZapora, clearBoard, moveSingleZombie } from "../board.js";
 import { addListener, disable, enable, hide, removeListener, show, showAlert } from "../utils.js";
-import { deck_zombiaki_element, cancel_button } from "../index.js";
+import { deck_zombies_element, cancel_button } from "../index.js";
 
-export default function zombiaki_id_19(card, field) {
-    putOverlay(card, zombiaki_id_19_callback);
+export default function zombies_id_19(card, field) {
+    putOverlay(card, zombies_id_19_callback);
 }
 
-export function zombiaki_id_19_callback(field) {
+export function zombies_id_19_callback(field) {
     bossCommand(field);
 }
 
@@ -20,7 +20,7 @@ function bossCommand(boss_field) {
             const board_field = board[i][j];
             const { card, element } = board_field;
             if (!card) continue;
-            if (card.type !== 'zombiak' || card.hp > 3) continue;
+            if (card.type !== 'zombie' || card.hp > 3) continue;
             if (card.name === boss_field.card.name && card.id === boss_field.card.id) continue;
             if (checkZapora(board_field)) continue;
             element.classList.add('move_available');
@@ -32,7 +32,7 @@ function bossCommand(boss_field) {
         showAlert('NIE MOŻNA WYDAĆ ROZKAZU ŻADNEMU ZOMBIAKOWI!');
         return;
     }
-    disable(deck_zombiaki_element);
+    disable(deck_zombies_element);
     show(cancel_button);
 }
 
@@ -40,7 +40,7 @@ function moveHandler(field, boss_field) {
     return function () {
         clearBoard();
         setAvailableFields(field, boss_field);
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
     }
 }
 
@@ -87,7 +87,7 @@ function setNewField(old_field, new_field, boss_field) {
         }
         disable(overlay_element);
         clearBoard();
-        moveSingleZombiak(old_field, old_field.card, new_field.direction);
+        moveSingleZombie(old_field, old_field.card, new_field.direction);
         new_field.element.style.backgroundImage = ``;
         removeListener(cancel_button);
         hide(cancel_button);

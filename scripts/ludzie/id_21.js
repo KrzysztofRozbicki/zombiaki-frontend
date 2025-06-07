@@ -1,7 +1,7 @@
 //WYNOCHA
 
-import { moveAllZombiakiBack } from "../board.js"
-export default function ludzie_id_21(card, field) {
-    moveAllZombiakiBack();
+import { moveAllzombiesBack } from "../board.js"
+export default function humans_id_21(card, field) {
+    moveAllzombiesBack();
 }
 

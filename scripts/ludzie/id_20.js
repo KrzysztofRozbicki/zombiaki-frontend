@@ -1,14 +1,14 @@
 //REFLEKTOR
-import { deck_ludzie_element, removeCard } from "../index.js";
+import { deck_humans_element, removeCard } from "../index.js";
 import { disable, enable, show, hide, addListener, removeListener } from "../utils.js";
-import { board, moveSingleZombiak } from "../board.js";
+import { board, moveSingleZombie } from "../board.js";
 
-export default function ludzie_id_20(card, field) {
+export default function humans_id_20(card, field) {
     reflektor();
 }
 
 function reflektor() {
-    disable(deck_ludzie_element);
+    disable(deck_humans_element);
     const tracks = document.querySelectorAll('.tor_reflektor');
     tracks.forEach(el => {
         show(el);
@@ -32,7 +32,7 @@ function prepareTrack(track) {
         }
         if (card_board?.mur) mur = true;
         if (!card) continue;
-        if (card && card?.type === 'zombiak') active_fields.push(field);
+        if (card && card?.type === 'zombie') active_fields.push(field);
     }
     active_fields.forEach(el => el.element.classList.add('reflektor_available'))
     addListener(track, reflektorHandler(active_fields));
@@ -41,7 +41,7 @@ function prepareTrack(track) {
 function reflektorHandler(track) {
     return function () {
         for (let i = track.length - 1; i >= 0; i--) {
-            moveSingleZombiak(track[i], track[i].card, 'back');
+            moveSingleZombie(track[i], track[i].card, 'back');
             clearBoard();
             removeCard();
         }
@@ -50,7 +50,7 @@ function reflektorHandler(track) {
 
 function clearBoard() {
     removeCard();
-    enable(deck_ludzie_element);
+    enable(deck_humans_element);
     const tracks = document.querySelectorAll('.tor_reflektor');
     tracks.forEach(el => {
         hide(el);

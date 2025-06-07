@@ -1,32 +1,32 @@
 //ZMIATAJ
 import { addListener, disable, enable, removeListener } from "../utils.js";
 import {
-    deck_ludzie_element,
-    deck_zombiaki_element,
+    deck_humans_element,
+    deck_zombies_element,
     removeCard,
 } from "../index.js";
-export default function ludzie_id_19(card, field) {
+export default function humans_id_19(card, field) {
     zmiataj();
 }
 
-let deck_zombiaki = [];
+let deck_zombies = [];
 
-let new_zombiaki_cards = [];
+let new_zombies_cards = [];
 function zmiataj() {
-    disable(deck_ludzie_element);
-    enable(deck_zombiaki_element);
-    const zombiaki_cards = deck_zombiaki_element.querySelectorAll('.card_zombiaki');
+    disable(deck_humans_element);
+    enable(deck_zombies_element);
+    const zombies_cards = deck_zombies_element.querySelectorAll('.card_zombies');
 
 
-    for (let i = 0; i < zombiaki_cards.length; i++) {
-        if (zombiaki_cards[i].classList.contains('card_blank')) {
+    for (let i = 0; i < zombies_cards.length; i++) {
+        if (zombies_cards[i].classList.contains('card_blank')) {
             continue;
         }
-        new_zombiaki_cards.push(zombiaki_cards[i]);
+        new_zombies_cards.push(zombies_cards[i]);
     }
 
-    for (let i = 0; i < new_zombiaki_cards.length; i++) {
-        const card = new_zombiaki_cards[i];
+    for (let i = 0; i < new_zombies_cards.length; i++) {
+        const card = new_zombies_cards[i];
         card.classList.add('remove_card');
         addListener(card, removeCardHandler(card));
     }
@@ -36,15 +36,15 @@ function zmiataj() {
 function removeCardHandler(card) {
     return function () {
         removeCard();
-        enable(deck_ludzie_element);
-        disable(deck_zombiaki_element);
-        for (let i = 0; i < new_zombiaki_cards.length; i++) {
-            const card = new_zombiaki_cards[i];
+        enable(deck_humans_element);
+        disable(deck_zombies_element);
+        for (let i = 0; i < new_zombies_cards.length; i++) {
+            const card = new_zombies_cards[i];
             card.classList.remove('remove_card');
             removeListener(card);
         }
         const id = +card.dataset.id;
-        card.src = `images/cards/zombiaki/rewers.webp`;
+        card.src = `images/cards/zombies/rewers.webp`;
         card.classList.add('card_blank');
         card.dataset.id = 'blank';
         card.dataset.name = 'blank';

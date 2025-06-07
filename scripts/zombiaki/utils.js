@@ -25,8 +25,8 @@ export function useBear(field_board) {
 }
 
 export function putOverlay(card, callback) {
-    const zombiaki_deck = document.getElementById('deck_zombiaki');
-    disable(zombiaki_deck);
+    const zombies_deck = document.getElementById('deck_zombies');
+    disable(zombies_deck);
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[i].length; j++) {
             const { element, overlay_cards } = board[i][j];
@@ -34,7 +34,7 @@ export function putOverlay(card, callback) {
             if (!temp_card) continue;
             const { type, name } = temp_card;
 
-            if (type !== 'zombiak' && (name === 'KOT' || name === 'PIES')) continue;
+            if (type !== 'zombie' && (name === 'KOT' || name === 'PIES')) continue;
             if (overlay_cards && overlay_cards?.length > 0) {
                 const is_overlay = !!overlay_cards.find(overlay_card => overlay_card.name === card.name);
                 if (is_overlay) continue;
@@ -56,9 +56,9 @@ function overlayHandler(card, field, callback) {
 
 export function addOverlay(card, field_board, callback) {
 
-    if (card.race === 'zombiaki') {
-        const zombiaki_deck = document.getElementById('deck_zombiaki');
-        enable(zombiaki_deck);
+    if (card.race === 'zombies') {
+        const zombies_deck = document.getElementById('deck_zombies');
+        enable(zombies_deck);
     }
 
     const { element } = field_board;
@@ -124,8 +124,8 @@ export function showOverlay(field_board, card, callback) {
         chosen_card_health.dataset.max_hp = card.max_hp;
         chosen_card_health.dataset.current_hp = card.hp;
         hide(play_card);
-        if (card.overlay_text && getTurn() !== 'ludzie') show(play_overlay);
-        if (getTurn() === 'ludzie') {
+        if (card.overlay_text && getTurn() !== 'humans') show(play_overlay);
+        if (getTurn() === 'humans') {
             const button_box = chosen_card.querySelector('.card_buttons_box');
             hide(button_box);
         }

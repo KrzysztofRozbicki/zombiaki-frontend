@@ -1,4 +1,4 @@
-import { deck_zombiaki_element, cancel_button } from "./index.js";
+import { deck_zombies_element, cancel_button } from "./index.js";
 
 export function showAlert(text, game_over = false, instruction = false) {
     const alert = document.getElementById('alert');
@@ -17,7 +17,7 @@ export function showAlert(text, game_over = false, instruction = false) {
         if (instruction) alert.classList.remove('instruction');
         alert.classList.add('hidden');
         if (text === 'NA POCZĄTKU TURY PRZESUŃ KARTĘ "KOT"' || text === 'NA POCZĄTKU TURY PRZESUŃ KARTĘ "PIES"') {
-            disable(deck_zombiaki_element);
+            disable(deck_zombies_element);
         }
     }, { once: true })
     if (game_over) {

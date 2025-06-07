@@ -369,8 +369,8 @@ div[data-przecznica="5"]:has(img):hover > div {
     animation: 0.7s infinite alternate ease-in-out shotAvailable;
 }
 
-#streets .zombiaki:hover,
-#streets .zombiaki:focus {
+#streets .zombies:hover,
+#streets .zombies:focus {
   background-color: var(--accent-color);
 }
 
@@ -457,11 +457,11 @@ div[data-przecznica="5"]:has(img):hover > div {
   bottom: 2rem;
 }
 
-#cancel.zombiaki_active {
+#cancel.zombies_active {
     right: 0;
 }
 
-#cancel.ludzie_active {
+#cancel.humans_active {
   left: 0;
 }
 
@@ -537,8 +537,8 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
-#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_image,
-#streets > div:has(.tor_electricity:hover) div[data-type="zombiak"] .field_pet {
+#streets > div:has(.tor_electricity:hover) div[data-type="zombie"] .field_image,
+#streets > div:has(.tor_electricity:hover) div[data-type="zombie"] .field_pet {
   animation: 1s alternate infinite ease-in shockElement;
 }
 
@@ -548,8 +548,8 @@ div[data-przecznica="5"]:has(img):hover > div {
   border-radius: 1rem;
 }
 
-#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_image,
-#streets > div:has(.tor_fire:hover) div[data-type="zombiak"] .field_pet {
+#streets > div:has(.tor_fire:hover) div[data-type="zombie"] .field_image,
+#streets > div:has(.tor_fire:hover) div[data-type="zombie"] .field_pet {
   animation: 1s alternate infinite ease-in fireElement;
 }
 

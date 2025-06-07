@@ -1,13 +1,13 @@
 
-export const cards_ludzie_json = [
+export const cards_humans_json = [
     {
         "id": 1,
         "amount": 1,
         "name": "STAĆ",
         "type": "other",
-        "description": "Na początku swojej najbliższej tury Zombiaki nie wykonują przymusowego ruchu.",
+        "description": "Na początku swojej najbliższej tury zombies nie wykonują przymusowego ruchu.",
         "flavor": "Dokumenty poproszę!",
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 2,
@@ -16,11 +16,11 @@ export const cards_ludzie_json = [
         "piercing": true,
         "name": "KRÓTKA SERIA",
         "type": "shot",
-        "instruction": "Krótka seria trafia najbliższego Zombiaka na wybranym torze i zadaje mu 2 rany. <br> Jeśli pierwsza rana zabiła Zombiaka, drugą otrzymuje kolejny Zombiak stojący na tym torze. <br> Dodatkowo, trafiony i nie zabity Zombiak cofa się o 1 pole, o ile jest to możliwe. <br> Uwaga: Człowiek absorbuje wszystkie pociski wystrzelone w Serii.",
-        "description": "Krótka seria trafia najbliższego Zombiaka na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze.Trafienie cofa Zombiaka o 1 pole.Człowiek absorbuje wszystkie pociski Serii.",
+        "instruction": "Krótka seria trafia najbliższego Zombiea na wybranym torze i zadaje mu 2 rany. <br> Jeśli pierwsza rana zabiła Zombiea, drugą otrzymuje kolejny Zombie stojący na tym torze. <br> Dodatkowo, trafiony i nie zabity Zombie cofa się o 1 pole, o ile jest to możliwe. <br> Uwaga: Człowiek absorbuje wszystkie pociski wystrzelone w Serii.",
+        "description": "Krótka seria trafia najbliższego Zombiea na torze i zadaje 2 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombie na torze.Trafienie cofa Zombiea o 1 pole.Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Łykaj kule, aumarlaku!",
         "blockable": true,
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -29,9 +29,9 @@ export const cards_ludzie_json = [
         "dmg": 1,
         "name": "220V",
         "type": "AOE",
-        "description": "Zagraj 200V na dowolny tor. Urwany drut wysokiego napięcia zadaje 1 ranę każdemu Zombiakowi znajdującemu się na tym torze.",
+        "description": "Zagraj 200V na dowolny tor. Urwany drut wysokiego napięcia zadaje 1 ranę każdemu Zombieowi znajdującemu się na tym torze.",
         "flavor": "Chyba cię pokopało?",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -40,10 +40,10 @@ export const cards_ludzie_json = [
         "dmg": 1,
         "name": "STRZAŁ",
         "type": "shot",
-        "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 1 ranę. <br> Dodatkowo, trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
+        "description": "Strzał trafia najbliższego Zombiea na wybranym torze i zadaje mu 1 ranę. <br> Dodatkowo, trafiony i niezabity Zombie cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "A ten zupełnie za nic!",
         "blockable": true,
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -53,10 +53,10 @@ export const cards_ludzie_json = [
         "max_dmg": 4,
         "name": "ROPA",
         "type": "AOE",
-        "instruction": "Zagraj Ropę na dowolne pole planszy, a następnie (opcjonalnie) wskaż kolejne sąsiadujące pola jej działania (nie po skosie). <br> Ropa zadaje łącznie 4 rany na wskazane pola (rozdzielone według wyboru grającego ludźmi). <br> Jeśli między traktowanymi Ropą Zombiakami jest puste pole, pochłania ono 1 punkt z siły rażenia Ropy.",
+        "instruction": "Zagraj Ropę na dowolne pole planszy, a następnie (opcjonalnie) wskaż kolejne sąsiadujące pola jej działania (nie po skosie). <br> Ropa zadaje łącznie 4 rany na wskazane pola (rozdzielone według wyboru grającego ludźmi). <br> Jeśli między traktowanymi Ropą Zombieami jest puste pole, pochłania ono 1 punkt z siły rażenia Ropy.",
         "description": "Zagraj Ropę na dowolne pole i (opcjonalnie) wskaż kolejne pola jej działania (nie po skosie). Ropa zadaje łącznie 4 rany. Puste pole pochłania 1 punkt siły rażenia Ropy.",
         "flavor": "A teraz coś z rurociągu Przyjaźń",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -66,11 +66,11 @@ export const cards_ludzie_json = [
         "dmg": 3,
         "piercing": true,
         "type": "shot",
-        "instruction": "Długa seria trafia najbliższego Zombiaka na wybranym torze i zadaje mu 3 rany. <br> Jeśli pierwsza lub druga rana zabiła Zombiaka, reszta pocisków z Serii trafia kolejnego Zombiaka stojącego na tym torze – i tak dalej. <br> Dodatkowo, trafiony i nie zabity Zombiak cofa się o 1 pole, o ile jest to możliwe.<br> Uwaga: Człowiek absorbuje wszystkie pociski wystrzelone w Serii.",
-        "description": "Długa seria trafia najbliższego Zombiaka na torze i zadaje 3 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombiak na torze (itd.). Trafienie cofa Zombiaka o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
+        "instruction": "Długa seria trafia najbliższego Zombiea na wybranym torze i zadaje mu 3 rany. <br> Jeśli pierwsza lub druga rana zabiła Zombiea, reszta pocisków z Serii trafia kolejnego Zombiea stojącego na tym torze – i tak dalej. <br> Dodatkowo, trafiony i nie zabity Zombie cofa się o 1 pole, o ile jest to możliwe.<br> Uwaga: Człowiek absorbuje wszystkie pociski wystrzelone w Serii.",
+        "description": "Długa seria trafia najbliższego Zombiea na torze i zadaje 3 rany. Jeśli pierwsza rana zabiła Zombniaka, drugą otrzymuje kolejny Zombie na torze (itd.). Trafienie cofa Zombiea o 1 pole. Człowiek absorbuje wszystkie pociski Serii.",
         "flavor": "Hasta la vista, baby!",
         "blockable": true,
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -78,20 +78,20 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "RACA ŚWIETLNA",
         "type": "other",
-        "instruction": "Weź maksymalnie 3 karty z wierzchu stosu kart Zombiaków (nie możesz wziąć ostatniej karty – Świt), wybierz z nich jedną i odrzuć na Śmietnik, a następnie odłóż pozostałe z powrotem w wybranej przez siebie kolejności. <br> Dodatkowo, dołóż na V przecznicę tyle Zombiaków o sile 1, ile jest możliwe.",
-        "description": "Weź maksymalnie 3 karty z wierzchu stosu kart Zombiaków (z wyjątkiem Świtu), odrzuć 1 z nich na Śmietnik, a pozostałe odłóż z powrotem w wybranej kolejności. Dodatkowo dołóż na V przecznicy tyle Zombiaków o sile 1 ile jest możliwe.",
+        "instruction": "Weź maksymalnie 3 karty z wierzchu stosu kart Zombieów (nie możesz wziąć ostatniej karty – Świt), wybierz z nich jedną i odrzuć na Śmietnik, a następnie odłóż pozostałe z powrotem w wybranej przez siebie kolejności. <br> Dodatkowo, dołóż na V przecznicę tyle Zombieów o sile 1, ile jest możliwe.",
+        "description": "Weź maksymalnie 3 karty z wierzchu stosu kart Zombieów (z wyjątkiem Świtu), odrzuć 1 z nich na Śmietnik, a pozostałe odłóż z powrotem w wybranej kolejności. Dodatkowo dołóż na V przecznicy tyle Zombieów o sile 1 ile jest możliwe.",
         "flavor": "Zakazuje się używać rac na stadionie.",
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 8,
         "amount": 1,
         "name": "SIEĆ",
         "type": "AOE",
-        "instruction": "Zagraj Sieć na dowolną liczbę Zombiaków sąsiadujących ze sobą (nie po skosie) o łącznej sile 6 lub mniej. <br> Sieć uniemożliwia zasieciowanym Zombiakom jakikolwiek ruch (jednak zasieciowane Zombiaki mogą zostać zmasowane). <br> Sieć przestaje działać na początku następnej tury ludzi.",
-        "description": "Zagraj Sieć na sąsiadujące ze sobą Zombiaki (nie po skosie) o łącznej sile 6 lub mniej. Sieć unieruchamia Zombiaki aż do początku następnej tury ludzi.",
+        "instruction": "Zagraj Sieć na dowolną liczbę Zombieów sąsiadujących ze sobą (nie po skosie) o łącznej sile 6 lub mniej. <br> Sieć uniemożliwia zasieciowanym Zombieom jakikolwiek ruch (jednak zasieciowane zombies mogą zostać zmasowane). <br> Sieć przestaje działać na początku następnej tury ludzi.",
+        "description": "Zagraj Sieć na sąsiadujące ze sobą zombies (nie po skosie) o łącznej sile 6 lub mniej. Sieć unieruchamia zombies aż do początku następnej tury ludzi.",
         "flavor": "Chyba trochę się zamotałeś.",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -100,9 +100,9 @@ export const cards_ludzie_json = [
         "name": "ULICA W OGNIU",
         "dmg": 1,
         "type": "AOE",
-        "description": "Zagraj tę kartę na jeden dowolny tor oprócz środkowego. Każdy Zombiak na tym torze otrzymuje 1 ranę.",
+        "description": "Zagraj tę kartę na jeden dowolny tor oprócz środkowego. Każdy Zombie na tym torze otrzymuje 1 ranę.",
         "flavor": "I tak był do rozbiórki.",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -112,9 +112,9 @@ export const cards_ludzie_json = [
         "dmg": 2,
         "type": "shot",
         "blockable": true,
-        "description": "Strzał trafia najbliższego Zombiaka na wybranym torze i zadaje mu 2 rany. Dodatkowo, trafiony i niezabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
+        "description": "Strzał trafia najbliższego Zombiea na wybranym torze i zadaje mu 2 rany. Dodatkowo, trafiony i niezabity Zombie cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "Prosto w tę zaropiałą gębę",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -122,11 +122,11 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "BECZKA",
         "type": "object",
-        "instruction": "Wystaw Beczką na I przecznicy na dowolnym torze (na niezajętym polu). <br> Beczka toczy się o 1 pole do przodu na początku tury ludzi. <br> Kiedy znajdzie się na tym samym polu, co Zombiak, zabija go automatycznie i sama zostaje zniszczona (odrzuć ją na Śmietnik). <br>  Jeśli Zombiak wejdzie na pole, na którym znajduje się Beczka, ginie automatycznie, a Beczka zostaje odrzucona na Śmietnik. <br>  Beczka rozbija się o Mur i Auto (należy odrzucić ją na Śmietnik bez efektu), wpada do Dziury (i zapełnia ją - obie karty zostają odrzucają na Śmietnik), a także detonuje Minę.",
-        "description": "Wystaw Beczkę na dowolnym polu pierwszej przecznicy. Co turę przesuń ją o 1 pole do przodu. Beczka zabija pierwszego na swojej drodze. Jeśli Zombiak wejdzie na Beczkę, ginie automatycznie. Beczka rozbija się o Mur i Auto, wpada do Dziury, a także detonuję Minę.",
+        "instruction": "Wystaw Beczką na I przecznicy na dowolnym torze (na niezajętym polu). <br> Beczka toczy się o 1 pole do przodu na początku tury ludzi. <br> Kiedy znajdzie się na tym samym polu, co Zombie, zabija go automatycznie i sama zostaje zniszczona (odrzuć ją na Śmietnik). <br>  Jeśli Zombie wejdzie na pole, na którym znajduje się Beczka, ginie automatycznie, a Beczka zostaje odrzucona na Śmietnik. <br>  Beczka rozbija się o Mur i Auto (należy odrzucić ją na Śmietnik bez efektu), wpada do Dziury (i zapełnia ją - obie karty zostają odrzucają na Śmietnik), a także detonuje Minę.",
+        "description": "Wystaw Beczkę na dowolnym polu pierwszej przecznicy. Co turę przesuń ją o 1 pole do przodu. Beczka zabija pierwszego na swojej drodze. Jeśli Zombie wejdzie na Beczkę, ginie automatycznie. Beczka rozbija się o Mur i Auto, wpada do Dziury, a także detonuję Minę.",
         "flavor": "Wytoczę mocniejszy argument",
         "board": true,
-        "race": "ludzie",
+        "race": "humans",
         'walkable': true
     },
     {
@@ -134,11 +134,11 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "JAJNIK",
         "type": "other",
-        "instruction": "Wybierz tor i wszystkie znajdujące się na nim Zombiaki (z wyjątkiem Psa i Kota) odwróć rewersem do góry - stają się oni Zombiakami o sile 1. <br> Zagranie Jajnika wymaga wolnej linii strzału. <br> Człowiek chroni przed działaniem Jajnika (jest odrzucany), ale tylko danego Zombiaka. Pozostałe Zombiaki na torze są normalnie zaatakowane w Zombiaki o sile 1. <br>  Jeśli Zombiak, którego zaatakował Jajnik posiada specjalną cechę (np. Kuloodporny czy Koń trojański), to po zamianie w Zombiaka o sile 1, traci tę cechę. <br> Karty (z wyjątkiem Kota i Misia) czy żetony (ran, galarety) leżące na karcie Zombiaka są odrzucane, tym samym ich efekty przestają działać.",
-        "description": "Wybierz tor i wszystkie znajdujące się na nim Zombiaki (z wyjątkiem Psa i Kota) stają się one Zombiakami o sile 1.",
+        "instruction": "Wybierz tor i wszystkie znajdujące się na nim zombies (z wyjątkiem Psa i Kota) odwróć rewersem do góry - stają się oni Zombieami o sile 1. <br> Zagranie Jajnika wymaga wolnej linii strzału. <br> Człowiek chroni przed działaniem Jajnika (jest odrzucany), ale tylko danego Zombiea. Pozostałe zombies na torze są normalnie zaatakowane w zombies o sile 1. <br>  Jeśli Zombie, którego zaatakował Jajnik posiada specjalną cechę (np. Kuloodporny czy Koń trojański), to po zamianie w Zombiea o sile 1, traci tę cechę. <br> Karty (z wyjątkiem Kota i Misia) czy żetony (ran, galarety) leżące na karcie Zombiea są odrzucane, tym samym ich efekty przestają działać.",
+        "description": "Wybierz tor i wszystkie znajdujące się na nim zombies (z wyjątkiem Psa i Kota) stają się one Zombieami o sile 1.",
         "flavor": "Bierz ich!",
         "blockable": true,
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -147,9 +147,9 @@ export const cards_ludzie_json = [
         "name": "SNAJPER",
         "dmg": 2,
         "type": "other",
-        "description": "Strzał Snajpera trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiaka na planszy i zadaje mu 2 rany. Dodatkowo, trafiony i nie zabity Zombiak cofa się o 1 pole, o ile jest to możliwe.",
+        "description": "Strzał Snajpera trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiea na planszy i zadaje mu 2 rany. Dodatkowo, trafiony i nie zabity Zombie cofa się o 1 pole, o ile jest to możliwe.",
         "flavor": "Już go kiedyś sprzątnąłem...",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -157,9 +157,9 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "GAZ ROZWESELAJĄCY",
         "type": "other",
-        "description": "Zagraj Gaz rozweselający na maksymalnie 2 wybrane przez siebie Zombiaki. Przesuń każdego z nich o 1 pole w dowolnym kierunku (nie po skosie), o ile to możliwe.",
+        "description": "Zagraj Gaz rozweselający na maksymalnie 2 wybrane przez siebie zombies. Przesuń każdego z nich o 1 pole w dowolnym kierunku (nie po skosie), o ile to możliwe.",
         "flavor": "Hi, hi, he, he, ho ,ho!",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -167,21 +167,21 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "DZIURA",
         "type": "object",
-        "instruction": "Wystaw Dziurę na dowolnym niezajętym polu planszy. <br> Jeżeli na pole z Dziurą wejdzie Zombiak o sile 1 lub 2, zginie automatycznie, a Dziura zostaje zapełniona (odrzuć ją na Śmietnik). <br> Zombiak o sile 3 lub większej przechodzi przez Dziurę bez szwanku (Dziura zostaje na planszy). <br> Jeżeli na pole z Dziurą wejdzie Zombiak z Człowiekiem, karta Człowieka i Dziura są odrzucane na Śmietnik. <br> Jeśli do Dziury wejdzie Syjamczyk albo Koń trojański, to po tym jak zginie, normalnie zamienia się w Zombiaki o sile 1 i Dziura jest odrzucana. <br> Jeśli na Dziurze stoi Zombiak o większej sile, niż 2 i otrzyma ranę oraz ma się cofnąć, to się cofa (o ile to możliwe) zamiast wpada do Dziury. <br> Jeśli nie może albo nie ma się gdzie cofać, to wtedy normalnie zapada do Dziury. <br> Uwaga: Ikony mózgów na karcie Dziury nie oznaczają ilość zadawanych ran, ale maksymalną siłę Zombiaka, jaki wpada do dziury.",
-        "description": "Wystaw Dziurę na wolnym polu. Gdy wejdzie w nią Zombiak o sile 1 lub 2, automatycznie ginie, a Dziura jest zapełniona (odrzuć ją na Śmietnik). Zombiak o sile 3 lub większej przechodzi przez Dziurę bez szwanku. Karta Człowieka zapełnia Dziurę automatycznie.",
+        "instruction": "Wystaw Dziurę na dowolnym niezajętym polu planszy. <br> Jeżeli na pole z Dziurą wejdzie Zombie o sile 1 lub 2, zginie automatycznie, a Dziura zostaje zapełniona (odrzuć ją na Śmietnik). <br> Zombie o sile 3 lub większej przechodzi przez Dziurę bez szwanku (Dziura zostaje na planszy). <br> Jeżeli na pole z Dziurą wejdzie Zombie z Człowiekiem, karta Człowieka i Dziura są odrzucane na Śmietnik. <br> Jeśli do Dziury wejdzie Syjamczyk albo Koń trojański, to po tym jak zginie, normalnie zamienia się w zombies o sile 1 i Dziura jest odrzucana. <br> Jeśli na Dziurze stoi Zombie o większej sile, niż 2 i otrzyma ranę oraz ma się cofnąć, to się cofa (o ile to możliwe) zamiast wpada do Dziury. <br> Jeśli nie może albo nie ma się gdzie cofać, to wtedy normalnie zapada do Dziury. <br> Uwaga: Ikony mózgów na karcie Dziury nie oznaczają ilość zadawanych ran, ale maksymalną siłę Zombiea, jaki wpada do dziury.",
+        "description": "Wystaw Dziurę na wolnym polu. Gdy wejdzie w nią Zombie o sile 1 lub 2, automatycznie ginie, a Dziura jest zapełniona (odrzuć ją na Śmietnik). Zombie o sile 3 lub większej przechodzi przez Dziurę bez szwanku. Karta Człowieka zapełnia Dziurę automatycznie.",
         "flavor": "Zemsta polskich drogowców",
         "board": true,
         "walkable": true,
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 16,
         "amount": 2,
         "name": "KREW",
         "type": "other",
-        "description": "PRzesuń jednego dowolnego Zombiaka w bok na sąsiedny tor, o ile jest możliwe.",
+        "description": "PRzesuń jednego dowolnego Zombiea w bok na sąsiedny tor, o ile jest możliwe.",
         "flavor": "A rh+. Moja ulubiona.",
-        "race": "ludzie",
+        "race": "humans",
         "board": true
     },
     {
@@ -189,10 +189,10 @@ export const cards_ludzie_json = [
         "amount": 3,
         "name": "ZAPORA",
         "type": "object",
-        "description": "Wystaw Zaporę na jednym z niezajętych pół na pierwszej przecznicy. Zapora uniemożliwia jakikolwiek ruch Zombiaków na tym torze. Zapora przestaje działać na początku następnej tury Ludzi.",
+        "description": "Wystaw Zaporę na jednym z niezajętych pół na pierwszej przecznicy. Zapora uniemożliwia jakikolwiek ruch Zombieów na tym torze. Zapora przestaje działać na początku następnej tury Ludzi.",
         "flavor": "Chodnik chwilowo nieczynny.",
         "board": true,
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 18,
@@ -201,12 +201,12 @@ export const cards_ludzie_json = [
         "type": "object",
         "mur": true,
         "hp": 5,
-        "instruction": " Wystaw Mur z rupieci na dowolne niezajęte pole, z wyjątkiem: 1) pól sąsiadujących lub stykających się po skosie z Zombiakiem, 2) przecznic znajdujących się za jakimkolwiek Zombiakiem, 3) przecznicy piątej. <br> Mur pozostaje na planszy do końca gry, chyba że zostanie zniszczony (Granat, Kilof). <br> Zombiak nie może wejść na pole z Murem, chyba że sumaryczna siła tego Zombiaka oraz wszystkich stykających się Zombiaków idących za nim na tym torze wyniesie 5 lub więcej. <br> W analogiczny sposób Zombiak może zostać cofnięty na Mur. <br> Ponadto, na pola za Murem nie działają karty Reflektora, Zapory ani Jajnika. <br> Uwaga: Ikony mózgów na karcie Muru z rupieci nie oznaczają ilości zadawanych Ran, ale minimalną siłę Zombiaków (ciągu Zombiaków) potrzebną do wejścia na Mur z rupieci.",
-        "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z Zombiakiem; przecznic znajdujących się za Zombiakiem; przecznicy V. Zombiak nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombiaków idących za nim wyniesie 5 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
+        "instruction": " Wystaw Mur z rupieci na dowolne niezajęte pole, z wyjątkiem: 1) pól sąsiadujących lub stykających się po skosie z zombiesem, 2) przecznic znajdujących się za jakimkolwiek zombiesem, 3) przecznicy piątej. <br> Mur pozostaje na planszy do końca gry, chyba że zostanie zniszczony (Granat, Kilof). <br> Zombie nie może wejść na pole z Murem, chyba że sumaryczna siła tego Zombiea oraz wszystkich stykających się Zombieów idących za nim na tym torze wyniesie 5 lub więcej. <br> W analogiczny sposób Zombie może zostać cofnięty na Mur. <br> Ponadto, na pola za Murem nie działają karty Reflektora, Zapory ani Jajnika. <br> Uwaga: Ikony mózgów na karcie Muru z rupieci nie oznaczają ilości zadawanych Ran, ale minimalną siłę Zombieów (ciągu Zombieów) potrzebną do wejścia na Mur z rupieci.",
+        "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z zombiesem; przecznic znajdujących się za zombiesem; przecznicy V. Zombie nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombieów idących za nim wyniesie 5 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
         "flavor": "Panowie, objazd!",
         "board": true,
         "walkable": true,
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 19,
@@ -216,17 +216,17 @@ export const cards_ludzie_json = [
         "description": "Wybierz jedną z kart przeciwnika, leżących na Cmentarzu i odrzuć ją na Śmietnik.",
         "flavor": "Nie, tak się bawić nie będziemy.",
         "board": 'deck',
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 20,
         "amount": 1,
         "name": "REFLEKTOR",
         "type": "other",
-        "description": "Covnij równocześnie o 1 pole wszystkie Zombiaki na jednym wybranym torze, o ile to możliwe.",
+        "description": "Covnij równocześnie o 1 pole wszystkie zombies na jednym wybranym torze, o ile to możliwe.",
         "flavor": "Parę słów do mikrofonu...",
         "blockable": true,
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -234,9 +234,9 @@ export const cards_ludzie_json = [
         "amount": 1,
         "name": "WYNOCHA",
         "type": "AOE",
-        "description": "Cofnij równocześnie o 1 pole wszystkie Zombiaki na planszy. Zombiak cofa się, o ile jest za nim wolne pole.",
+        "description": "Cofnij równocześnie o 1 pole wszystkie zombies na planszy. Zombie cofa się, o ile jest za nim wolne pole.",
         "flavor": "Martwym wstęp wzbroniony.",
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 22,
@@ -244,10 +244,10 @@ export const cards_ludzie_json = [
         "name": "CHUCK",
         "type": "other",
         "board": true,
-        "instruction": "Odrzuć na Śmietnik wierzchnią kartę ze stosu kart Zombiaków. <br>  Nie można zagrać tej karty, jeśli w talii Zombiaków pozostała już tylko ostatnia karta (Świt). <br>  Odrzucana karta jest widoczna dla graczy.",
-        "description": "Odrzuć na Śmietnik wierzchnią kartę ze stosu kart Zombiaków",
+        "instruction": "Odrzuć na Śmietnik wierzchnią kartę ze stosu kart Zombieów. <br>  Nie można zagrać tej karty, jeśli w talii Zombieów pozostała już tylko ostatnia karta (Świt). <br>  Odrzucana karta jest widoczna dla graczy.",
+        "description": "Odrzuć na Śmietnik wierzchnią kartę ze stosu kart Zombieów",
         "flavor": "Chuck it out!",
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 23,
@@ -255,9 +255,9 @@ export const cards_ludzie_json = [
         "name": "CEGŁA",
         "type": "shot",
         "dmg": 1,
-        "description": "Cegła trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiaka na planszy i zadaje mu 1 ranę. Trafiony Zombiak nie cofa się.",
+        "description": "Cegła trafia dowolnego (niekoniecznie pierwszego na linii strzału) Zombiea na planszy i zadaje mu 1 ranę. Trafiony Zombie nie cofa się.",
         "flavor": "Podaj cegłę",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -267,12 +267,12 @@ export const cards_ludzie_json = [
         "type": "other",
         "dmg": 5,
         "max_dmg": 5,
-        "instruction": "Zagraj Miotacz na najbliższą przecznicę od strony ludzi, na której znajduje się jakikolwiek Zombiak. <br> Miotacz zadaje na tej przecznicy łącznie 5 ran, rozdzielanych dowolnie przez ludzi (jeśli między traktowanymi Miotaczem Zombiakami jest puste pole, pochłania ono 1 punkt z siły rażenia Miotacza).",
-        "description": "Zagraj Miotacz na najbliższą przecznicę, na której znajduje się jakikolwiek Zombiak. Miotacz zadaje łącznie 5 ran, rozdzielanych przez ludzi (puste pole pochłania 1 punkt siły rażenia Miotacza).",
+        "instruction": "Zagraj Miotacz na najbliższą przecznicę od strony ludzi, na której znajduje się jakikolwiek Zombie. <br> Miotacz zadaje na tej przecznicy łącznie 5 ran, rozdzielanych dowolnie przez ludzi (jeśli między traktowanymi Miotaczem Zombieami jest puste pole, pochłania ono 1 punkt z siły rażenia Miotacza).",
+        "description": "Zagraj Miotacz na najbliższą przecznicę, na której znajduje się jakikolwiek Zombie. Miotacz zadaje łącznie 5 ran, rozdzielanych przez ludzi (puste pole pochłania 1 punkt siły rażenia Miotacza).",
         "flavor": "Palenie szkodzi zdrowiu.",
         "blockable": true,
         "board": true,
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 25,
@@ -282,12 +282,12 @@ export const cards_ludzie_json = [
         "dmg": 2,
         "blow_dmg": 1,
         "activation": ['MIOTACZ', 'ULICA W OGNIU', 'ROPA', 'GRANAT', 'BECZKA', 'AUTO'],
-        "instruction": "Wystaw Minę na dowolnym niezajętym polu planszy, z wyjątkiem pól znajdujących się bezpośrednio przed Zombiakiem. <br> Jeżeli na pole z Miną wejdzie Zombiak, następuje wybuch. <br> Zombiak znajdujący się na polu z Miną otrzymuje 2 rany, zaś odłamek razi sąsiednie pola (wybrane przez grającego ludźmi, nie po skosie), zadając 1 ranę. <br> Minę detonuje także Beczka, ogień (Miotacz, Ulica w ogniu, Ropa) lub wybuch (Granat, wybuchające Auto).",
-        "description": "Wystaw Minę na wolnym polu, ale nie bezpośrednio przed Zombiakiem. Jeżeli na Minę wejdzie Zombiak, otrzymuje on 2 rany, zaś odłamek razi wybrane sąsiednie pole zadając 1 ranę (nie po skosie). Minę detonuje także Miotacz, Ulica w ogniu, Ropa, Granat, Beczka i Auto.",
+        "instruction": "Wystaw Minę na dowolnym niezajętym polu planszy, z wyjątkiem pól znajdujących się bezpośrednio przed zombiesem. <br> Jeżeli na pole z Miną wejdzie Zombie, następuje wybuch. <br> Zombie znajdujący się na polu z Miną otrzymuje 2 rany, zaś odłamek razi sąsiednie pola (wybrane przez grającego ludźmi, nie po skosie), zadając 1 ranę. <br> Minę detonuje także Beczka, ogień (Miotacz, Ulica w ogniu, Ropa) lub wybuch (Granat, wybuchające Auto).",
+        "description": "Wystaw Minę na wolnym polu, ale nie bezpośrednio przed zombiesem. Jeżeli na Minę wejdzie Zombie, otrzymuje on 2 rany, zaś odłamek razi wybrane sąsiednie pole zadając 1 ranę (nie po skosie). Minę detonuje także Miotacz, Ulica w ogniu, Ropa, Granat, Beczka i Auto.",
         "flavor": "Pamiątka po Szkopach",
         "board": true,
         "walkable": true,
-        "race": "ludzie"
+        "race": "humans"
 
     },
     {
@@ -297,12 +297,12 @@ export const cards_ludzie_json = [
         "type": "object",
         "mur": true,
         "hp": 6,
-        "instruction": "Mur. Wystaw Mur na dowolne niezajęte pole, z wyjątkiem: 1) pól sąsiadujących lub stykających się po skosie z Zombiakiem, 2) przecznic znajdujących się za jakimkolwiek Zombiakiem, 3)  przecznicy piątej. Mur pozostaje na planszy do końca gry, chyba że zostanie zniszczony (Granat, Kilof). <br>  Zombiak nie może wejść na pole z Murem, chyba że sumaryczna siła tego Zombiaka oraz wszystkich stykających się Zombiaków idących za nim na tym torze wyniesie 6 lub więcej. <br>  W analogiczny sposób Zombiak może zostać cofnięty na Mur. <br> Ponadto, na pola za Murem nie działają karty Reflektora, Zapory ani Jajnika. <br> Uwaga: Ikony mózgów na karcie Muru nie oznaczają ilości zadawanych Ran, ale minimalną siłę Zombiaków (ciągu Zombiaków) potrzebną do wejścia na Mur.",
-        "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z Zombiakiem; przecznic znajdujących się za Zombiakiem; przecznicy V. Zombiak nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombiaków idących za nim wyniesie 6 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
+        "instruction": "Mur. Wystaw Mur na dowolne niezajęte pole, z wyjątkiem: 1) pól sąsiadujących lub stykających się po skosie z zombiesem, 2) przecznic znajdujących się za jakimkolwiek zombiesem, 3)  przecznicy piątej. Mur pozostaje na planszy do końca gry, chyba że zostanie zniszczony (Granat, Kilof). <br>  Zombie nie może wejść na pole z Murem, chyba że sumaryczna siła tego Zombiea oraz wszystkich stykających się Zombieów idących za nim na tym torze wyniesie 6 lub więcej. <br>  W analogiczny sposób Zombie może zostać cofnięty na Mur. <br> Ponadto, na pola za Murem nie działają karty Reflektora, Zapory ani Jajnika. <br> Uwaga: Ikony mózgów na karcie Muru nie oznaczają ilości zadawanych Ran, ale minimalną siłę Zombieów (ciągu Zombieów) potrzebną do wejścia na Mur.",
+        "description": "Wystaw Mur na wolne pole, z wyjątkiem: pól sąsiadujących (też po skosie) z zombiesem; przecznic znajdujących się za zombiesem; przecznicy V. Zombie nie może wejść na Mur, chyba że suma jego siły io wszystkich Zombieów idących za nim wyniesie 6 lub więcej. Na pola za Murem nie działa Reflektor, Zapora, ani Jajnik.",
         "flavor": "Bez spychacza- zapomnij.",
         "board": true,
         "walkable": true,
-        "race": "ludzie"
+        "race": "humans"
     },
     {
         "id": 27,
@@ -310,10 +310,10 @@ export const cards_ludzie_json = [
         "name": "BETONOWE BUCIKI",
         'type': 'other',
         'dmg': 1,
-        "instruction": "Zagraj Betonowe buciki na wybranego przez siebie Zombiaka. <br> Za każdym razem, kiedy ten Zombiak się poruszy (w dowolnym kierunku, również do tyłu), otrzymuje 1 ranę. <br> Przed Betonowymi bucikami w żaden sposób nie chroni Człowiek. <br> Jeśli Zombiak z Betonowymi bucikami będzie miał już tylko 1 i wejdzie na Barykadę, to ginie i nie wygrywa gry, chyba że będzie to Syamczyk albo Koń trojański, który po śmierci zamienia się w Zombiaki o sile 1. <br> Po tym jak Zombiak z bucikami zginie, obie karty odrzucane są na Śmietnik.",
-        "description": "Zagraj Betonowe Buciki na wybranego przez siebie Zombiaka. Za każdym razem, kiedy Zombiak się poruszy (w dowolnym kierunku, również do tyłu), otrzymuję 1 ranę. Człowiek nie chroni w żaden sposób przed Betonowymi bucikami.",
+        "instruction": "Zagraj Betonowe buciki na wybranego przez siebie Zombiea. <br> Za każdym razem, kiedy ten Zombie się poruszy (w dowolnym kierunku, również do tyłu), otrzymuje 1 ranę. <br> Przed Betonowymi bucikami w żaden sposób nie chroni Człowiek. <br> Jeśli Zombie z Betonowymi bucikami będzie miał już tylko 1 i wejdzie na Barykadę, to ginie i nie wygrywa gry, chyba że będzie to Syamczyk albo Koń trojański, który po śmierci zamienia się w zombies o sile 1. <br> Po tym jak Zombie z bucikami zginie, obie karty odrzucane są na Śmietnik.",
+        "description": "Zagraj Betonowe Buciki na wybranego przez siebie Zombiea. Za każdym razem, kiedy Zombie się poruszy (w dowolnym kierunku, również do tyłu), otrzymuję 1 ranę. Człowiek nie chroni w żaden sposób przed Betonowymi bucikami.",
         "flavor": "Na rzeźbę łydek idealne.",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -323,7 +323,7 @@ export const cards_ludzie_json = [
         'type': 'other',
         "description": "Zagraj Granat na dowolne pole planszy. Granat automatycznie niszczy wszystkie karty znajdujące się na tym polu. Przed Granatem nie chroni Człowiek.",
         "flavor": "Wyrwij zawlęczkę i policz do trzech.",
-        "race": "ludzie",
+        "race": "humans",
         "board": true,
     },
     {
@@ -334,11 +334,11 @@ export const cards_ludzie_json = [
         'dmg': 1,
         'blow_dmg': 1,
         'activation': ['STRZAŁ', 'STRZAŁ. TEN LEPSZY', 'SNAJPER', 'KRÓTKA SERIA', 'DŁUGA SERIA', 'MIOTACZ', 'ULICA W OGNIU', 'ROPA', 'GRANAT', 'MINA'],
-        "instruction": "Wystaw Auto na wolnym polu planszy, przy czym zagranie auta wymaga wolnej linii strzału. <br> Wystawione na planszy Auto można w dowolnej chwili zdetonować za pomocą strzału (Strzał, Snajper, jeden pocisk Serii), ognia (Miotacz, Ulica w ogniu, Ropa) lub wybuchu (Granat, odłamek Miny). <br> Zdetonowane Auto zadaje jedną ranę na polu, na którym stało i jedną na każdym dookoła (nawet po skosie). <br> Zombiaki mogą normalnie wchodzić na pole zajęte przez Auto. <br> Jeśli na polu z Autem znajduje się także Zombiak, gracz grający Ludźmi wybiera czy trafia Zombiaka, czy Auto.",
-        "description": "Wystaw Auto na dowolnym wolnym polu. Auto można zdetonować za pomocą Strzału, Snajpera, Serii, Miotacza, Ulicy w ogniu, Ropy, Granatu, odłamka Miny. Zdetonowane zadaje 1 ranę na swoim polu i 1 na każdym dookoła (nawet po skosie). Zombiaki mogą wchodzić na pole z Autem.",
+        "instruction": "Wystaw Auto na wolnym polu planszy, przy czym zagranie auta wymaga wolnej linii strzału. <br> Wystawione na planszy Auto można w dowolnej chwili zdetonować za pomocą strzału (Strzał, Snajper, jeden pocisk Serii), ognia (Miotacz, Ulica w ogniu, Ropa) lub wybuchu (Granat, odłamek Miny). <br> Zdetonowane Auto zadaje jedną ranę na polu, na którym stało i jedną na każdym dookoła (nawet po skosie). <br> zombies mogą normalnie wchodzić na pole zajęte przez Auto. <br> Jeśli na polu z Autem znajduje się także Zombie, gracz grający Ludźmi wybiera czy trafia Zombiea, czy Auto.",
+        "description": "Wystaw Auto na dowolnym wolnym polu. Auto można zdetonować za pomocą Strzału, Snajpera, Serii, Miotacza, Ulicy w ogniu, Ropy, Granatu, odłamka Miny. Zdetonowane zadaje 1 ranę na swoim polu i 1 na każdym dookoła (nawet po skosie). zombies mogą wchodzić na pole z Autem.",
         "flavor": "Trabant! Nie trzeba detonatora!",
         "board": true,
         "walkable": true,
-        "race": "ludzie"
+        "race": "humans"
     }
 ];

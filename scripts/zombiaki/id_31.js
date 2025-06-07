@@ -1,13 +1,13 @@
 //SPADAJ
 
 import { board, clearBoard, setField, unsetField } from "../board.js";
-import { deck_zombiaki_element, removeCard } from "../index.js";
+import { deck_zombies_element, removeCard } from "../index.js";
 import { addListener, disable, enable } from "../utils.js";
 import { addOverlay } from "./utils.js";
 import { raceFunctions } from "../allFunctions.js";
 
-export default function zombiaki_id_31(card, field) {
-    disable(deck_zombiaki_element);
+export default function zombies_id_31(card, field) {
+    disable(deck_zombies_element);
 
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
@@ -15,7 +15,7 @@ export default function zombiaki_id_31(card, field) {
             const { card, element } = field;
             const is_webbed = element.classList.contains('webbed');
             if (is_webbed) continue;
-            if (card?.type !== 'zombiak') continue;
+            if (card?.type !== 'zombie') continue;
             element.classList.add('move_available');
             addListener(element, spadajHandler(field), { once: true });
         }
@@ -65,7 +65,7 @@ function swapCards(old_field, new_field) {
         }
 
         clearBoard();
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
         removeCard();
     }
 }
@@ -86,7 +86,7 @@ function checkAvailableFields(field) {
         const { card, element } = board_field;
         const is_webbed = element.classList.contains('webbed');
         if (is_webbed) continue;
-        if (card?.type === 'zombiak') all_fields.push(board_field);;
+        if (card?.type === 'zombie') all_fields.push(board_field);;
     }
 
     return all_fields;

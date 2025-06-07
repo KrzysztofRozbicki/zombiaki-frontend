@@ -1,15 +1,15 @@
 //MIOTACZ
 import { board } from '../board.js';
 import { addListener, disable } from '../utils.js';
-import { deck_ludzie_element } from '../index.js';
+import { deck_humans_element } from '../index.js';
 import { aoeHandler } from "./utils.js";
 
-export default function ludzie_id_24(card, field) {
+export default function humans_id_24(card, field) {
     miotacz(card);
 }
 
 function miotacz(card) {
-    disable(deck_ludzie_element);
+    disable(deck_humans_element);
     const przecznica = checkPrzecznica();
     for (let i = 0; i < board[przecznica].length; i++) {
         const field = board[przecznica][i];
@@ -23,7 +23,7 @@ function miotacz(card) {
                 const field = board[przecznica][tor];
                 const { card, card_pet } = field;
                 if (tor === tor_krystynka) continue;
-                if (card?.type === 'zombiak' || card_pet) {
+                if (card?.type === 'zombie' || card_pet) {
                     burn_krystynka = false;
                     continue;
                 }
@@ -41,7 +41,7 @@ function checkPrzecznica() {
         for (let j = 0; j < board[i].length; j++) {
             const { card } = board[i][j];
             if (!card) continue;
-            if (card.type === 'zombiak') return i;
+            if (card.type === 'zombie') return i;
         }
     }
 }

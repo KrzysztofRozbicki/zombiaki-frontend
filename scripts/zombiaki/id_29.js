@@ -1,15 +1,15 @@
 //PAPU
 import { board, clearBoard } from "../board.js";
-import { deck_zombiaki_element, removeCard } from "../index.js";
+import { deck_zombies_element, removeCard } from "../index.js";
 import { enable, disable, addListener } from "../utils.js";
 
-export default function zombiaki_id_29(card, field) {
-    disable(deck_zombiaki_element);
+export default function zombies_id_29(card, field) {
+    disable(deck_zombies_element);
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const { card, element } = board[i][j];
             if (!card) continue;
-            if (card.type !== 'zombiak') continue;
+            if (card.type !== 'zombie') continue;
             if (card.hp < card.max_hp) {
                 addListener(element, handlePapu(board[i][j]), { once: true });
                 element.classList.add('papu_available');
@@ -32,7 +32,7 @@ function handlePapu(field) {
             masa_text_element.innerText = card.hp;
         }
         clearBoard();
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
         removeCard();
     }
 }

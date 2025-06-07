@@ -1,24 +1,24 @@
-import { cards_ludzie_json } from './ludzie/cards.js';
-import { cards_zombiaki_json } from './zombiaki/cards.js';
+import { cards_humans_json } from './humans/cards.js';
+import { cards_zombies_json } from './zombies/cards.js';
 import { board, setField } from "./board.js";
-import { addOverlay } from "./zombiaki/utils.js";
+import { addOverlay } from "./zombies/utils.js";
 import { raceFunctions } from "./allFunctions.js";
 
 
 export const TEST_STATE = true;
 
 export const TEST_MODE = {
-    race: 'zombiaki',
+    race: 'zombies',
     board: true,
 };
 
-let test_deck_ludzie = cards_ludzie_json;
-let test_deck_zombiaki = cards_zombiaki_json;
+let test_deck_humans = cards_humans_json;
+let test_deck_zombies = cards_zombies_json;
 
-const all_cards = [...cards_ludzie_json, ...cards_zombiaki_json];
+const all_cards = [...cards_humans_json, ...cards_zombies_json];
 
-const start_cards_zombiaki = ['KLIK', 'PAPU', 'MASA', 'ZENEK'];
-const start_cards_ludzie = ['MIOTACZ', 'SIEĆ', 'DŁUGA SERIA', 'CEGŁA'];
+const start_cards_zombies = ['KLIK', 'PAPU', 'MASA', 'ZENEK'];
+const start_cards_humans = ['MIOTACZ', 'SIEĆ', 'DŁUGA SERIA', 'CEGŁA'];
 
 const test_board = [
     // {
@@ -62,16 +62,16 @@ const test_board = [
 
 export function testMode() {
     if (TEST_MODE.board) putCardsOnBoard();
-    changeCards(test_deck_ludzie, start_cards_ludzie);
-    changeCards(test_deck_zombiaki, start_cards_zombiaki);
+    changeCards(test_deck_humans, start_cards_humans);
+    changeCards(test_deck_zombies, start_cards_zombies);
     const endCard = {
         id: 'dawn',
         amount: 1,
         name: "ŚWIT",
-        image_src: `images/cards/zombiaki/dawn.webp`
+        image_src: `images/cards/zombies/dawn.webp`
     }
 
-    test_deck_zombiaki.push(endCard);
+    test_deck_zombies.push(endCard);
 }
 
 function putCardsOnBoard() {
@@ -95,10 +95,10 @@ function changeCards(deck, cards) {
     }
 }
 
-export function get_test_deck_ludzie() {
-    return test_deck_ludzie;
+export function get_test_deck_humans() {
+    return test_deck_humans;
 }
 
-export function get_test_deck_zombiaki() {
-    return test_deck_zombiaki;
+export function get_test_deck_zombies() {
+    return test_deck_zombies;
 }

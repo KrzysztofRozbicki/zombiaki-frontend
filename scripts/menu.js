@@ -1,12 +1,12 @@
-import { cards_ludzie, cards_zombiaki } from "./index.js";
+import { cards_humans, cards_zombies } from "./index.js";
 import { show, hide, showAll, hideAll, randomRotate } from "./utils.js";
 const intro = document.getElementById('intro');
 const board_element = document.getElementById('board');
 const menu_element = document.getElementById('menu');
 const choose_race = document.getElementById('choose-race');
 
-const end_turn_ludzie = document.getElementById('rewers_stack_ludzie');
-const end_turn_zombiaki = document.getElementById('rewers_stack_zombiaki');
+const end_turn_humans = document.getElementById('rewers_stack_humans');
+const end_turn_zombies = document.getElementById('rewers_stack_zombies');
 
 
 export function initMenu(race) {
@@ -19,9 +19,9 @@ export function initMenu(race) {
 
 function randomRotateDeck() {
 
-    const stack_ludzie = end_turn_ludzie.querySelectorAll('.stack');
-    const stack_zombiaki = end_turn_zombiaki.querySelectorAll('.stack');
-    const whole_stack = [...stack_ludzie, ...stack_zombiaki];
+    const stack_humans = end_turn_humans.querySelectorAll('.stack');
+    const stack_zombies = end_turn_zombies.querySelectorAll('.stack');
+    const whole_stack = [...stack_humans, ...stack_zombies];
 
     whole_stack.forEach(el => randomRotate(15, el));
 
@@ -29,14 +29,14 @@ function randomRotateDeck() {
 
 export function chooseRace(race) {
 
-    const oppositeRace = race === 'ludzie' ? 'zombiaki' : 'ludzie';
+    const oppositeRace = race === 'humans' ? 'zombies' : 'humans';
 
     hide(document.getElementById(`rewers_stack_${oppositeRace}`))
     show(document.getElementById(`rewers_stack_${race}`));
-    cards_ludzie.forEach(card =>
-        card.dataset.playable = (race === 'ludzie')
+    cards_humans.forEach(card =>
+        card.dataset.playable = (race === 'humans')
     );
-    cards_zombiaki.forEach(card =>
-        card.dataset.playable = (race === 'zombiaki')
+    cards_zombies.forEach(card =>
+        card.dataset.playable = (race === 'zombies')
     );
 }

@@ -1,11 +1,11 @@
 //UGRYZIENIE
 import { board, clearBoard, setField } from "../board.js";
-import { deck_zombiaki_element, removeCard, cancel_button } from "../index.js";
+import { deck_zombies_element, removeCard, cancel_button } from "../index.js";
 import { addListener, disable, enable, hideCancelButton, showAlert } from "../utils.js";
-import { zombiak_1 } from '../zombiaki/cards.js';
+import { zombie_1 } from '../zombies/cards.js';
 
-export default function zombiaki_id_32(card, field) {
-    disable(deck_zombiaki_element);
+export default function zombies_id_32(card, field) {
+    disable(deck_zombies_element);
     checkFields();
 }
 
@@ -26,7 +26,7 @@ function checkFields() {
         }
     }
     if (!is_possible) {
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
         showAlert('NIE MOŻESZ ZAGRAĆ UGRYZIENIA - BRAK WOLNYCH PÓL');
         setTimeout(() => hideCancelButton(), 10);
     }
@@ -40,32 +40,32 @@ function handleAvailableFields(field, available_fields) {
         available_fields.forEach(board_field => {
             const { element } = board_field
             element.classList.add('move_on');
-            const handler_mouseover = hoverZombiakHandler(field, board_field);
+            const handler_mouseover = hoverZombieHandler(field, board_field);
             element.handler_mouseover = handler_mouseover;
             element.addEventListener('mouseover', handler_mouseover);
-            addListener(element, putZombiakHandler(field, board_field), { once: true });
+            addListener(element, putZombieHandler(field, board_field), { once: true });
         })
     }
 }
 
-function hoverZombiakHandler(old_field, new_field) {
+function hoverZombieHandler(old_field, new_field) {
     return function () {
-        const handler = outZombiakHandler(old_field, new_field);
+        const handler = outZombieHandler(old_field, new_field);
         new_field.element.addEventListener('mouseout', handler, { once: true })
         new_field.element.classList.add('background_image');
         new_field.element.handler_mouseout = handler;
-        new_field.element.style.setProperty('--bg-image', `url('../images/cards/zombiaki/rewers.webp')`)
+        new_field.element.style.setProperty('--bg-image', `url('../images/cards/zombies/rewers.webp')`)
     }
 }
 
-function outZombiakHandler(old_field, new_field) {
+function outZombieHandler(old_field, new_field) {
     return function () {
         new_field.element.classList.remove('background_image');
         new_field.element.style.removeProperty('--bg-image');
     }
 }
 
-function putZombiakHandler(old_field, new_field) {
+function putZombieHandler(old_field, new_field) {
     return function () {
         const old_element = old_field.element
         const human_index = old_field.overlay_cards.findIndex(card => card.name === 'CZŁOWIEK');
@@ -73,10 +73,10 @@ function putZombiakHandler(old_field, new_field) {
         if (old_field.overlay_cards.length === 0) old_field.overlay_cards = null;
         const human_element = old_element.querySelector('div[data-name="CZŁOWIEK"]');
         human_element.remove();
-        setField(new_field, zombiak_1, { other: true });
+        setField(new_field, zombie_1, { other: true });
         clearBoard();
         removeCard();
-        enable(deck_zombiaki_element);
+        enable(deck_zombies_element);
     }
 }
 
@@ -92,7 +92,7 @@ function checkAvailableFields(field) {
         if (t < 0 || t > 2) continue;
         if (p < 0 || p > przecznica) continue;
         const { card, card_board } = board[p][t];
-        if (card?.type === 'zombiak' || card_board?.mur) continue;
+        if (card?.type === 'zombie' || card_board?.mur) continue;
         all_fields.push(board[p][t]);
     }
     return all_fields;

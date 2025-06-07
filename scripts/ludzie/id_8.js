@@ -1,9 +1,9 @@
 //SIEĆ
 import { board } from './../board.js';
 import { hideCancelButton, enable, disable, addListener, removeListener } from '../utils.js';
-import { removeCard, deck_ludzie_element } from '../index.js';
+import { removeCard, deck_humans_element } from '../index.js';
 let MAX_STRENGTH = 6;
-export default function ludzie_id_8(card, field) {
+export default function humans_id_8(card, field) {
     web();
     MAX_STRENGTH = 6;
 }
@@ -11,12 +11,12 @@ export default function ludzie_id_8(card, field) {
 
 
 function web() {
-    disable(deck_ludzie_element);
+    disable(deck_humans_element);
     for (let i = board.length - 1; i >= 0; i--) {
         for (let j = 0; j < board[0].length; j++) {
             const field = board[i][j];
             const { element, card } = field;
-            if (!card || card.race !== 'zombiaki') continue;
+            if (!card || card.race !== 'zombies') continue;
             if (card.hp > MAX_STRENGTH) continue;
             element.classList.add('web_available');
             addListener(element, webHandler(field));
@@ -32,7 +32,7 @@ function webHandler(field) {
         const { element, card } = field;
         MAX_STRENGTH -= card.hp;
         if (MAX_STRENGTH < 0) {
-            enable(deck_ludzie_element);
+            enable(deck_humans_element);
             return;
         }
         element.classList.add('webbed')
@@ -62,7 +62,7 @@ function setWebBoard(field) {
         if (p < 0 || p > 4) continue;
         const { element, card } = board[p][t];
         const is_webbed = element.classList.contains('webbed');
-        if (!card || card.race !== 'zombiaki') continue;
+        if (!card || card.race !== 'zombies') continue;
         if (card.hp > MAX_STRENGTH) continue;
         if (is_webbed) continue;
 
@@ -70,7 +70,7 @@ function setWebBoard(field) {
     }
     if (all_fields.length === 0) {
         MAX_STRENGTH = 0;
-        enable(deck_ludzie_element);
+        enable(deck_humans_element);
         return;
     }
     all_fields.forEach((field) => {

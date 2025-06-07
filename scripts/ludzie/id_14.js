@@ -1,12 +1,12 @@
 //GAZ ROZWESELAJĄCY
-import { board, clearBoard, moveSingleZombiak } from "../board.js";
-import { deck_ludzie_element, removeCard } from "../index.js";
+import { board, clearBoard, moveSingleZombie } from "../board.js";
+import { deck_humans_element, removeCard } from "../index.js";
 import { addListener, disable, enable, hideCancelButton } from "../utils.js";
 
 
 let gas_amount = 2;
 
-export default function ludzie_id_14(card, field) {
+export default function humans_id_14(card, field) {
     happyGas();
     gas_amount = 2;
 }
@@ -15,17 +15,17 @@ function happyGas() {
     if (gas_amount === 1) hideCancelButton();
     if (gas_amount === 0) {
         removeCard();
-        enable(deck_ludzie_element);
+        enable(deck_humans_element);
         clearBoard();
         return;
     }
-    disable(deck_ludzie_element);
+    disable(deck_humans_element);
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const field = board[i][j];
             const { element, card } = field;
             if (!card) continue;
-            if (card.type !== 'zombiak' || element.classList.contains('gased') || element.classList.contains('webbed')) continue;
+            if (card.type !== 'zombie' || element.classList.contains('gased') || element.classList.contains('webbed')) continue;
             element.classList.add('gas_available');
             addListener(element, gasHandler(field), { once: true });
         }
@@ -73,7 +73,7 @@ function setAvailableFields(field) {
 function setNewField(old_field, new_field) {
     return function () {
         clearBoard();
-        moveSingleZombiak(old_field, old_field.card, new_field.direction);
+        moveSingleZombie(old_field, old_field.card, new_field.direction);
         new_field.element.classList.add('gased');
         gasHandler();
         new_field.element.style.backgroundImage = ``;

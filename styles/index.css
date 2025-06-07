@@ -74,7 +74,7 @@ button {
   -webkit-text-stroke: 3px var(--background-color);
 }
 
-#choose-zombiaki p {
+#choose-zombies p {
   color: var(--color-green);
 }
 .choose-race div:after {
@@ -156,12 +156,12 @@ button {
 
 
 
-#rewers_stack_zombiaki {
-  background-image: url('../images/cards/zombiaki/dawn_rotated.webp');
+#rewers_stack_zombies {
+  background-image: url('../images/cards/zombies/dawn_rotated.webp');
 }
 
-#rewers_stack_ludzie {
-  background-image: url('../images/cards/ludzie/rewers_rotated.webp');
+#rewers_stack_humans {
+  background-image: url('../images/cards/humans/rewers_rotated.webp');
 }
 
 .end_turn {
@@ -176,13 +176,13 @@ button {
   aspect-ratio: 1.3;
 }
 
-#rewers_stack_zombiaki:hover:before,
-#rewers_stack_ludzie:hover:before {
+#rewers_stack_zombies:hover:before,
+#rewers_stack_humans:hover:before {
     filter: sepia(1.3) saturate(2) brightness(0.5);
 }
 
-#rewers_stack_zombiaki:before,
-#rewers_stack_ludzie:before {
+#rewers_stack_zombies:before,
+#rewers_stack_humans:before {
   content: '';
   position: absolute;
   top: 0;
@@ -196,11 +196,11 @@ button {
   border-radius: 1rem;
 }
 
-#rewers_stack_zombiaki:before {
-    background-image: url('../images/cards/zombiaki/rewers_rotated.webp');
+#rewers_stack_zombies:before {
+    background-image: url('../images/cards/zombies/rewers_rotated.webp');
 }
-#rewers_stack_ludzie:before {
-    background-image: url('../images/cards/ludzie/rewers_rotated.webp');
+#rewers_stack_humans:before {
+    background-image: url('../images/cards/humans/rewers_rotated.webp');
 }
 
 .end_turn p {
@@ -217,7 +217,7 @@ button {
   filter: none !important;
 }
 
-#rewers_stack_zombiaki p {
+#rewers_stack_zombies p {
   color: var(--color-green);
 }
 .end_turn:hover p,

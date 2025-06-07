@@ -1,4 +1,4 @@
-import { ludzieFunctions } from "./ludzie/allFunctions.js";
-import { zombiakiFunctions } from "./zombiaki/allFunctions.js";
+import { humansFunctions } from "./humans/allFunctions.js";
+import { zombiesFunctions } from "./zombies/allFunctions.js";
 
-export const raceFunctions = { ...ludzieFunctions, ...zombiakiFunctions }
+export const raceFunctions = { ...humansFunctions, ...zombiesFunctions }
