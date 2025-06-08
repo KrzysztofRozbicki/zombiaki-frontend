@@ -1,5 +1,5 @@
 //SIEĆ
-import { board } from './../board.js';
+import { board } from '../board.js';
 import { hideCancelButton, enable, disable, addListener, removeListener } from '../utils.js';
 import { removeCard, deck_humans_element } from '../index.js';
 let MAX_STRENGTH = 6;

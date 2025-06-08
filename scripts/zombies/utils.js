@@ -11,7 +11,7 @@ import {
 } from "../index.js";
 import { show, hide, enable, disable, randomRotate, addListener, removeListener } from '../utils.js';
 import { addInstruction, board } from "../board.js";
-import { clearBoard } from './../board.js';
+import { clearBoard } from '../board.js';
 const play_overlay = document.getElementById('play_overlay');
 
 export function useBear(field_board) {

@@ -2,7 +2,7 @@
 import { board, clearBoard, setField } from "../board.js";
 import { deck_zombies_element, removeCard, cancel_button } from "../index.js";
 import { addListener, disable, enable, hideCancelButton, showAlert } from "../utils.js";
-import { zombie_1 } from '../zombies/cards.js';
+import { zombie_1 } from './cards.js';
 
 export default function zombies_id_32(card, field) {
     disable(deck_zombies_element);
